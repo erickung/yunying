@@ -1,0 +1,85 @@
+<div class="row-fluid">
+	<div class="span12">
+		<h3 class="heading">用户组管理</h3>
+		<div id="datagrid-layout"></div>
+	</div>
+</div>
+
+<script>
+
+Ext.require([
+             'Ext.grid.*',
+             'Ext.data.*',
+             'Ext.util.*',
+             'Ext.state.*'
+         ]);
+         Ext.onReady(function() {
+        	    var sm = Ext.create('Ext.selection.CheckboxModel', {
+        	        listeners: {
+        					selectionchange: function(sm, selections) {
+        	            }
+        	        }
+        	    });
+        	    
+        	    
+        	    var columns = <%$columns%>;
+        	    var opts = {
+        				xtype:'actioncolumn',
+        				width:85,
+        				text: '操作',
+        				items: [{
+        					iconCls : 'splashy-document_letter_edit',
+        					tooltip: '修改',
+        					handler: function(grid, rowIndex, colIndex) {
+        						var id = grid.getStore().getAt(rowIndex).get('user_id');
+        						window.location.href = '/admin/usergroup/userinfo?action=edit&id=' + id;
+        					}
+        				}]
+        			};
+        	    columns.push(opts);
+        	    
+        		Ext.QuickTips.init();
+        	    // register model
+        	    Ext.define('media', {
+        	        extend: 'Ext.data.Model',
+        	        fields: <%$fields%>,
+        	        idProperty: 'user_id'
+        	    });
+        	    var store = Ext.create('Ext.data.ArrayStore', {
+        			pageSize : 20,
+        			page : 1,
+        			start : 0,
+        	        model: 'media',
+        	        remoteSort: true,
+        			remoteFilter:true,
+        			autoLoad: true,
+        			autoSync: true,
+        	        proxy: {
+        				type: 'ajax',
+        	            url: '/admin/user/userlist',
+        	            simpleSortMode: true
+        	        },
+        	        /*
+        	        sorters: [{
+        	            property: 'user_id',
+        	            direction: 'DESC'
+        	        }]
+        	        */
+        	    });
+
+
+
+
+             // create the Grid
+             window.grid = Ext.create('Ext.grid.Panel', {
+                 id:'grid',
+                 store: store,
+         		stateId : 'bms_manage_media',
+                 columns: columns,
+                 columnLines: true,
+                 selModel: sm,
+                 renderTo:'datagrid-layout'
+             });
+         });
+
+</script>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>ping</title>
+	
+		<!-- Bootstrap framework -->
+		<link rel="stylesheet" href="<%$res%>/bootstrap/css/bootsrap.css" />
+		<link rel="stylesheet" href="<%$res%>/bootstrap/css/bootstrap-responsive.min.css" />
+		<!-- jQuery UI theme -->
+		<link rel="stylesheet" href="<%$res%>/lib/jquery-ui/css/Aristo/Aristo.css" />
+		<!-- tooltips-->
+		<link rel="stylesheet" href="<%$res%>/lib/qtip2/jquery.qtip.min.css" />
+		<link rel="stylesheet" href="<%$res%>/lib/fullcalendar/fullcalendar_gebo.css" />
+    </head>
+    <body>
+		<div class="row-fluid">
+		<div class="span2"></div>
+		<div class="span7">
+			<div class="row-fluid">
+				<div class="span3">
+					<h4 class="heading">查看范围</h4>
+					<ul class="nav nav-tabs">
+					  <li <%if $params.range == 1%> class="active" <%/if%>>
+					    <a href="<%$url%>&range=1">当日</a>
+					  </li>
+					  <li <%if $params.range == 2%> class="active" <%/if%>>
+					  	<a href="<%$url%>&range=2">本月</a>
+					  </li>
+					  <li <%if $params.range == 3%> class="active" <%/if%>><a href="<%$url%>&range=3&type=day">全部</a></li>
+					</ul>
+				</div>
+				<div class="span2">
+					<h4 class="heading">查看刻度</h4>
+					<ul class="nav nav-tabs">
+					  <%if $params.range == 1 || $params.range == 2 %>
+					  <li <%if $params.type == 'hour'%> class="active" <%/if%>>
+					    <a href="<%$url%>&type=hour">小时</a>
+					  </li>
+					  <%/if%>
+					  <%if $params.range != 1%>
+					  <li <%if $params.type == 'day'%> class="active" <%/if%> ><a href="<%$url%>&type=day">天</a></li>
+					  <%/if%>
+					</ul>
+				</div>
+			</div>
+			<div class="heading clearfix">
+				<h3 class="pull-left">丢包率</h3>
+			</div>
+			<div id="fl_1" style="height:270px;width:100%;margin:15px auto 0"></div>
+			<div class="heading clearfix">
+				<h3 class="pull-left">响应时间</h3>
+			</div>
+			<div id="fl_2" style="height:270px;width:100%;margin:15px auto 0"></div>
+		</div>
+		</div>			
+	</body>	
+	<script src="<%$res%>/js/jquery.min.js"></script>
+	<script src="<%$res%>/js/json2.js"></script>
+    <script src="<%$res%>/js/jquery-migrate.min.js"></script>
+    <script src="<%$res%>/lib/jquery-ui/jquery-ui-1.10.0.custom.min.js"></script>
+    <!-- touch events for jquery ui-->
+	<script src="<%$res%>/js/forms/jquery.ui.touch-punch.min.js"></script>
+    <!-- easing plugin -->
+	<script src="<%$res%>/js/jquery.easing.1.3.min.js"></script>
+    <!-- smart resize event -->
+	<script src="<%$res%>/js/jquery.debouncedresize.min.js"></script>
+    <!-- js cookie plugin -->
+	<script src="<%$res%>/js/jquery_cookie_min.js"></script>
+    <!-- main bootstrap js -->
+	<script src="<%$res%>/bootstrap/js/bootstrap.js"></script>
+	<script src="<%$res%>/bootstrap/js/bootstrap-typeahead.js"></script>
+    <!-- bootstrap plugins -->
+	<script src="<%$res%>/js/bootstrap.plugins.min.js"></script>
+	<!-- sticky messages -->
+	<script src="<%$res%>/lib/sticky/sticky.min.js"></script>
+    <!-- tooltips -->
+	<script src="<%$res%>/lib/qtip2/jquery.qtip.min.js"></script>
+	<!-- small charts -->
+	<script src="<%$res%>/js/jquery.peity.min.js"></script>
+	<!-- charts -->
+	<script src="<%$res%>/lib/flot/jquery.flot.min.js"></script>
+    <script src="<%$res%>/lib/flot/jquery.flot.resize.min.js"></script>
+    <script src="<%$res%>/lib/flot/jquery.flot.pie.min.js"></script>
+	
+	<script>
+        $(document).ready(function() {
+        	show_char();
+        });
+        
+        var show_char = function() {
+            // Setup the placeholder reference
+            var elem = $('#fl_1');
+            var loss = '<%$loss%>';
+            loss = JSON.parse(loss);  
+            var data = [];
+            xtickts = JSON.parse('<%$xtickts%>');
+            for(var i=0; i< loss.length; i++)
+            {
+            	var line = '<a href="<%$url%>source=' + loss[i]['line'] + '">' + loss[i]['line'] + '</a>';
+            	var line = loss[i]['line'];
+            	data.push({ label: line,  data: loss[i]['data']})
+            }
+            max = 7;
+   			paint(elem, data);
+   		 
+            var elem = $('#fl_2');
+            var resp = '<%$resp%>';
+            resp = JSON.parse(resp);  
+            var data = [];
+            for(var i=0; i< resp.length; i++)
+            {
+            	//var line = '<a href="<%$url%>source=' + resp[i]['line'] + '">' + resp[i]['line'] + '</a>';
+            	var line = resp[i]['line'];
+            	data.push({ label: line,  data: resp[i]['data']})
+            }
+            
+            max = 400;
+   			paint(elem, data);
+        }
+       
+        var paint = function(elem, data){
+       		$.plot(elem, data, 
+                   {
+                       lines: { show: true },
+                       points: { show: true },
+                       
+                       xaxis : {ticks: xtickts,mode: "string",tickFormatter: function(axis){ return axis.toString();}},
+                       yaxis: { min: 0, max: max },
+                       grid: {
+                           hoverable: true,
+                           borderWidth: 1
+                           ,  labelMargin: 1
+                         
+                       },
+   					colors: [ "#8cc7e0", "#2d83a6" ]
+                   }
+               );
+               // Create a tooltip on our chart
+               elem.qtip({
+                   prerender: true,
+                   content: 'Loading...', // Use a loading message primarily
+                   position: {
+                       viewport: $(window), // Keep it visible within the window if possible
+                       target: 'mouse', // Position it in relation to the mouse
+                       adjust: { x: 8, y: -30 } // ...but adjust it a bit so it doesn't overlap it.
+                   },
+                   show: true, // We'll show it programatically, so no show event is needed
+                   style: {
+                       classes: 'ui-tooltip-shadow ui-tooltip-tipsy',
+                       tip: false // Remove the default tip.
+                   }
+               });
+            
+               // Bind the plot hover
+               elem.on('plothover', function(event, coords, item) {
+                   // Grab the API reference
+                   var self = $(this),
+                       api = $(this).qtip(),
+                       previousPoint, content,
+            
+                   // Setup a visually pleasing rounding function
+                   round = function(x) { return Math.round(x * 1000) / 1000; };
+            
+                   // If we weren't passed the item object, hide the tooltip and remove cached point data
+                   if(!item) {
+                       api.cache.point = false;
+                       return api.hide(event);
+                   }
+            
+                   // Proceed only if the data point has changed
+                   previousPoint = api.cache.point;
+                   if(previousPoint !== item.dataIndex)
+                   {
+                       // Update the cached point data
+                       api.cache.point = item.dataIndex;
+            
+                       // Setup new content
+                       content = item.series.label + '(' + round(item.datapoint[0]) + ') = ' + round(item.datapoint[1]);
+            
+                       // Update the tooltip content
+                       api.set('content.text', content);
+            
+                       // Make sure we don't get problems with animations
+                       //api.elements.tooltip.stop(1, 1);
+            
+                       // Show the tooltip, passing the coordinates
+                       api.show(coords);
+                   }
+               });
+        }
+        
+        function writeObj(obj){
+        	var description = "";
+        	for(var i in obj){ 
+        		var property=obj[i]; 
+        		description+=i+" = "+property+"\n";
+        	} 
+        	alert(description);
+        }
+	</script>	
+</html>

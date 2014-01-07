@@ -1,0 +1,53 @@
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Gebo Admin Panel</title>
+
+	<!-- Bootstrap framework -->
+	<link rel="stylesheet" href="<%$res%>/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<%$res%>/bootstrap/css/bootstrap-responsive.min.css" />
+	<!-- jQuery UI theme -->
+	<link rel="stylesheet" href="<%$res%>/lib/jquery-ui/css/Aristo/Aristo.css" />
+	<!-- tooltips-->
+	<link rel="stylesheet" href="<%$res%>/lib/qtip2/jquery.qtip.min.css" />
+	<!-- colorbox -->
+	<link rel="stylesheet" href="<%$res%>/lib/colorbox/colorbox.css" />
+	
+	<!-- code prettify -->
+	<link rel="stylesheet" href="<%$res%>/lib/google-code-prettify/prettify.css" />    
+	<!-- sticky notifications -->
+	<link rel="stylesheet" href="<%$res%>/lib/sticky/sticky.css" />    
+	<!-- aditional icons -->
+	<link rel="stylesheet" href="<%$res%>/img/splashy/splashy.css" />
+	<!-- flags -->
+	<link rel="stylesheet" href="<%$res%>/img/flags/flags.css" />	
+	<!-- datatables -->
+	<link rel="stylesheet" href="<%$res%>/lib/datatables/extras/TableTools/media/css/TableTools.css">
+	
+	<%foreach $css_arr as $css%>
+		<link rel="stylesheet" href="<%$res%>/<%$css%>" />
+	<%/foreach%>
+	
+	<!-- main styles -->
+	<link rel="stylesheet" href="<%$res%>/css/style.css" />
+	<link rel="stylesheet" href="/assets/css/main.css" />
+	<!-- theme color-->
+	<link rel="stylesheet" href="<%$res%>/css/blue.css" id="link_theme" />	
+	
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+	
+	<!-- favicon -->
+	<link rel="shortcut icon" href="favicon.ico" />
+	
+	<!--[if lte IE 8]>
+	    <link rel="stylesheet" href="<%$res%>/css/ie.css" />
+	<![endif]-->
+	
+	<!--[if lt IE 9]>
+	<script src="<%$res%>/js/ie/html5.js"></script>
+	<script src="<%$res%>/js/ie/respond.min.js"></script>
+	<script src="<%$res%>/lib/flot/excanvas.min.js"></script>
+	<![endif]-->
+	<script>
+	//* hide all elements & show preloader
+	document.documentElement.className += 'js';
+	</script>

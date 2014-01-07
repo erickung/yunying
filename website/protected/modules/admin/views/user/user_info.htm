@@ -1,0 +1,45 @@
+<div class="row-fluid">
+	<div class="span12">
+		<h3 class="heading">用户信息</h3>
+		<div id="user_info" class="span8">
+			<form method="POST" class="bms-form form-horizontal" action="" onSubmit="this.action='/admin/user/edit';this.submit();">
+				<div class="control-group">
+					<label class="control-label" for="user_email">Email<span class="f_req">*</span></label>
+					<div class="controls">
+						<input type="text" required name="user_email" id="user_email" placeholder="Email" value="<%$user->user_email%>">
+					</div>
+            	</div>
+				<div class="control-group">
+					<label class="control-label" for="user_name">用户名<span class="f_req">*</span></label>
+					<div class="controls">
+						<input type="text" required id="user_name" name="user_name" placeholder="用户名" value="<%$user->user_name%>">
+					</div>
+            	</div>
+       
+				<div class="control-group">
+					<label class="control-label" for="user_group">用户组<span class="f_req">*</span></label>&nbsp;&nbsp;&nbsp;&nbsp;
+					<select name="chosen_b" id="chosen_b" multiple data-placeholder="选择组" class="chzn_b span12">
+						<option value="部门1">部门1</option>
+						<option value="部门2">部门2</option>
+						<option value="部门3">4部门3</option>
+						<option value="部门4">2部门4</option>
+						<option value="部门5">3部门5</option>	
+					</select>	
+				</div>
+				<br><br>
+				<div class="control-group">
+					<div class="controls">&nbsp;&nbsp;&nbsp;&nbsp;
+						<input class="btn btn-gebo" type="submit" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" class="btn" onclick="javascript:history.go(-1);return;">取消</button>
+					</div>
+				</div>
+				
+				<input type="hidden" name="action" value="<%$action%>">
+				<input type="hidden" name="user_id" value="<%$user->user_id%>">
+			</form>
+		</div>
+		<div class="span4"></div>
+		
+		
+	</div>
+</div>

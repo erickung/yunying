@@ -83,8 +83,6 @@ class RootSmarty extends Smarty
 		$this->var_init($views_inits);
 	}
 	
-	
-	
 	private function config()
 	{
 		$this->template_dir = SMARTY_TMPL_DIR;

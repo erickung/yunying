@@ -32,7 +32,7 @@ class WebUser extends CWebUser
 	
 	public function getLoginUer()
 	{
-		$token = CMS::getSession(CMSConsts::CMS_TOKEN);
+		$token = Root::getSession(CMSConsts::CMS_TOKEN);
 		if (is_null($token)) return false;
 		
 		$user = UserAR::model()->find("token='$token'");

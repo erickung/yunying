@@ -1,5 +1,5 @@
 <?php
-abstract class CMSMongoActiveRecord extends EMongoDocument implements ActiveRecordInterface, ActiveRecordAppInterface
+abstract class RootMongoActiveRecord extends EMongoDocument implements ActiveRecordInterface, ActiveRecordAppInterface
 {
 	private static $_mongo_settings; 
 	

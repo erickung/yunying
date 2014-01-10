@@ -6,9 +6,12 @@
 class RootController extends CController implements RootInterface
 {
 	public $smarty;
-	public $login = true;
 	public $module_id;
 	private $view_path;
+	
+	private static $nologin = array(
+			'site' => array('login', 'index'),
+	);
 
 	public function __construct($id,$module=null)
 	{
@@ -18,26 +21,39 @@ class RootController extends CController implements RootInterface
 	
 	protected function beforeAction($action)
 	{
-		
-		if ($this->getId() == 'site' && in_array($this->getAction()->getId(), array('login', 'index', 'upload')))
-			return true;
+		if ($this->noLoginActions($action)) return true;
 
-		Yii::import('application.modules.admin.ar.*');
-		if (!WebUser::Instance()->auth())
-			$this->redirect('/', true, 'login');
-		
-		if (!WebUser::Instance()->checkPower($this))
-			$this->redirect("/", true, 'purview');
-		
-		Request::processGet(); 
-		Request::processPost();
+		$this->checkLogin();
+		$this->checkPower();
+		$this->processRequest();
 		
 		return true;
 	}
-
-	protected function afterAction($action)
+	
+	protected function checkLogin()
 	{
-		//OperateLogServ::log($this->module_id);
+		if (!WebUser::Instance()->auth())
+			$this->redirect('/', true, 'login');
+	}
+	
+	protected function checkPower()
+	{
+		if (!WebUser::Instance()->checkPower($this))
+			$this->redirect("/", true, 'purview');
+	}
+	
+	protected function processRequest()
+	{
+		//Request::processGet();
+		//Request::processPost();
+	}
+	
+	private function noLoginActions($action)
+	{
+		$controller = $this->getId();
+		$action = strtolower($this->getAction()->getId());
+		
+		return isset(self::$nologin[$controller]) && in_array($action, self::$nologin[$controller]);
 	}
 
 	public function redirect($url,$terminate=true,$statusCode=302)

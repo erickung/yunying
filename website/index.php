@@ -6,6 +6,7 @@ define('APP_ROOT', FRM_ROOT . 'website' . DS);
 if (!defined('RUNTIME_PATH')) define('RUNTIME_PATH', APP_ROOT . 'runtime' . DS);
 define('APP_PROTECT', APP_ROOT . 'protected' . DS);
 define('APP_CONFIG', APP_PROTECT . 'config' . DS);
+
 if (file_exists(RUNTIME_PATH . 'runtime.php'))
 	require RUNTIME_PATH . 'runtime.php';
 else

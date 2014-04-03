@@ -776,7 +776,7 @@ class CController extends CBaseController
 	 * @see getLayoutFile
 	 */
 	public function render($view,$data=null,$return=false)
-	{
+	{	
 		if($this->beforeRender($view))
 		{
 			$output=$this->renderPartial($view,$data,true);

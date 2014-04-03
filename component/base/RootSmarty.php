@@ -61,7 +61,7 @@ class RootSmarty extends Smarty
 	{
 		if($data && !empty($data))
 			$this->var_init($data);
-	
+
 		return $this->fetch($this->getView($view));
 	}
 	
@@ -78,7 +78,7 @@ class RootSmarty extends Smarty
 	private function initView()
 	{
 		$this->assign('controller', $this);
-		$this->assign('layouts', $this->controller->getViewPath() . DS . 'layouts');
+		$this->assign('layouts', SMARTY_TMPL_DIR . DS . 'layouts');
 		$views_inits = Root::loadConf('view_init');
 		$this->var_init($views_inits);
 	}

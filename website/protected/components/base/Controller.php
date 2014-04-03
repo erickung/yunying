@@ -15,4 +15,9 @@ class Controller extends RootController
 	{
 		//OperateLogServ::log($this->module_id);
 	}
+	
+	public function render($view, $data = NULL, $return = false)
+	{
+		return parent::render($view);
+	} 
 }

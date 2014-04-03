@@ -21,11 +21,11 @@ class RootController extends CController implements RootInterface
 	
 	protected function beforeAction($action)
 	{
-		if ($this->noLoginActions($action)) return true;
+		//if ($this->noLoginActions($action)) return true;
 
-		$this->checkLogin();
-		$this->checkPower();
-		$this->processRequest();
+		//$this->checkLogin();
+		//$this->checkPower();
+		//$this->processRequest();
 		
 		return true;
 	}
@@ -72,9 +72,11 @@ class RootController extends CController implements RootInterface
 	public function render($view, $data = NULL, $return = false)
 	{
 		$html = $this->smarty->getMainContents($view, $data);
+
 		$this->assign('content', $html);
-		$this->smarty->setTemplateDir($this->smarty->getMainViewPath());
+		$this->smarty->setTemplateDir(SMARTY_TMPL_DIR);
 		$this->smarty->assignAssets();
+	
 		$this->smarty->display('layouts/main.htm');
 	}
 	

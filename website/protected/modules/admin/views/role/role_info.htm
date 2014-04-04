@@ -1,0 +1,29 @@
+<div class="row-fluid">
+	<div class="span12">
+		<h3 class="heading">角色信息</h3>
+		<div id="user_info" class="span8">
+			<form method="POST" class="bms-form form-horizontal" action="" onSubmit="this.action='/admin/role/edit';this.submit();">
+				<div class="control-group">
+					<label class="control-label" for="role_name">Email<span class="f_req">*</span></label>
+					<div class="controls">
+						<input type="text" required name="role_name" id="role_name" placeholder="角色名称" value="<%c v=$role->role_name %>" >
+					</div>
+            	</div>
+ 
+				<br><br>
+				<div class="control-group">
+					<div class="controls">&nbsp;&nbsp;&nbsp;&nbsp;
+						<input class="btn btn-gebo" type="submit" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" class="btn" onclick="javascript:history.go(-1);return;">取消</button>
+					</div>
+				</div>
+				
+				<input type="hidden" name="action" value="<%$action%>">
+				<input type="hidden" name="role_id" value="<%$role->role_id%>">
+			</form>
+		</div>
+		<div class="span4"></div>
+		
+		
+	</div>
+</div>

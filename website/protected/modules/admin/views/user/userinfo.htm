@@ -1,0 +1,90 @@
+<div class="span12">
+        <h3 class="heading">用户信息</h3>
+		<div class="row-fluid">
+			<div class="span8">
+				<form class="form-horizontal">
+					<fieldset>
+						<div class="control-group formSep">
+							<label class="control-label" for="u_fname">用户名</label>
+							<div class="controls">
+								<input type="text" value="" class="input-xlarge" id="u_fname">
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label" for="u_email">Email</label>
+							<div class="controls">
+								<input type="text" value="" class="input-xlarge" id="u_email">
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label" for="u_password">Password</label>
+							<div class="controls">
+								<div class="sepH_b">
+									<input type="password" value="my_password" class="input-xlarge" id="u_password">
+									<span class="help-block">Enter your password</span>
+								</div>
+								<input type="password" class="input-xlarge" id="s_password_re">
+								<span class="help-block">Repeat password</span>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">I want to receive:</label>
+							<div class="controls">
+								<label class="checkbox inline">
+									<input type="checkbox" name="email_receive" id="email_newsletter" value="newsletter">
+									Newsletters
+								</label>
+								<label class="checkbox inline">
+									<input type="checkbox" checked="checked" name="email_receive" id="email_sysmessages" value="sys_messages">
+									System messages
+								</label>
+								<label class="checkbox inline">
+									<input type="checkbox" name="email_receive" id="email_othermessages" value="other_messages">
+									Other messages
+								</label>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">Language(s)</label>
+							<div class="controls">
+								<select class="span8 chzn-done" data-placeholder="Choose a language(s)..." multiple="" id="user_languages" name="user_languages" style="display: none;">
+									<option selected="selected">English</option>
+									<option>French</option>
+									<option>German</option>
+									<option>Italian</option>
+									<option>Chinese</option>
+									<option>Spanish</option>
+								</select><div id="user_languages_chzn" class="chzn-container chzn-container-multi" style="width: 343px;" title=""><ul class="chzn-choices"><li id="user_languages_chzn_c_0" class="search-choice"><span>English</span><a rel="0" class="search-choice-close" href="javascript:void(0)"></a></li><li class="search-field"><input type="text" style="width: 25px;" autocomplete="off" class="" value="Choose a language(s)..."></li></ul><div style="left: -9000px; width: 341px; top: 30px;" class="chzn-drop"><ul class="chzn-results"><li style="" class="result-selected" id="user_languages_chzn_o_0">English</li><li style="" class="active-result" id="user_languages_chzn_o_1">French</li><li style="" class="active-result" id="user_languages_chzn_o_2">German</li><li style="" class="active-result" id="user_languages_chzn_o_3">Italian</li><li style="" class="active-result" id="user_languages_chzn_o_4">Chinese</li><li style="" class="active-result" id="user_languages_chzn_o_5">Spanish</li></ul></div></div>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">Gender</label>
+							<div class="controls">
+								<label class="radio inline">
+									<input type="radio" checked="checked" name="f_gender" id="s_male" value="male">
+									Male
+								</label>
+								<label class="radio inline">
+									<input type="radio" name="f_gender" id="s_female" value="female">
+									Female
+								</label>
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label" for="u_signature">Signature</label>
+							<div class="controls">
+								<textarea class="input-xlarge" id="u_signature" rows="4" style="overflow: hidden; word-wrap: break-word; max-height: 80px; min-height: 80px; height: 80px;">Lorem ipsum…</textarea>
+								<span class="help-block">Automatic resize</span>
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<button type="submit" class="btn btn-gebo">Save changes</button>
+							<button class="btn">Cancel</button>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+    </div>

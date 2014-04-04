@@ -23,18 +23,7 @@ return array(
 				//'<controller:\w+>/<action:\w+\.js>'=>'<controller>/<action>',
 			),
 		),
-		
-		'mongodb' => array(
-				'class'            => 'EMongoDB',
-				'connectionString' => 'mongodb://192.168.16.161',
-				'dbName'           => 'corsair_video',
-				'fsyncFlag'        => true,
-				'safeFlag'         => true,
-				'useCursor'        => false
-		),
-		
 		'db'=> RunTime::getDBConf('pocket'),
-		'db_corsair' => RunTime::getDBConf('corsair'),
 		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors

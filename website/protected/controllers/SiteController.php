@@ -1,6 +1,6 @@
 <?php
 
-class SiteController extends Controller
+class SiteController extends FController
 {
 	/**
 	 * This is the default 'index' action that is invoked

@@ -8,7 +8,7 @@
 
 return array(
 	'basePath'=> APP_PROTECT,
-	'name'=>'My Web Application',
+	'name'=>'运营平台',
 	'runtimePath'=>RUNTIME_PATH,
 
 	// preloading 'log' component
@@ -25,7 +25,7 @@ return array(
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
-		'admin','sales',
+		'admin','sales','product','custom',
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'admin',

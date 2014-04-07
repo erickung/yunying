@@ -10,22 +10,34 @@ class RootController extends CController implements RootInterface
 	private $view_path;
 	
 	private static $nologin = array(
-			'site' => array('login', 'index'),
+			'site' => array('login'),
+	);
+	public static $defaultModules = array(
+			'custom.pass' => array('info'),
 	);
 
 	public function __construct($id,$module=null)
 	{
 		parent::__construct($id, $module);
-		$this->init();
+	}
+	
+	public function assignModules($modules_detail, $user_modules, $module)
+	{
+		if ($this->smarty)
+		{
+			$this->assign('modules_detail', $modules_detail);
+			$this->assign('user_modules', $user_modules);
+			$this->assign('selected_module', $module);
+		}
 	}
 	
 	protected function beforeAction($action)
-	{
-		//if ($this->noLoginActions($action)) return true;
+	{		
+		$this->processRequest();
+		if ($this->noLoginActions($action)) return true;
 
-		//$this->checkLogin();
-		//$this->checkPower();
-		//$this->processRequest();
+		$this->checkLogin();
+		$this->checkPower();
 		
 		return true;
 	}
@@ -33,19 +45,29 @@ class RootController extends CController implements RootInterface
 	protected function checkLogin()
 	{
 		if (!WebUser::Instance()->auth())
-			$this->redirect('/', true, 'login');
+			$this->redirect('/site/login', true, 'login');
 	}
 	
 	protected function checkPower()
 	{
-		if (!WebUser::Instance()->checkPower($this))
-			$this->redirect("/", true, 'purview');
+		if (!WebUser::Instance()->checkPower($this)) return true;
+			//$this->redirect("/", true, 'purview');
 	}
 	
 	protected function processRequest()
 	{
-		//Request::processGet();
-		//Request::processPost();
+		if (Yii::app()->request->isPostRequest)
+		{
+			Request::processPost();
+			$this->smarty = new RootSmarty($this);
+		}
+		else 
+		{
+			if (!Yii::app()->request->isAjaxRequest)
+				$this->smarty = new RootSmarty($this);
+
+			Request::processGet();
+		}	
 	}
 	
 	private function noLoginActions($action)
@@ -74,7 +96,6 @@ class RootController extends CController implements RootInterface
 		$html = $this->smarty->getMainContents($view, $data);
 
 		$this->assign('content', $html);
-		$this->smarty->setTemplateDir(SMARTY_TMPL_DIR);
 		$this->smarty->assignAssets();
 	
 		$this->smarty->display('layouts/main.htm');
@@ -115,10 +136,5 @@ class RootController extends CController implements RootInterface
 	{
 		$this->view_path = $path;
 		$this->smarty->setTemplateDir($path);
-	}
-
-	public function init()
-	{
-		$this->smarty = new RootSmarty($this);
 	}
 }

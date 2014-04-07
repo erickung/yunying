@@ -24,17 +24,17 @@ class UserIdentity extends CUserIdentity
 		
 		if (!$this->user) 
 		{
-			CMS::error("can't get user : {$this->username}");
+			Root::error("can't get user : {$this->username}");
 			return false;
 		}
-
-		if ($this->authByLdap())
+		
+		if ($this->authBySys())
 		{
 			$this->user->token = $this->genToken();
 			$this->user->last_login_time = new CDbExpression('NOW()');
 			$this->user->password = $this->encrypt($this->password);
 			$this->user->save();
-			CMS::addSession(CMSConsts::CMS_TOKEN, $this->user->token);
+			Root::setCookie(RootConsts::TOKEN, $this->user->token);
 			return true;
 		}
 		else 

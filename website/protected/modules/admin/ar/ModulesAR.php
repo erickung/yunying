@@ -15,6 +15,7 @@ class ModulesAR extends Modules
 {
 	const IS_ACTION_MODULE = 1;
 	const IS_ROOT_MODULE = 0;
+	public $href;
 	
 	public static function model($className=__CLASS__)
 	{
@@ -33,20 +34,7 @@ class ModulesAR extends Modules
 	
 	public function editModule()
 	{
-		$this->beginTransaction();
-		try
-		{
-			$module = $this->findByPk($this->module_id);
-			$this->copyAttributesFromAR($this, $module);
-			$module->save();
-			$this->commit();
-			return true;
-		}
-		catch(Exception $e)
-		{
-			$this->rollBack();
-			return false;
-		}
+		$this->modifyByPk();
 	}
 	
 	public function isRootModule()

@@ -17,6 +17,22 @@ class Root
 		return Yii::app()->session->remove($k);
 	}
 	
+	public static function setCookie($k, $v)
+	{
+		setcookie($k, $v, time()+86400*30, '/', $_SERVER['HTTP_HOST']);
+		$_COOKIE[$k] = $v;
+	}
+	
+	public static function getCookie($k)
+	{
+		return isset($_COOKIE[$k]) ? $_COOKIE[$k] : null;
+	}
+	
+	public static function removeCookie($k)
+	{
+		setcookie($k, null, 0, '/', $_SERVER['HTTP_HOST']);
+	}
+	
 	public static function loadFileConf($conf)
 	{
 		return self::loadConf($conf, true);

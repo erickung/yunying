@@ -54,19 +54,19 @@ class RootActiveRecord extends CActiveRecord implements ActiveRecordInterface, A
 		array_shift($args);
 		
 		$this->beginTransaction();
-		$is_new = $this->getIsNewRecord();
+		//$is_new = $this->getIsNewRecord();
 		try
-		{			
+		{		
 			call_user_func_array(array($this, $action), $args);
 			$this->commit();
 		}
 		catch (CDbException $e)
-		{
+		{var_dump($e->getMessage());
 			$this->rollBack();
 			return false;
 		}
 		
-		OperateLogServ::Instance()->addLogAfterCommit($this, $is_new);
+		//OperateLogServ::Instance()->addLogAfterCommit($this, $is_new);
 		return true;
 	}
 

@@ -3,14 +3,10 @@ return array(
 		
 		'user'=>array(
 			// enable cookie-based authentication
-			'class' => 'application.components.base.WebUser',
+			'class' => 'application.components.base.FWebUser',
 			'allowAutoLogin'=>true,
 		),
-		
-		'smarty'=>array(
-		   // 'class'=>'application.extensions.smarty.CSmarty',
-				 'class'=>'root.base.RootSmarty',
-		),
+
 		// uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
 			'urlFormat'=>'path',

@@ -1,0 +1,35 @@
+<div class="span12">
+        <h3 class="heading">用户信息</h3>
+		<div class="row-fluid">
+			<div class="span8">
+				<%form name="userinfo" action="/custom/pass/edit" method="POST" class="form-horizontal"%>
+					<fieldset>
+						<div class="control-group formSep">
+							<label class="control-label" for="user_name">原密码</label>
+							<div class="controls">
+								<input type="text" name="origin_pass"  class="input-xlarge" id="origin_pass">
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label" for="user_email">现密码</label>
+							<div class="controls">
+								<input type="text" name="pass"  class="input-xlarge" id="pass">
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label" for="user_email">再次确认</label>
+							<div class="controls">
+								<input type="text" name="re_pass"  class="input-xlarge" id="re_pass">
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<button type="submit" class="btn btn-gebo">保  存</button>
+								<button type="button" class="btn" onClick="eric.common.go('/');">Cancel</button>
+							</div>
+						</div>
+					</fieldset>
+				<%/form%>
+			</div>
+		</div>
+    </div>

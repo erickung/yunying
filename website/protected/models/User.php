@@ -11,6 +11,9 @@
  * @property string $last_login_time
  * @property string $token
  * @property string $password
+ *
+ * The followings are the available model relations:
+ * @property Roles[] $roles
  */
 class User extends RootActiveRecord
 {
@@ -23,26 +26,6 @@ class User extends RootActiveRecord
 	}
 
 	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('user_email, user_name, token, password', 'required'),
-			array('user_status', 'numerical', 'integerOnly'=>true),
-			array('user_email', 'length', 'max'=>63),
-			array('user_name, token', 'length', 'max'=>32),
-			array('password', 'length', 'max'=>40),
-			array('last_login_time', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('user_id, user_email, user_name, user_status, last_login_time, token, password', 'safe', 'on'=>'search'),
-		);
-	}
-
-	/**
 	 * @return array relational rules.
 	 */
 	public function relations()
@@ -50,6 +33,7 @@ class User extends RootActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'roles' => array(self::MANY_MANY, 'Roles', 'user_roles(user_id, role_id)'),
 		);
 	}
 

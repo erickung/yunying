@@ -11,6 +11,44 @@
 					</form>
 					<div id="side_accordion" class="accordion">
 						
+						<%foreach $user_modules as $id=>$modules %>
+						<div class="accordion-group">
+							<div class="accordion-heading <%if $selected_module->parent_module_id==$id%>sdb_h_active<%/if%>">
+								<a href="#collapse<%$id%>" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
+									<i class="icon-leaf"></i> <%$modules_detail.$id->module_name%>
+								</a>
+							</div>
+							<div class="accordion-body collapse <%if $selected_module->parent_module_id==$id%>in<%/if%>" id="collapse<%$id%>">
+								<%foreach $modules as $mid%>
+								<div class="accordion-inner">
+									<ul class="nav nav-list">
+										<li <%if $mid==$selected_module->module_id%>class="active"<%/if%>><a href="/<%$modules_detail.$mid->href%>"><%$modules_detail.$mid->module_name%></a></li>
+									</ul>
+								</div>
+								<%/foreach%>
+							</div>
+						</div>
+						<%/foreach%>
+						
+						<div class="accordion-group">
+							<div class="accordion-heading <%if $selected_module->href=='custom/pass/info'%>sdb_h_active<%/if%>">
+								<a href="#collapseCustom" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
+									<i class="icon-cog"></i> 个人设置
+								</a>
+							</div>
+							<div class="accordion-body collapse <%if $selected_module->href=='custom/pass/info'%>in<%/if%>" id="collapseCustom">
+								<div class="accordion-inner">
+									<ul class="nav nav-list">
+										<li <%if $selected_module->href=='custom/pass/info'%>class="active"<%/if%>><a href="/custom/pass/info">密码修改</a></li>
+									</ul>
+                                    
+								</div>
+							</div>
+						</div>
+						
+						
+						
+						<!-- 
 						<div class="accordion-group">
 							<div class="accordion-heading sdb_h_active">
 								<a href="#collapseOne" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
@@ -67,14 +105,23 @@
 							<div class="accordion-body collapse" id="collapseFour">
 								<div class="accordion-inner">
 									<ul class="nav nav-list">
-										<li><a href="javascript:void(0)">角色管理</a></li>
-										<li><a href="javascript:void(0)">权限管理</a></li>
-										<li><a href="javascript:void(0)">用户管理</a></li>
+										<li><a href="/admin/role/list">角色管理</a></li>
+										<li><a href="/admin/modules/list">权限管理</a></li>
+										<li><a href="/admin/user/list">用户管理</a></li>
 									</ul>
                                     
 								</div>
 							</div>
 						</div>
+						
+						
+						 -->
+						
+						
+						
+						
+						
+						
   
 
 					</div>

@@ -5,6 +5,8 @@ class WebUser extends CWebUser
 	public $roles;
 	public $modules;
 	private $all_modules;
+	private $all_module_tree;
+	private $first_module;
 	private static $module_ids;
 	
 	/**
@@ -26,13 +28,13 @@ class WebUser extends CWebUser
 		if (!$user) return false;	
 		
 		$this->load($user);
-		$this->all_modules = $this->getAllModuleActions();
+		$this->getModuleActions();
 		return true;
 	}
 	
 	public function getLoginUer()
 	{
-		$token = Root::getSession(CMSConsts::CMS_TOKEN);
+		$token = Root::getCookie(RootConsts::TOKEN);
 		if (is_null($token)) return false;
 		
 		$user = UserAR::model()->find("token='$token'");
@@ -43,82 +45,66 @@ class WebUser extends CWebUser
 		return $user;
 	}
 	
-	public function checkPower(CMSController $contr,$params=array())
+	public function checkPower(RootController $contr,$params=array())
 	{
 		$controller_id = ($contr->getModule()) ? $contr->getModule()->getId() . '.' . $contr->getId() : $contr->getId();
 		$action_id = $contr->getAction()->getId();
-		$module_action = $this->getUserModuleActions();
 
-		foreach ($module_action as $action)
+		if (isset($contr::$defaultModules[$controller_id]) && in_array($action_id, $contr::$defaultModules[$controller_id]))
 		{
-			if ($this->checkMudulePower($action, $controller_id, $action_id))
-			{
-				$contr->module_id = self::$module_ids[$action];
-				return true;
-			}
-				
+			$module = new stdClass();
+			$module->href = str_replace('.', '/', $controller_id) . '/' . $action_id;
+			$contr->assignModules($this->all_modules, $this->all_module_tree, $module);
+			return true;
 		}
-
+				
+		foreach ($this->all_modules as $module)
+		{
+			if ($module->controller == $controller_id && $module->action == $action_id)
+			{
+				$contr->assignModules($this->all_modules, $this->all_module_tree, $module);
+				return true;
+			}	
+		}
 		return false;
 	}
 	
-	public function getUserModuleActions()
+	public function getModuleActions()
 	{
-		$modules = $this->getModuleActions($this->modules);
-		return array_flip($modules);
-	}
-	
-	public function getAllModuleActions()
-	{
-		return $this->getModuleActions(Modules::model()->findAll());	
-	}
-	
-	public function getModuleActions(array $module_actions)
-	{
-		$modules = array();
-		
-		if (empty($module_actions)) return $modules;
-		$i = 0;
-		foreach ($module_actions as $module)
-		{
-			if (!$module->controller) continue;
-			
-			$actions = $this->getModuleAction($module);
-			foreach ($actions as $k => $m)
-			{	
-				$modules[strtolower($k)] = $i;
-				self::$module_ids[strtolower($k)] = $module->module_id;
-				$i++;
-			}
-		}
-		
-		return $modules;
-	}
-
-	public function getModuleTree($has_ation = false)
-	{
-		$modules = array();
 		foreach ($this->modules as $module)
 		{
-			if (!$has_ation && $module->isActionModule()) continue;
+			if ($module->is_action) continue;
 			
-			$module_id = $module->module_id;
-			if ($module->isRootModule())
+			if ($module->parent_module_id == 0)
 			{
-				$modules[$module_id] = array();
+				if (!isset($this->all_module_tree[$module->module_id])) $this->all_module_tree[$module->module_id] = array();
 			}
 			else
 			{
-				if (isset($modules[$module->parent_module_id]))
-					array_push($modules[$module->parent_module_id], $module_id);
-				else
-					$modules[$module->parent_module_id] = array($module_id);	
-			}
+				if (!isset($this->all_module_tree[$module->parent_module_id]))
+					$this->all_module_tree[$module->parent_module_id] = array();
+
+				array_push($this->all_module_tree[$module->parent_module_id], $module->module_id);
+			}	
+			
+			$module->href = str_replace('.', '/', $module->controller) . '/' . $module->action;
+			$this->all_modules[$module->module_id] = $module;
 		}
-		
-		return $modules;
 	}
 	
+	public function getFirstModule()
+	{
+		foreach ($this->all_module_tree as $modules)
+		{
+			foreach ($modules as $m)
+			{
+				return $this->all_modules[$m]->href;
+			}
+		}
+	}
+	
+	
+	/*
 	private function getModuleAction(Modules $module)
 	{
 		$rnt = array();
@@ -137,11 +123,12 @@ class WebUser extends CWebUser
 		
 		return ($action == $req_action);
 	}
+	*/
 	
 	private function load(UserAR $user)
 	{
 		$this->user = $user;
 		$this->roles = $user->getUserRoles();
-		$this->modules = $user->getUserModules();
+		$this->modules = $user->getUserModules();	
 	}
 }

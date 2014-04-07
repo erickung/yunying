@@ -1,11 +1,15 @@
 <?php
 class Request
 {
+	public static $get = array();
+	public static $post = array();
+	
 	public static function processGet()
 	{
-		if (!isset($_GET['dir'])) $_GET['dir'] = 'desc';
-		if (!isset($_GET['limit'])) $_GET['limit'] = '20';
-		if (!isset($_GET['start'])) $_GET['start'] = '0';
+		self::$get = $_GET;
+		if (!isset($_GET['dir'])) self::$get['dir'] = 'desc';
+		if (!isset($_GET['limit'])) self::$get['limit'] = '20';
+		if (!isset($_GET['start'])) self::$get['start'] = '0';
 	}
 	
 	public static function processPost()
@@ -13,7 +17,9 @@ class Request
 		$post = @file_get_contents("php://input");
 		$post = json_decode($post, true);
 		if ($post && !empty($post) && isset($post['data']))
-			$_POST = array_merge($_POST, $post['data']);
+			self::$post = array_merge($_POST, $post['data']);
+		else 
+			self::$post = $_POST;
 	}
 	
 	public static function getNewConditionAfterAddSearch($condition, $Property, $value)

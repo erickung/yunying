@@ -5,3 +5,4 @@ define('FRM_COM', FRM_ROOT . 'component');
 Yii::import('root.*');
 Yii::import('root.base.*');
 Yii::import('root.service.*');
+Yii::setPathOfAlias('frm.base', FRM_COM.DS.'base');

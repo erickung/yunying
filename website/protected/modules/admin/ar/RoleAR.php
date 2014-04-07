@@ -1,24 +1,24 @@
 <?php
-//////////////////////////////////////////////////////////////////////////////////////////
-// Author: 孔繁兴
-// Copyright 2005-, Funshion Online Technologies Ltd. All Rights Reserved
-// 版权 2005-，北京风行在线技术有限公司 所有版权保护
-// This is UNPUBLISHED PROPRIETARY SOURCE CODE of Funshion Online Technologies Ltd.;
-// the contents of this file may not be disclosed to third parties, copied or
-// duplicated in any form, in whole or in part, without the prior written
-// permission of Funshion Online Technologies Ltd.
-// 这是北京风行在线技术有限公司未公开的私有源代码。本文件及相关内容未经风行在线技术有
-// 限公司事先书面同意，不允许向任何第三方透露，泄密部分或全部; 也不允许任何形式的私自备份.
-//////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * 
+ * @author eric
+ *
+ */
 
 class RoleAR extends Roles
 {	
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+	
 	function getRoleModules()
 	{
+		$modules = array();
 		try 
 		{
-			return ModulesAR::model()->with(
-					array('Roles'=>array('condition'=>"Roles.role_id={$this->role_id}"),
+			$modules = ModulesAR::model()->with(
+					array('roles'=>array('condition'=>"roles.role_id={$this->role_id}"),
 					)
 			)->findAll();
 		}
@@ -27,6 +27,40 @@ class RoleAR extends Roles
 			CMS::error("get role modules error: role_id:'{$this->role_id}'");
 			return array();
 		}
+
+		$rnt = array();
+		foreach ($modules as $m)
+		{
+			$rnt[$m->module_id] = $m->module_name;
+		}
+		return $rnt;
+	}
+	
+	function getAllRoleModules($column=3)
+	{
+		$modules = ModulesAR::model()->findAll();
+		$role_modules = ($this->role_id) ? $this->getRoleModules() : array();
+		
+		$rnt = array();
+		$j = 0;
+		foreach ($modules as $i => $m)
+		{
+			if ($i%$column == 0) $j++;
+			if (!isset($rnt[$j])) $rnt[$j] = array();
+			
+			$r = array(
+				'module_id'=>$m->module_id, 
+				'module_name'=>$m->module_name,
+				'checked'=>false,
+			);
+			if (isset($role_modules[$m->module_id]))
+				$r['checked'] = true;
+
+			array_push($rnt[$j], $r);
+
+		}
+
+		return $rnt;
 	}
 	
 	function addRole($modules = null)

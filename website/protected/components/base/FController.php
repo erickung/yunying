@@ -7,6 +7,8 @@ class FController extends RootController
 {
 	protected function beforeAction($action)
 	{
+		
+	
 		if (!parent::beforeAction($action)) return false;
 		return true;
 	}
@@ -18,6 +20,6 @@ class FController extends RootController
 	
 	public function render($view, $data = NULL, $return = false)
 	{
-		return parent::render($view);
+		return parent::render($view, $data, $return);
 	} 
 }

@@ -61,23 +61,6 @@ class <?php echo $modelClass; ?> extends RootActiveRecord
 	}
 
 	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-<?php foreach($rules as $rule): ?>
-			<?php echo $rule.",\n"; ?>
-<?php endforeach; ?>
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('<?php echo implode(', ', array_keys($columns)); ?>', 'safe', 'on'=>'search'),
-		);
-	}
-
-	/**
 	 * @return array relational rules.
 	 */
 	public function relations()

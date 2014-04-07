@@ -1,0 +1,47 @@
+<div class="span12">
+	<h3 class="heading">用户列表</h3>
+        
+	<div role="grid" class="dataTables_wrapper form-inline" id="dt_gal_wrapper">
+        
+        
+        <div class="row">
+        	<div class="span6">
+        		<a href="/admin/user/userinfo"><i class="splashy-add"></i></a>
+    			<div  class="dataTables_length">
+    				
+    						
+    						
+    			</div>
+    		</div>
+    	</div>
+        
+        
+		<table id="smpl_tbl" class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>用户名称</th>
+					<th>用户邮箱</th>
+					<th>用户状态</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%foreach from=$users item=user%>
+				<tr>
+					<td><%$user->user_id%></td>
+					<td><%$user->user_name%></td>
+					<td><%$user->user_email%></td>
+					<td><%$user->user_status%></td>
+					<td class=" ">
+						<a title="Edit" class="sepV_a" href="/admin/user/userinfo?user_id=<%$user->user_id%>"><i class="icon-pencil"></i></a>
+						<a title="View" class="sepV_a" href="/admin/user/userStatic?user_id=<%$user->user_id%>"><i class="icon-eye-open"></i></a>
+						<a title="Delete" href="#"><i class="icon-trash"></i></a>
+					</td>
+				</tr>
+				<%/foreach%>
+				
+			</tbody>
+		</table>
+	</div>	
+	</div>

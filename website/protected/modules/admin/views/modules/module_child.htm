@@ -1,0 +1,53 @@
+<div class="span12">
+        <h3 class="heading">模块信息</h3>
+		<div class="row-fluid">
+			<div class="span8">
+				<%form name="module_info" action="/admin/modules/cEdit" method="POST" class="form-horizontal"%>
+					<fieldset>
+						<div class="control-group formSep">
+							<label class="control-label" for="module_name">模块名</label>
+							<div class="controls">
+								<input type="text" name="module_name"  value="<%$module->module_name%>" class="input-xlarge" id="module_name">
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label">是否action:</label>
+							<div class="controls">
+								<label class="checkbox inline">
+									<input type="checkbox" name="is_action" id="is_action">
+									是
+								</label>
+								
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label" for="controller">控制器</label>
+							<div class="controls">
+								<input type="text" name="controller"  value="<%$module->controller%>" class="input-xlarge" id="controller">
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label" for="action">action</label>
+							<div class="controls">
+								<input type="text" name="action"  value="<%$module->action%>" class="input-xlarge" id="action">
+							</div>
+						</div>
+						<div class="control-group formSep">
+							<label class="control-label" for="module_name">排序</label>
+							<div class="controls">
+								<input type="text" name="ordering"  value="<%$module->ordering%>" class="input-xlarge" id="ordering">
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<button type="submit" class="btn btn-gebo">Save changes</button>
+								<button type="button" class="btn" onClick="eric.common.go();">Cancel</button>
+							</div>
+						</div>
+						<input type="hidden" name="module_id" id="module_id" value="<%$module->module_id%>">
+						<input type="hidden" name="parent_module_id" id="parent_module_id" value="<%$pid%>">
+					</fieldset>
+				<%/form%>
+			</div>
+		</div>
+</div>

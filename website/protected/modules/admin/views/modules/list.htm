@@ -1,0 +1,41 @@
+<div class="span12">
+	<h3 class="heading">模块列表</h3>
+        
+	<div role="grid" class="dataTables_wrapper form-inline" id="dt_gal_wrapper">
+        <div class="row">
+        	<div class="span6">
+        		<a href="/admin/modules/ModuleInfo"><i class="splashy-add"></i></a>
+    			<div  class="dataTables_length">
+    				
+    						
+    						
+    			</div>
+    		</div>
+    	</div>
+        
+        
+		<table id="smpl_tbl" class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>模块名称</th>
+					<th>排序</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%foreach from=$modules item=module%>
+				<tr>
+					<td><%$module->module_id%></td>
+					<td><%$module->module_name%></td>
+					<td><%$module->ordering%></td>
+					<td class=" ">
+						<a title="Edit" class="sepV_a" href="/admin/modules/ModuleInfo?id=<%$module->module_id%>"><i class="icon-pencil"></i></a>
+					</td>
+				</tr>
+				<%/foreach%>
+				
+			</tbody>
+		</table>
+	</div>	
+	</div>

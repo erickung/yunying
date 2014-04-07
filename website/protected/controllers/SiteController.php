@@ -8,7 +8,10 @@ class SiteController extends FController
 	 */
 	public function actionIndex()
 	{
-		$this->render('product/list');
+		$first_module = WebUser::Instance()->getFirstModule();
+		header("Location: $first_module");
+		
+		//$this->render('index');
 	}
 
 	/**
@@ -56,25 +59,33 @@ class SiteController extends FController
 	 */
 	public function actionLogin()
 	{
-		/*
-		$model=new LoginForm;
-
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
 
 		// collect user input data
 		if(isset($_POST['LoginForm']))
 		{
-			$model->attributes=$_POST['LoginForm'];
-			// validate user input and redirect to the previous page if valid
+			$UserIdentity = new UserIdentity($_POST['username'], $_POST['password']);
+			
+			if ($UserIdentity->authenticate())
+			{
+				$this->redirect(Yii::app()->user->returnUrl);
+				/*
+				$user = WebUser::Instance()->getLoginUer();
+				$rnt = $user ? $user->attributes : false;
+				if ($rnt)
+					$rnt['modules'] = WebUser::Instance()->getUserModuleActions();
+				*/
+				//echo json_encode(array('success' => true, 'user' => $rnt));
+			}
+			else
+			{
+				CMS::error("login failure : {$_POST['username']}");
+				echo json_encode(array('success' => false));
+			}
+			
 			if($model->validate() && $model->login())
 				$this->redirect(Yii::app()->user->returnUrl);
 		}
-		*/
+
 		// display the login form
 		//$this->render('login',array('model'=>$model));
 		$this->renderPartial('login');

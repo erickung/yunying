@@ -21,7 +21,7 @@ class RootSmarty extends Smarty
 	public function init()
 	{
 		Yii::registerAutoloader('smartyAutoload');
-		$this->setTemplateDir($this->controller->getViewPath());
+		$this->setTemplateDir(SMARTY_TMPL_DIR);
 		$this->initView();
 	}
 	
@@ -67,7 +67,20 @@ class RootSmarty extends Smarty
 	
 	public function getView($view)
 	{
-		return strpos($view, "/") ? $view . '.htm' : $this->controller->getId() . '/' . $view . '.htm';
+		if (strpos($view, "."))
+			return Yii::getPathOfAlias($view);
+		
+		$cid = $this->controller->getId();
+		if ($this->controller->getModule())
+		{
+			$module_id = $this->controller->getModule()->getId();
+			
+			return Yii::getPathOfAlias("$module_id.views.$cid.$view") . '.htm';
+		}
+		else 
+		{
+			return Yii::getPathOfAlias("application.views.$cid.$view") . '.htm';
+		}
 	}
 	
 	public function getMainViewPath()

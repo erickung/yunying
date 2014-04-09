@@ -10,7 +10,6 @@
 						<input autocomplete="off" name="query" class="search_query input-medium" size="16" type="text" placeholder="Search..." /><button type="submit" class="btn"><i class="icon-search"></i></button>
 					</form>
 					<div id="side_accordion" class="accordion">
-						
 						<%foreach $user_modules as $id=>$modules %>
 						<div class="accordion-group">
 							<div class="accordion-heading <%if $selected_module->parent_module_id==$id%>sdb_h_active<%/if%>">

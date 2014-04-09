@@ -4,7 +4,8 @@ class WebUser extends CWebUser
 	public $user;
 	public $roles;
 	public $modules;
-	private $all_modules;
+	private $all_action_modules;
+	private $all_view_modules;
 	private $all_module_tree;
 	private $first_module;
 	private static $module_ids;
@@ -48,33 +49,53 @@ class WebUser extends CWebUser
 	public function checkPower(RootController $contr,$params=array())
 	{
 		$controller_id = ($contr->getModule()) ? $contr->getModule()->getId() . '.' . $contr->getId() : $contr->getId();
+		$controller_id = strtolower($controller_id);
 		$action_id = $contr->getAction()->getId();
+		$action_id = strtolower($action_id);
 
 		if (isset($contr::$defaultModules[$controller_id]) && in_array($action_id, $contr::$defaultModules[$controller_id]))
 		{
 			$module = new stdClass();
 			$module->href = str_replace('.', '/', $controller_id) . '/' . $action_id;
-			$contr->assignModules($this->all_modules, $this->all_module_tree, $module);
+			$contr->assignModules($this->all_view_modules, $this->all_module_tree, $module);
 			return true;
 		}
-				
-		foreach ($this->all_modules as $module)
+
+		if (isset($this->all_action_modules[$controller_id][$action_id])) 
 		{
-			if ($module->controller == $controller_id && $module->action == $action_id)
+			$module_id = $this->all_action_modules[$controller_id][$action_id];
+			foreach ($this->modules as $m)
 			{
-				$contr->assignModules($this->all_modules, $this->all_module_tree, $module);
-				return true;
-			}	
+				if ($m->module_id == $module_id)
+				{
+					$pid = $m->parent_module_id;
+					break;
+				}
+			}
+
+			$contr->assignModules($this->all_view_modules, $this->all_module_tree, $this->all_view_modules[$pid]);
+			return true;
 		}
+		//exit;
 		return false;
 	}
 	
 	public function getModuleActions()
-	{
+	{				
 		foreach ($this->modules as $module)
 		{
-			if ($module->is_action) continue;
-			
+			if ($module->is_action)
+			{
+				$actions = explode(',', strtolower($module->action));
+				if (!isset($this->all_action_modules[$module->controller]))
+					$this->all_action_modules[$module->controller] = array();
+				
+				foreach ($actions as $action)
+					$this->all_action_modules[$module->controller][$action] = $module->module_id;
+				
+				continue;
+			} 
+
 			if ($module->parent_module_id == 0)
 			{
 				if (!isset($this->all_module_tree[$module->module_id])) $this->all_module_tree[$module->module_id] = array();
@@ -88,7 +109,7 @@ class WebUser extends CWebUser
 			}	
 			
 			$module->href = str_replace('.', '/', $module->controller) . '/' . $module->action;
-			$this->all_modules[$module->module_id] = $module;
+			$this->all_view_modules[$module->module_id] = $module;
 		}
 	}
 	
@@ -98,37 +119,15 @@ class WebUser extends CWebUser
 		{
 			foreach ($modules as $m)
 			{
-				return $this->all_modules[$m]->href;
+				return $this->all_view_modules[$m]->href;
 			}
 		}
 	}
-	
-	
-	/*
-	private function getModuleAction(Modules $module)
-	{
-		$rnt = array();
-		$actions = explode(',', $module->action);
-		foreach ($actions as $action)
-			$rnt[$module->controller . '.' . $action] = $module;
-		
-		return $rnt;
-	}
-	
-	private function checkMudulePower($action, $controller_id, $action_id)
-	{
-		$req_action = strtolower($controller_id) . '.' . strtolower($action_id);
-		if (!isset($this->all_modules[$req_action]))
-			return true;
-		
-		return ($action == $req_action);
-	}
-	*/
 	
 	private function load(UserAR $user)
 	{
 		$this->user = $user;
 		$this->roles = $user->getUserRoles();
-		$this->modules = $user->getUserModules();	
+		$this->modules = $user->getUserModules();
 	}
 }

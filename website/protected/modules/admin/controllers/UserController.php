@@ -43,30 +43,6 @@ class UserController extends FController
 		
 		$this->assign('user_roles', $user_roles);
 		$this->render('userinfo');
-
-		/*
-		$user = new UserAR();
-		$action = isset($_GET['action']) ? $_GET['action'] : 'add';
-
-		if ($action == 'edit')
-		{
-			$id = $_GET['user_id'];
-			$user = UserAR::model()->findByPk($id);
-		}
-		
-		$user_roles = $user->getUserRoles();
-		$user_role = array();
-		foreach ($user_roles as $role)
-			$user_role[] = $role->role_id;
-		
-		$roles = RoleAR::model()->findAll();
-		$checked_arr = CMSElement::getCheckBoxData($roles, 'role_id', 'role_name', $user_role);
-		
-		$data = CMS::convetARToArray($user);
-		$data['user_role'] = $checked_arr;
-		//$custom = array('user_role'=>$checked_arr);
-		Response::success($data);
-		*/
 	}
 	
 	function actionUserEdit()

@@ -51,7 +51,7 @@ class RootController extends CController implements RootInterface
 	protected function checkPower()
 	{
 		if (!WebUser::Instance()->checkPower($this)) return true;
-			//$this->redirect("/", true, 'purview');
+			//$this->redirect("/", true, 404);
 	}
 	
 	protected function processRequest()
@@ -87,7 +87,7 @@ class RootController extends CController implements RootInterface
 		}
 		else
 		{
-			parent::redirect($url,$terminate);
+			parent::redirect($url,$terminate,$statusCode);
 		}
 	}
 	

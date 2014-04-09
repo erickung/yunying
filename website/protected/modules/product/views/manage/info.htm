@@ -1,0 +1,31 @@
+<div class="span12">
+        <h3 class="heading">用户信息</h3>
+		<div class="row-fluid">
+			<div class="span8">
+				<%form name="product_info" action="/product/manage/edit" method="POST" class="form-horizontal"%>
+					<fieldset>
+						<%text name=name value=$product->name label="产品名称"%>
+						<%text name=type value=$product->type label="类  型"%>
+						<%text name=fund_size value=$product->fund_size label="规  模"%>
+						<%text name=funds_source value=$product->funds_source label="资金来源"%>
+						
+						
+						
+						<div class="control-group formSep">
+							<label class="control-label" for="note">备 注</label>
+							<div class="controls">
+								<textarea class="input-xlarge" name="note" id="note" rows="4" style="overflow: hidden; word-wrap: break-word; max-height: 80px; min-height: 80px; height: 80px;"></textarea>
+							</div>
+						</div>
+						<div class="control-group">
+							<div class="controls">
+								<button type="submit" class="btn btn-gebo">保  存</button>
+								<button type="button" class="btn" onClick="eric.common.go();">Cancel</button>
+							</div>
+						</div>
+						<input type="hidden" name="product_id" id="product_id" value="<%$product->product_id%>">
+					</fieldset>
+				<%/form%>
+			</div>
+		</div>
+    </div>

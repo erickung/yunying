@@ -41,6 +41,7 @@ class ModulesController extends FController
 	public function actionEdit()
 	{		
 		$ModulesAR = new ModulesAR();
+		if (!isset(Request::$post['is_action'])) Request::$post['is_action'] = 0;
 		$ModulesAR->setAttributesFromRequest(Request::$post);
 		$flag = true;
 		if ($ModulesAR->module_id)

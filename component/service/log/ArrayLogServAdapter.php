@@ -6,7 +6,7 @@ class ArrayLogServAdapter extends LogServAdapter
 		return 'array_' . self::$log_num;
 	}
 	
-	protected function getLog(array $log)
+	protected function getLog($log)
 	{
 		return $log;
 	}

@@ -10,7 +10,7 @@
  * @param Smarty $smarty
  * @return string
  */
-function smarty_function_cc($params, &$smarty) 
+function smarty_function_c($params, &$smarty) 
 {   
 	$value = '';
     if ($params['v'])

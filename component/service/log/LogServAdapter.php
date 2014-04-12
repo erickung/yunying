@@ -1,5 +1,5 @@
 <?php
-abstract class LogServAdapter implements CMSLog
+abstract class LogServAdapter implements RootLog
 {
 	const BEFORE_COMMIT = 'before';
 	const AFTER_COMMIT = 'after';
@@ -40,7 +40,6 @@ abstract class LogServAdapter implements CMSLog
 			$this->init();
 			self::$logs[self::$name][self::ADD_COMMIT][++self::$log_num] = $this->getLog($log);
 			self::$ar_labels[self::$name] = $this->getLabels($log);
-			CMS::error(json_encode(self::$logs));CMS::error(json_encode(self::$ar_labels));
 		}
 		elseif (self::isDel())	//	删除
 		{
@@ -52,7 +51,6 @@ abstract class LogServAdapter implements CMSLog
 		else		//修改
 		{
 			self::$logs[self::$name][self::AFTER_COMMIT][self::$log_num] = $this->getLog($log);
-			CMS::error(json_encode(self::$logs));
 		}
 		
 		self::$status = 0;
@@ -93,17 +91,17 @@ abstract class LogServAdapter implements CMSLog
 		self::$status = 0;
 	}
 	
-	protected function isDel()
+	public function isDel()
 	{
 		return self::$status == -1;
 	}
 	
-	protected function isAdd()
+	public function isAdd()
 	{
 		return self::$status == 1;
 	}
 	
-	protected function isModify()
+	public function isModify()
 	{
 		return self::$status == 0;
 	}
@@ -113,7 +111,7 @@ abstract class LogServAdapter implements CMSLog
 		$text_insert = array();
 		$text_del = array();
 		$text_modify = array();
-	
+		
 		foreach ($logs as $ar_name => $log)
 		{
 			if (isset($log[self::BEFORE_COMMIT]))
@@ -147,7 +145,7 @@ abstract class LogServAdapter implements CMSLog
 		if (!empty($text_modify)) $text['modify'] = $text_modify;
 		if (!empty($text_insert)) $text['insert'] = $text_insert;
 		if (!empty($text_del)) $text['del'] = $text_del;
-		return json_encode($text);
+		return !empty($text) ? json_encode($text) : '';
 	}
 	
 	protected function getLogItemData($log_data)
@@ -169,8 +167,11 @@ abstract class LogServAdapter implements CMSLog
 					$logs[self::BEFORE_COMMIT][$i][$field] = $log[$field];
 					$logs[self::AFTER_COMMIT][$i][$field] = $v;
 				}
-				$logs[self::BEFORE_COMMIT][$i][$log[self::PRIMARY_KEY]] = $log[self::PRIMARY_VALUE];
-				$logs[self::AFTER_COMMIT][$i][$log[self::PRIMARY_KEY]] = $log[self::PRIMARY_VALUE];
+				if (!empty($logs[self::BEFORE_COMMIT][$i]))
+				{
+					$logs[self::BEFORE_COMMIT][$i][$log[self::PRIMARY_KEY]] = $log[self::PRIMARY_VALUE];
+					$logs[self::AFTER_COMMIT][$i][$log[self::PRIMARY_KEY]] = $log[self::PRIMARY_VALUE];
+				}
 			}
 			
 		}

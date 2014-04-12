@@ -1,0 +1,32 @@
+	<div class="row-fluid">
+		<div class="span6">
+			<select id="custom-headers" multiple="multiple">
+				<option value="fr">France</option>
+				<option value="uk">United Kingdom</option>
+				<option value="us">United States</option>
+				<option value="ch">China</option>
+			</select>
+		</div>
+
+	</div>
+	
+<%asset css="lib/multi-select/css/multi-select.css"%>
+<%asset js="lib/multi-select/js/jquery.multi-select.js"%>
+
+<%javascript%>     
+var gebo_multiselect = {
+	init : function(){   
+       if($('#custom-headers').length) {
+            //* custom headers
+            $('#custom-headers').multiSelect({
+                selectableHeader: "<div class='custom-header'>Selectable item</div>",
+                selectionHeader: "<div class='custom-header'>Selected items</div>"
+            });
+        }
+	}
+
+};
+
+gebo_multiselect.init();
+<%/javascript%>
+

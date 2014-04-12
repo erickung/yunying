@@ -15,6 +15,12 @@ class RootActiveRecord extends CActiveRecord implements ActiveRecordInterface, A
 			self::DB_POCKET => 	self::DB_POCKET,
 	);
 	private $_transaction;		
+	private $modify_before;
+	
+	public function isReadOnly()
+	{
+		return $this->getDbConnection()->readOnly;
+	}
 
 	public function behaviors()
 	{
@@ -29,6 +35,40 @@ class RootActiveRecord extends CActiveRecord implements ActiveRecordInterface, A
 				'modify_time' => '最后修改时间',
 				'modify_user_id' => '最后修改人'
 		);
+	}
+	
+	/**
+	 * 用于展现的时候做类型转换的
+	 * @return array:
+	 */
+	public function displays()
+	{
+		
+	}
+	
+	/**
+	 * 用于保存时做强制类型装换
+	 * @return array:
+	 */
+	public function saveRule()
+	{
+		return array();
+	}
+	
+	public function getErrors($attribute = NULL)
+	{
+		$errors = parent::getErrors($attribute);
+		$msg = '';
+		foreach ($errors as $attr => $err)
+		{
+			$msg .= $err[0] . ' ';
+		}
+		return $msg;
+	}
+	
+	public function noLogFields()
+	{
+		return array(self::MODIFY_TIME_FIELD, self::MODIFY_USER_FIELD);
 	}
 	
 	public function getDbConnection()
@@ -54,20 +94,51 @@ class RootActiveRecord extends CActiveRecord implements ActiveRecordInterface, A
 		array_shift($args);
 		
 		$this->beginTransaction();
-		//$is_new = $this->getIsNewRecord();
+		if ($this->getIsNewRecord()) OperateLogServ::Instance()->setIsAdd();
+
 		try
-		{		
+		{			
 			call_user_func_array(array($this, $action), $args);
 			$this->commit();
 		}
 		catch (CDbException $e)
-		{var_dump($e->getMessage());
+		{
 			$this->rollBack();
 			return false;
 		}
-		
-		//OperateLogServ::Instance()->addLogAfterCommit($this, $is_new);
+		/*
+		if (!OperateLogServ::Instance()->isDel())
+			OperateLogServ::Instance()->addLogAfterCommit($this);
+		*/
 		return true;
+	}
+	
+	public function deleteByPk($pk,$condition='',$params=array())
+	{
+		//OperateLogServ::Instance()->setIsDel();
+		$ar = $this->findByPk($pk, $condition, $params);
+		//OperateLogServ::Instance()->addLogAfterCommit($ar);
+		return $ar->deleteAllByAttributes(array($ar->primaryKey() => $pk));
+	}
+	
+	protected function modifyByPk()
+	{
+		try
+		{
+			$this->setIsNewRecord(false);
+			//OperateLogServ::Instance()->setModify();
+			$this->modify_before = $ar = $this->findByPk($this->getPrimaryKey());
+			if (is_null($ar) || !$ar instanceof CActiveRecord)
+				return false;
+		
+			//OperateLogServ::Instance()->addLogBeforeCommit($ar);
+			$this->copyAttributesFromAR($this, $ar);	
+			$ar->save();
+		}
+		catch(Exception $e)
+		{
+			return false;
+		}
 	}
 
 	public function add()
@@ -82,6 +153,10 @@ class RootActiveRecord extends CActiveRecord implements ActiveRecordInterface, A
 		}
 	}
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see ActiveRecordAppInterface::getCondition()
+	 */
 	public function getCondition(array $custom_cond = array(), array $reset_key = array())
 	{
 		return ActiveRecordServ::Instance($this)->getCondition($custom_cond, $reset_key);
@@ -102,24 +177,6 @@ class RootActiveRecord extends CActiveRecord implements ActiveRecordInterface, A
 		ActiveRecordServ::Instance($this)->copyAttributesFromArray($arr_from, $ar_to);
 	}
 	
-	protected function modifyByPk()
-	{
-		try
-		{
-			$ar = $this->findByPk($this->getPrimaryKey());
-			if (is_null($ar) || !$ar instanceof CActiveRecord)
-				return false;
-				
-			OperateLogServ::addLogBeforeCommit($ar);
-			$this->copyAttributesFromAR($this, $ar);
-			$ar->save();
-		}
-		catch(Exception $e)
-		{
-			return false;
-		}
-	}
-	
 	public function setAttributesFromRequest(array $res)
 	{
 		$this->copyAttributesFromArray($res, $this);
@@ -135,17 +192,17 @@ class RootActiveRecord extends CActiveRecord implements ActiveRecordInterface, A
 		return parent::model($className);
 	}
 	
-	protected function beginTransaction()
+	public function beginTransaction()
 	{
 		$this->_transaction = $this->dbConnection->beginTransaction();
 	}
 	
-	protected function commit()
+	public function commit()
 	{
 		$this->_transaction->commit();
 	}
 
-	protected function rollback()
+	public function rollback()
 	{
 		$this->_transaction->rollback();
 	}

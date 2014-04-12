@@ -16,7 +16,7 @@ class ARLogServAdapter extends LogServAdapter
 				unset($data[$k]);
 			if ($ar instanceof CMSMongoActiveRecord)
 			{
-				if (is_array($v)) $data[$k] = json_encode($v);
+				if (is_array($v)) $data[$k] = serialize($v);
 			}
 		}
 		if (self::isModify())

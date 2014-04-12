@@ -1,0 +1,27 @@
+<div class="row-fluid">
+	<div class="span12">
+		<h3 class="heading">产品角色</h3>
+		<div id="user_info" class="span8">
+			<%form name="product_role" action="/admin/ProductRole/edit" method="POST" class="form-horizontal"%>
+				<div class="control-group">
+					<label class="control-label" for="name">角色名称<span class="f_req">*</span></label>
+					<div class="controls">
+						<input type="text" required name="name" id="pr_name" placeholder="角色名称" value="<%c v=$role->pr_name %>" >
+					</div>
+            	</div>
+				<br><br>
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" class="btn btn-gebo">保存</button>
+					
+						<button type="button" class="btn" onClick="eric.common.go();">返回</button>
+					</div>
+				</div>		
+				<input type="hidden" name="pr_id" value="<%$role->pr_id%>">
+			<%/form%>
+		</div>
+		<div class="span4"></div>
+		
+		
+	</div>
+</div>

@@ -1,0 +1,32 @@
+<div role="grid" class="dataTables_wrapper form-inline" id="dt_gal_wrapper">
+        <div class="row">
+        	<div class="span6">
+        		<a href="/product/setting/processInfo"><i class="splashy-add"></i></a>
+    			<div  class="dataTables_length">
+		
+    			</div>
+    		</div>
+    	</div>
+        
+		<table id="smpl_tbl" class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>流程名称</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%foreach from=$process item=item%>
+				<tr>
+					<td><%$item->process_id%></td>
+					<td><%$item->process_name%></td>
+					<td class=" ">
+						<a title="Edit" class="sepV_a" href="/product/setting/processInfo?id=<%$item->process_id%>"><i class="icon-pencil"></i></a>
+					</td>
+				</tr>
+				<%/foreach%>
+				
+			</tbody>
+		</table>
+	</div>

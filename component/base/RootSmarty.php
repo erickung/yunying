@@ -72,6 +72,7 @@ class RootSmarty extends Smarty
 			return Yii::getPathOfAlias($view);
 		
 		$cid = $this->controller->getId();
+		$cid = strtolower($cid);
 		if ($this->controller->getModule())
 		{
 			$module_id = $this->controller->getModule()->getId();

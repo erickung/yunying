@@ -7,9 +7,15 @@
 						<%text name=name value=$product->name label="产品名称"%>
 						<%text name=type value=$product->type label="类  型"%>
 						<%text name=fund_size value=$product->fund_size label="规  模"%>
-						<%text name=funds_source value=$product->funds_source label="资金来源"%>
 						<%text name=build_date value=$product->build_date label="预计成立日期"%>
-
+						<%text name=publish_start_date value=$product->publish_start_date label="发行开始日期"%>
+						<%text name=publish_end_date value=$product->publish_end_date label="发行结束日期"%>
+						<div class="control-group formSep">
+							<label class="control-label" for="funds_source">资金来源</label>
+							<div class="controls">
+								<textarea class="input-xlarge"name="funds_source" id="funds_source" rows="4" style="overflow: hidden; word-wrap: break-word; max-height: 80px; min-height: 80px; height: 80px;"><%$product->funds_source%></textarea>
+							</div>
+						</div>
 						<div class="control-group formSep">
 							<label class="control-label" for="note">备 注</label>
 							<div class="controls">
@@ -31,9 +37,16 @@
 <%asset css="lib/datepicker/datepicker.css"%>
 <%asset js="lib/datepicker/bootstrap-datepicker.min.js"%>
 <%javascript%>
+var yearFrom=new Date().getYear()-60+1900;
+var yearTo=new Date().getYear()-18+1900;      
 var gebo_datepicker = {
-	init : function(){
-		$('#build_date').datepicker();
+	init : function(){   
+       $('#build_date').datepicker({
+       		format: "yyyy-mm-dd",
+       		yearRange : yearFrom+':'+yearTo,
+       }); 
+       $('#publish_start_date').datepicker({format: "yyyy-mm-dd"}); 
+       $('#publish_end_date').datepicker({format: "yyyy-mm-dd"}); 
 	}
 
 };

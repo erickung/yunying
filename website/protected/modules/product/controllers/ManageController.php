@@ -29,6 +29,7 @@ class ManageController extends FController
 	{
 		$ProductInfoAR = new ProductInfoAR();
 		$ProductInfoAR->setAttributesFromRequest(Request::$post);
+
 		$flag = true;
 		if ($ProductInfoAR->product_id)
 		{

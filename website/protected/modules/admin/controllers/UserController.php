@@ -35,6 +35,7 @@ class UserController extends FController
 			$this->assign('user', $user);
 			
 			$user_roles = $user->getAllUserRoles();
+			$user_products = $user->getAllProductRoles();
 		}
 		else 
 		{
@@ -42,6 +43,7 @@ class UserController extends FController
 		}
 		
 		$this->assign('user_roles', $user_roles);
+		$this->assign('user_products', $user_products);
 		$this->render('userinfo');
 	}
 	
@@ -51,14 +53,16 @@ class UserController extends FController
 
 		$UserAR->setAttributesFromRequest(Request::$post);
 		$roles = Request::$post['role_name'];
+		$product_roles = Request::$post['pr_name'];
+
 		$flag = true;
 		if ($UserAR->user_id)
 		{
-			$flag = $UserAR->saveCommit('updateUser',$roles);
+			$flag = $UserAR->saveCommit('updateUser',$roles, $product_roles);
 		}
 		else
 		{
-			$flag = $UserAR->saveCommit('addUser',$roles);
+			$flag = $UserAR->saveCommit('addUser',$roles,$product_roles);
 		}
 		
 		Response::resp($flag, '', '/admin/user/list');

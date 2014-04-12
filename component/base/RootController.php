@@ -45,7 +45,7 @@ class RootController extends CController implements RootInterface
 	protected function checkLogin()
 	{
 		if (!WebUser::Instance()->auth())
-			$this->redirect('/site/login', true, 'login');
+			$this->redirect('/site/login', true, 403);
 	}
 	
 	protected function checkPower()

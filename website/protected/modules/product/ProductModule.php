@@ -9,7 +9,7 @@ class ProductModule extends CWebModule
 
 		// import the module-level models and components
 		$this->setImport(array(
-			'product.models.*',
+			'product.ar.*',
 			'product.components.*',
 		));
 	}

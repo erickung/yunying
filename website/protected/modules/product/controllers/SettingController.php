@@ -1,6 +1,6 @@
 <?php
 
-class SettingController extends Controller
+class SettingController extends FController
 {
 	public function actionIndex()
 	{

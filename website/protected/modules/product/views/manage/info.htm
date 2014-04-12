@@ -8,13 +8,12 @@
 						<%text name=type value=$product->type label="类  型"%>
 						<%text name=fund_size value=$product->fund_size label="规  模"%>
 						<%text name=funds_source value=$product->funds_source label="资金来源"%>
-						
-						
-						
+						<%text name=build_date value=$product->build_date label="预计成立日期"%>
+
 						<div class="control-group formSep">
 							<label class="control-label" for="note">备 注</label>
 							<div class="controls">
-								<textarea class="input-xlarge" name="note" id="note" rows="4" style="overflow: hidden; word-wrap: break-word; max-height: 80px; min-height: 80px; height: 80px;"></textarea>
+								<textarea class="input-xlarge"name="note" id="note" rows="4" style="overflow: hidden; word-wrap: break-word; max-height: 80px; min-height: 80px; height: 80px;"><%$product->note%></textarea>
 							</div>
 						</div>
 						<div class="control-group">
@@ -28,4 +27,16 @@
 				<%/form%>
 			</div>
 		</div>
-    </div>
+</div>
+<%asset css="lib/datepicker/datepicker.css"%>
+<%asset js="lib/datepicker/bootstrap-datepicker.min.js"%>
+<%javascript%>
+var gebo_datepicker = {
+	init : function(){
+		$('#build_date').datepicker();
+	}
+
+};
+
+gebo_datepicker.init();
+<%/javascript%>

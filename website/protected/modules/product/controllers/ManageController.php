@@ -3,6 +3,14 @@ class ManageController extends FController
 {
 	function actionList()
 	{
+		$products = ProductInfoAR::model()->findAll();
+		$count = ProductInfoAR::model()->count();
+		
+		$this->render('list', array(
+				'fields' => array('product_id','name'),
+				'products'=>$products,
+				'count'=>$count,
+		));
 		$this->render('list');
 	}
 	

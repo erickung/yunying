@@ -27,8 +27,9 @@ class RootSmarty extends Smarty
 	
 	public function assignAssets()
 	{
-		$this->assign('scripts', "<script>" . self::$javascrpts . "</script>");
+		$this->assign('scripts', self::$javascrpts);
 		$this->assign('css_arr', self::$cssfiles);
+		$this->assign('jsfiles', self::$jsfiles);
 	}
 	
 	public static function addJavascript($scripts)

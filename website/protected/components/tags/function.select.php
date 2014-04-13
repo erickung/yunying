@@ -1,15 +1,22 @@
 <?php
 function smarty_function_select($params, &$smarty) 
 {
-	if (empty($params['data'])) {
-		throw new CException(Yii::t('yiiext', "You should specify data parameters."));
+	if (empty($params['obj']) || empty($params['name'])) {
+		throw new CException(Yii::t('yiiext', "You should specify obj and name parameters."));
 	}
+	$ar = $params['obj'];
+	$name = $params['name'];
 	$data = $params['data'];
-	$select = CMSArray::getValue($params, 'select');
-	$key = CMSArray::getValue($params, 'key');
-	$value= CMSArray::getValue($params, 'value');
-	$arr = CMS::convertARToOptions($data, $key, $value);
-	array_unshift($arr, array('all', CMSArray::getValue($params, 'text')));
-	
-	return json_encode($arr);
+	$label = $ar->labels[$name];
+
+	$select = "<label for='$name' class='control-label'>$label</label><div class='controls'><select id='$name' name='$name'>";
+	foreach ($data as $k => $v)
+	{
+		$selected = $ar->{$name} == $k ? 'selected="selected"' : '';
+
+		$select .= "<option value='$k' $selected>$v</option>";
+	}
+	$select .= '</select></div>';
+
+	return $select;
 }

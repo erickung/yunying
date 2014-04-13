@@ -1,0 +1,107 @@
+<%require file="product.manage.approval_note"%>
+<div class="row-fluid">
+    <div class="span12">
+        <h3 class="heading">产品详情</h3>
+		<div class="row-fluid">
+					<div class="control-group" align="right">
+						<div class="controls">
+							<%if $power && $product->status>0%>
+							<a data-toggle="modal" data-backdrop="static" href="#approval_pass" class="btn btn-gebo">通   过</a>
+							<a data-toggle="modal" data-backdrop="static" href="#approval_reject" class="btn btn-gebo">驳   回 </a>
+							<%/if%>
+							<button type="button" class="btn" onClick="eric.common.go();">返回</button>
+						</div>
+					</div>
+			<div class="span12">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#base_info" data-toggle="tab">基本信息</a></li>
+					<li><a href="#publish_info" data-toggle="tab">发行信息</a></li>
+					<li><a href="#extra_info" data-toggle="tab">扩展信息</a></li>
+					<li><a href="#aprroval_info" data-toggle="tab">审批记录</a></li>
+				</ul>
+				
+				<div class="tab-content">
+					<div class="tab-pane active" id="base_info">
+						
+						<%require file="product.manage.base_info_static"%>
+					</div>
+					<div class="tab-pane" id="publish_info">
+						<%require file="product.manage.publish_info_static"%>
+					</div>
+					<div class="tab-pane" id="extra_info">
+						<%require file="product.manage.extra_info_static"%>
+					</div>
+					<div class="tab-pane" id="aprroval_info">
+						<%require file="product.manage.aprroval_info_static"%>
+					</div>
+				</div>
+				
+						
+						
+						
+						
+						
+						
+						<!-- 
+						<li class="v-heading">
+							Recent activity <span>(latest 24 hours)</span>
+						</li>
+						<li>
+							<ul class="unstyled sepH_b item-list">
+								<li><i class="splashy-comment sepV_b"></i>John <a href="#">commented</a> on <a href="#">Lorem ipsum dolor sit amet...</a></li>
+								<li><i class="splashy-document_letter_edit sepV_b"></i>John <a href="#">posted</a> new article <a href="#">Lorem ipsum dolor sit amet, consectetur...</a></li>
+								<li><i class="splashy-image_cultured  sepV_b"></i>John added <a href="#">new_image,jpg</a></li>
+								<li><i class="splashy-comment sepV_b"></i>John <a href="#">commented</a> on <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></li>
+								<li class="item-list-more"><i class="splashy-comment sepV_b"></i>John <a href="#">commented</a> on <a href="#">Lorem ipsum dolor sit </a></li>
+								<li class="item-list-more"><i class="splashy-comment sepV_b"></i>John <a href="#">commented</a> on <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></li>
+								<li class="item-list-more"><i class="splashy-comment sepV_b"></i>John <a href="#">commented</a> on <a href="#">Lorem ipsum dolor sit amet, consectetur </a></li>
+								<li class="item-list-more"><i class="splashy-comment sepV_b"></i>John <a href="#">commented</a> on <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing</a></li>
+								<li class="item-list-more"><i class="splashy-comment sepV_b"></i>John <a href="#">commented</a> on <a href="#">Lorem ipsum, consectetur adipiscing elit</a></li>
+								<li class="item-list-more"><i class="splashy-comment sepV_b"></i>John <a href="#">commented</a> on <a href="#">Lorem ipsum dolor sit </a></li>
+								<li class="item-list-more"><i class="splashy-comment sepV_b"></i>John <a href="#">commented</a> on <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></li>
+								<li class="item-list-more"><i class="splashy-comment sepV_b"></i>John <a href="#">commented</a> on <a href="#">Lorem ipsum dolor sit amet, consectetur </a></li>
+								<li class="item-list-more"><i class="splashy-comment sepV_b"></i>John <a href="#">commented</a> on <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing</a></li>
+								<li class="item-list-more"><i class="splashy-comment sepV_b"></i>John <a href="#">commented</a> on <a href="#">Lorem ipsum, consectetur adipiscing elit</a></li>
+							</ul>
+							<a class="item-list-show btn btn-mini" data-items="5" href="#">Show 5 more...</a>
+						</li>
+						<li class="v-heading">
+							User images
+						</li>
+						<li>
+							<div class="sepH_a item-list clearfix">
+								<img alt="" src="http://www.placehold.it/100x100/EFEFEF/AAAAAA" class="thumbnail sepV_a sepH_a">
+								<img alt="" src="http://www.placehold.it/100x100/EFEFEF/AAAAAA" class="thumbnail sepV_a sepH_a">
+								<img alt="" src="http://www.placehold.it/100x100/EFEFEF/AAAAAA" class="thumbnail sepV_a sepH_a">
+								<img alt="" src="http://www.placehold.it/100x100/EFEFEF/AAAAAA" class="thumbnail sepV_a sepH_a">
+								<img alt="" src="http://www.placehold.it/100x100/EFEFEF/AAAAAA" class="thumbnail sepV_a sepH_a item-list-more">
+								<img alt="" src="http://www.placehold.it/100x100/EFEFEF/AAAAAA" class="thumbnail sepV_a sepH_a item-list-more">
+								<img alt="" src="http://www.placehold.it/100x100/EFEFEF/AAAAAA" class="thumbnail sepV_a sepH_a item-list-more">
+								<img alt="" src="http://www.placehold.it/100x100/EFEFEF/AAAAAA" class="thumbnail sepV_a sepH_a item-list-more">
+								<img alt="" src="http://www.placehold.it/100x100/EFEFEF/AAAAAA" class="thumbnail sepV_a sepH_a item-list-more">
+								<img alt="" src="http://www.placehold.it/100x100/EFEFEF/AAAAAA" class="thumbnail sepV_a sepH_a item-list-more">
+								<img alt="" src="http://www.placehold.it/100x100/EFEFEF/AAAAAA" class="thumbnail sepV_a sepH_a item-list-more">
+								<img alt="" src="http://www.placehold.it/100x100/EFEFEF/AAAAAA" class="thumbnail sepV_a sepH_a item-list-more">
+							</div>
+							<a class="item-list-show btn btn-mini" data-items="5" href="#">Show 5 more...</a>
+						</li>
+						
+						 -->
+					
+				
+			</div>
+		</div>	
+    </div>
+</div>
+
+<%javascript%>
+$("#bnt_pass").click(function(){
+	$("#pass_type").val(1);
+	$("#form_product_info").submit();
+});
+
+$("#bnt_reject").click(function(){
+	$("#pass_type").val(-1);
+	$("#form_product_info").submit();
+});
+<%/javascript%>

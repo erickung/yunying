@@ -1,0 +1,13 @@
+<div class="vcard">
+<ul>
+
+
+	
+	<%foreach $approval_items as $item%>
+		<li><i class="splashy-comment sepV_b"></i><%$item->user_id%> 审核 <%$item->type%> 备注： <%$item->note%></li>
+	<%/foreach%>
+
+
+						
+</ul>
+</div>

@@ -6,6 +6,15 @@ eric.common = {
 		else
 			history.go(-1);
 	},
+	
+	datepicker : function(id){
+		var yearFrom=new Date().getYear()-60+1900;
+		var yearTo=new Date().getYear()-18+1900;  
+		$('#'+id).datepicker({
+			format: "yyyy-mm-dd",
+			yearRange : yearFrom+':'+yearTo,
+		}); 
+	}
 };
 eric.request = {
 	post : function(form, url){

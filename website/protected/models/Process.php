@@ -6,7 +6,10 @@
  * The followings are the available columns in table 'process':
  * @property integer $process_id
  * @property string $process_name
- * @property string $role_ids
+ *
+ * The followings are the available model relations:
+ * @property ProductRole[] $productRoles
+ * @property ProductInfo[] $productInfos
  */
 class Process extends RootActiveRecord
 {
@@ -26,6 +29,8 @@ class Process extends RootActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'productRoles' => array(self::MANY_MANY, 'ProductRole', 'process_roles(process_id, role_id)'),
+			'productInfos' => array(self::HAS_MANY, 'ProductInfo', 'process_id'),
 		);
 	}
 
@@ -37,7 +42,6 @@ class Process extends RootActiveRecord
 		return array(
 			'process_id' => 'Process',
 			'process_name' => 'Process Name',
-			'role_ids' => 'Role Ids',
 		);
 	}
 
@@ -61,7 +65,6 @@ class Process extends RootActiveRecord
 
 		$criteria->compare('process_id',$this->process_id);
 		$criteria->compare('process_name',$this->process_name,true);
-		$criteria->compare('role_ids',$this->role_ids,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

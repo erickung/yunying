@@ -39,7 +39,7 @@ class UserIdentity extends CUserIdentity
 		}
 		else 
 		{
-			CMS::error("ldap auth failure : {$this->username}");
+			Root::error("ldap auth failure : {$this->username}");
 			return false;
 		}
 	}
@@ -62,7 +62,7 @@ class UserIdentity extends CUserIdentity
 	    $ldapPswd = $this->password;
 	
 		$ldapLink = ldap_connect($ldapHost, $ldapPort);
-		if (!$ldapLink) CMS::error("link to ldap error {$this->username}");
+		if (!$ldapLink) Root::error("link to ldap error {$this->username}");
 
 		if($ldapLink)
 		{

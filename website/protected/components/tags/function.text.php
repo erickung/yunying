@@ -13,7 +13,7 @@ function smarty_function_text($params, &$smarty)
 	$text = 
 <<<TEXT
 	<div class="control-group formSep">
-		<label class="control-label" for="name">$label</label>
+		<label class="control-label" for="$name">$label</label>
 		<div class="controls">
 			<input type="text" name="$name"  value="$value" class="input-xlarge" id="$name">
 		</div>

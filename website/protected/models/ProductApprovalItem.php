@@ -1,25 +1,29 @@
 <?php
 
 /**
- * This is the model class for table "product_role".
+ * This is the model class for table "product_approval_item".
  *
- * The followings are the available columns in table 'product_role':
- * @property integer $pr_id
- * @property string $pr_name
+ * The followings are the available columns in table 'product_approval_item':
+ * @property integer $pai_id
+ * @property integer $product_id
+ * @property integer $after_status
+ * @property integer $origin_status
+ * @property integer $type
+ * @property string $note
+ * @property string $user_id
  *
  * The followings are the available model relations:
- * @property Process[] $processes
- * @property ProductApprovalItem[] $productApprovalItems
- * @property User[] $users
+ * @property ProductInfo $product
+ * @property User $user
  */
-class ProductRole extends RootActiveRecord
+class ProductApprovalItem extends RootActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'product_role';
+		return 'product_approval_item';
 	}
 
 	/**
@@ -30,9 +34,8 @@ class ProductRole extends RootActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'processes' => array(self::MANY_MANY, 'Process', 'process_roles(role_id, process_id)'),
-			'productApprovalItems' => array(self::HAS_MANY, 'ProductApprovalItem', 'pr_id'),
-			'users' => array(self::MANY_MANY, 'User', 'user_product_role(pr_id, user_id)'),
+			'product' => array(self::BELONGS_TO, 'ProductInfo', 'product_id'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 		);
 	}
 
@@ -42,8 +45,13 @@ class ProductRole extends RootActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pr_id' => 'Pr',
-			'pr_name' => 'Pr Name',
+			'pai_id' => 'Pai',
+			'product_id' => 'Product',
+			'after_status' => 'After Status',
+			'origin_status' => 'Origin Status',
+			'type' => '通过/驳回',
+			'note' => 'Note',
+			'user_id' => 'User',
 		);
 	}
 
@@ -65,8 +73,13 @@ class ProductRole extends RootActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('pr_id',$this->pr_id);
-		$criteria->compare('pr_name',$this->pr_name,true);
+		$criteria->compare('pai_id',$this->pai_id);
+		$criteria->compare('product_id',$this->product_id);
+		$criteria->compare('after_status',$this->after_status);
+		$criteria->compare('origin_status',$this->origin_status);
+		$criteria->compare('type',$this->type);
+		$criteria->compare('note',$this->note,true);
+		$criteria->compare('user_id',$this->user_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -77,7 +90,7 @@ class ProductRole extends RootActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ProductRole the static model class
+	 * @return ProductApprovalItem the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

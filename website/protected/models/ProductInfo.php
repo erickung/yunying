@@ -8,17 +8,21 @@
  * @property string $name
  * @property integer $type
  * @property integer $fund_size
- * @property integer $publish_start_date
- * @property integer $publish_end_date
  * @property integer $build_date
  * @property string $funds_source
- * @property integer $income_distribution_cycle
- * @property string $note
  * @property integer $status
+ * @property integer $process_id
+ * @property integer $duration
+ * @property integer $investment_way
+ * @property double $min_rate
+ * @property double $max_rate
  *
  * The followings are the available model relations:
  * @property ProductAccountInformation $productAccountInformation
- * @property ProductPublishRate[] $productPublishRates
+ * @property ProductApprovalItem[] $productApprovalItems
+ * @property ProductExtra $productExtra
+ * @property Process $process
+ * @property ProductPublish $productPublish
  * @property ProductReturnRate[] $productReturnRates
  */
 class ProductInfo extends RootActiveRecord
@@ -40,7 +44,10 @@ class ProductInfo extends RootActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'productAccountInformation' => array(self::HAS_ONE, 'ProductAccountInformation', 'product_id'),
-			'productPublishRates' => array(self::HAS_MANY, 'ProductPublishRate', 'product_id'),
+			'productApprovalItems' => array(self::HAS_MANY, 'ProductApprovalItem', 'product_id'),
+			'productExtra' => array(self::HAS_ONE, 'ProductExtra', 'product_id'),
+			'process' => array(self::BELONGS_TO, 'Process', 'process_id'),
+			'productPublish' => array(self::HAS_ONE, 'ProductPublish', 'product_id'),
 			'productReturnRates' => array(self::HAS_MANY, 'ProductReturnRate', 'product_id'),
 		);
 	}
@@ -52,16 +59,17 @@ class ProductInfo extends RootActiveRecord
 	{
 		return array(
 			'product_id' => 'Product',
-			'name' => 'Name',
-			'type' => 'Type',
-			'fund_size' => '单位为万元',
-			'publish_start_date' => 'Publish Start Date',
-			'publish_end_date' => 'Publish End Date',
-			'build_date' => 'Build Date',
-			'funds_source' => 'Funds Source',
-			'income_distribution_cycle' => 'Income Distribution Cycle',
-			'note' => 'Note',
+			'name' => '项目名称',
+			'type' => '信托类型',
+			'fund_size' => '发行规模',
+			'build_date' => '成立日期',
+			'funds_source' => '资金来源',
 			'status' => 'Status',
+			'process_id' => '流程id',
+			'duration' => '项目期限',
+			'investment_way' => '投资方式',
+			'min_rate' => 'Min Rate',
+			'max_rate' => 'Max Rate',
 		);
 	}
 
@@ -87,13 +95,14 @@ class ProductInfo extends RootActiveRecord
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('type',$this->type);
 		$criteria->compare('fund_size',$this->fund_size);
-		$criteria->compare('publish_start_date',$this->publish_start_date);
-		$criteria->compare('publish_end_date',$this->publish_end_date);
 		$criteria->compare('build_date',$this->build_date);
 		$criteria->compare('funds_source',$this->funds_source,true);
-		$criteria->compare('income_distribution_cycle',$this->income_distribution_cycle);
-		$criteria->compare('note',$this->note,true);
 		$criteria->compare('status',$this->status);
+		$criteria->compare('process_id',$this->process_id);
+		$criteria->compare('duration',$this->duration);
+		$criteria->compare('investment_way',$this->investment_way);
+		$criteria->compare('min_rate',$this->min_rate);
+		$criteria->compare('max_rate',$this->max_rate);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

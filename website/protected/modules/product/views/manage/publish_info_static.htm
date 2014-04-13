@@ -1,0 +1,21 @@
+<div class="vcard">
+<ul>
+
+<%static_text name='start_date' obj=$publish%>
+<%static_text name='end_date' obj=$publish%>
+<li>
+	<span class="item-key"><%$publish->labels.personal_threshold%></span>
+	<div class="vcard-item"><%$publish->personal_threshold%>  (万元)</div>
+</li>
+<li>
+<span class="item-key"><%$publish->labels.origin_threshold%></span>
+	<div class="vcard-item"><%$publish->origin_threshold%>  (万元)</div>
+</li>
+<li>
+	<span class="item-key">开户行信息</span>
+	<div class="vcard-item">户名：<%$publish->bank_name%></div>
+	<div class="vcard-item">账号：<%$publish->bank_account%></div>
+	<div class="vcard-item">银行：<%$publish->bank_address%></div>
+</li>
+</ul>
+</div>

@@ -1,0 +1,43 @@
+<div class="modal hide" id="approval_pass">
+	<%form id="product_approval1" name="product_approval1" action="/product/manage/approval" method="POST" class="form-horizontal"%>
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>审批意见</h3>
+	</div>
+	<div class="modal-body">
+		
+		<div class="control-group formSep">
+				<textarea class="input-xxlarge" name="note" id="note" rows="4" ></textarea>
+		</div>
+		
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-gebo">提  交</button>
+		<a href="#" class="btn" data-dismiss="modal">Close</a>
+	</div>
+	<input type="hidden" name="pass_type" id="pass_type" value="1">
+	<input type="hidden" name="product_id" id="product_id" value="<%$product->product_id%>">
+	<%/form%>
+</div>
+
+<div class="modal hide" id="approval_reject">
+	<%form id="product_approval2" name="product_approval2" action="/product/manage/approval" method="POST" class="form-horizontal"%>
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>驳回意见</h3>
+	</div>
+	<div class="modal-body">
+		
+		<div class="control-group formSep">
+				<textarea class="input-xxlarge" name="note" id="note" rows="4" ></textarea>
+		</div>
+		
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-gebo">提  交</button>
+		<a href="#" class="btn" data-dismiss="modal">Close</a>
+	</div>
+	<input type="hidden" name="pass_type" id="pass_type" value="-1">
+	<input type="hidden" name="product_id" id="product_id" value="<%$product->product_id%>">
+	<%/form%>
+</div>

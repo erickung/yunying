@@ -1,55 +1,62 @@
 <div class="span12">
-        <h3 class="heading">用户信息</h3>
+        <h3 class="heading">产品信息</h3>
 		<div class="row-fluid">
-			<div class="span8">
-				<%form name="product_info" action="/product/manage/edit" method="POST" class="form-horizontal"%>
+			
+				<%form id="form_product_info" name="form_product_info" action="/product/manage/edit" method="POST" class="form-horizontal"%>
+					<div class="span12">
 					<fieldset>
-						<%text name=name value=$product->name label="产品名称"%>
-						<%text name=type value=$product->type label="类  型"%>
-						<%text name=fund_size value=$product->fund_size label="规  模"%>
-						<%text name=build_date value=$product->build_date label="预计成立日期"%>
-						<%text name=publish_start_date value=$product->publish_start_date label="发行开始日期"%>
-						<%text name=publish_end_date value=$product->publish_end_date label="发行结束日期"%>
-						<div class="control-group formSep">
-							<label class="control-label" for="funds_source">资金来源</label>
-							<div class="controls">
-								<textarea class="input-xlarge"name="funds_source" id="funds_source" rows="4" style="overflow: hidden; word-wrap: break-word; max-height: 80px; min-height: 80px; height: 80px;"><%$product->funds_source%></textarea>
+						<div class="tabbable tabbable-bordered">
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#base_info" data-toggle="tab">基本信息</a></li>
+								<li><a href="#publish_info" data-toggle="tab">发行信息</a></li>
+								<li><a href="#extra_info" data-toggle="tab">扩展信息</a></li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="base_info">
+								<%require file='product.manage.base_info'%>
+								</div>
+								<div class="tab-pane" id="publish_info">
+								<%require file='product.manage.publish_info'%>
+								</div>
+								<div class="tab-pane" id="extra_info">
+								<%require file='product.manage.extra_info'%>
+								</div>
 							</div>
 						</div>
-						<div class="control-group formSep">
-							<label class="control-label" for="note">备 注</label>
-							<div class="controls">
-								<textarea class="input-xlarge"name="note" id="note" rows="4" style="overflow: hidden; word-wrap: break-word; max-height: 80px; min-height: 80px; height: 80px;"><%$product->note%></textarea>
-							</div>
-						</div>
-						<div class="control-group">
-							<div class="controls">
-								<button type="submit" class="btn btn-gebo">保  存</button>
-								<button type="button" class="btn" onClick="eric.common.go();">Cancel</button>
-							</div>
-						</div>
-						<input type="hidden" name="product_id" id="product_id" value="<%$product->product_id%>">
+						<br>
+						
+					
+					
 					</fieldset>
+					<fieldset>
+						<input type="hidden" name="product_id" id="product_id" value="<%$product->product_id%>">
+						<input type="hidden" name="pass_type" id="pass_type" value="">
+						<input type="hidden" name="status" id="status" value="<%$product->status%>">
+					</fieldset>
+					<div class="control-group" align="left">
+							<div class="controls">
+								<%if !$product or $product->status == 0%>
+								<button type="submit" class="btn btn-gebo">保  存</button>
+								<button type="button" id="bnt_send" class="btn btn-gebo">提交审批</button>
+								<%/if%>
+								<button type="button" class="btn" onClick="eric.common.go();">返回</button>
+							</div>
+					</div>
+					</div>
 				<%/form%>
-			</div>
+			
 		</div>
 </div>
+
 <%asset css="lib/datepicker/datepicker.css"%>
 <%asset js="lib/datepicker/bootstrap-datepicker.min.js"%>
-<%javascript%>
-var yearFrom=new Date().getYear()-60+1900;
-var yearTo=new Date().getYear()-18+1900;      
-var gebo_datepicker = {
-	init : function(){   
-       $('#build_date').datepicker({
-       		format: "yyyy-mm-dd",
-       		yearRange : yearFrom+':'+yearTo,
-       }); 
-       $('#publish_start_date').datepicker({format: "yyyy-mm-dd"}); 
-       $('#publish_end_date').datepicker({format: "yyyy-mm-dd"}); 
-	}
+<%javascript%>  
 
-};
 
-gebo_datepicker.init();
+
+$("#bnt_send").click(function(){
+	$("#status").val(1);
+	$("#form_product_info").submit();
+});
+
 <%/javascript%>

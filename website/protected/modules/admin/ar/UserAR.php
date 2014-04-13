@@ -206,4 +206,16 @@ class UserAR extends User
 	{
 		return sha1($pwd);
 	}
+	
+	public static function getUserNameByUserid($user_id)
+	{	
+		static $users;
+		if (!$users)
+		{
+			$us = self::model()->findAll();
+			foreach ($us as $u)
+				$users[$u->user_id] = $u->user_name;
+		} 
+		return isset($users[$user_id]) ? $users[$user_id] : '';
+	}
 }

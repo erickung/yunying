@@ -1,7 +1,7 @@
 <div role="grid" class="dataTables_wrapper form-inline" id="dt_gal_wrapper">
         <div class="row">
         	<div class="span6">
-        		<a href="/admin/modules/ModuleInfo"><i class="splashy-add"></i></a>
+        		<a href="/product/manage/info"><i class="splashy-add"></i></a>
     			<div  class="dataTables_length">
 		
     			</div>
@@ -14,6 +14,7 @@
 					<th>id</th>
 					<th>产品名称</th>
 					<th>产品金额</th>
+					<th>状态</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -23,8 +24,12 @@
 					<td><%$item->product_id%></td>
 					<td><%$item->name%></td>
 					<td><%$item->fund_size%></td>
+					<td><%$item->status_name%></td>
 					<td class=" ">
+						
 						<a title="Edit" class="sepV_a" href="/product/manage/info?id=<%$item->product_id%>"><i class="icon-pencil"></i></a>
+						<a title="View" class="sepV_a" href="/product/manage/static?id=<%$item->product_id%>"><i class="icon-eye-open"></i></a>
+						
 					</td>
 				</tr>
 				<%/foreach%>

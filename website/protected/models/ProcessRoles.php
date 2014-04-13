@@ -1,25 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "product_role".
+ * This is the model class for table "process_roles".
  *
- * The followings are the available columns in table 'product_role':
- * @property integer $pr_id
- * @property string $pr_name
- *
- * The followings are the available model relations:
- * @property Process[] $processes
- * @property ProductApprovalItem[] $productApprovalItems
- * @property User[] $users
+ * The followings are the available columns in table 'process_roles':
+ * @property integer $process_id
+ * @property integer $role_id
  */
-class ProductRole extends RootActiveRecord
+class ProcessRoles extends RootActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'product_role';
+		return 'process_roles';
 	}
 
 	/**
@@ -30,9 +25,6 @@ class ProductRole extends RootActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'processes' => array(self::MANY_MANY, 'Process', 'process_roles(role_id, process_id)'),
-			'productApprovalItems' => array(self::HAS_MANY, 'ProductApprovalItem', 'pr_id'),
-			'users' => array(self::MANY_MANY, 'User', 'user_product_role(pr_id, user_id)'),
 		);
 	}
 
@@ -42,8 +34,8 @@ class ProductRole extends RootActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'pr_id' => 'Pr',
-			'pr_name' => 'Pr Name',
+			'process_id' => 'Process',
+			'role_id' => 'Role',
 		);
 	}
 
@@ -65,8 +57,8 @@ class ProductRole extends RootActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('pr_id',$this->pr_id);
-		$criteria->compare('pr_name',$this->pr_name,true);
+		$criteria->compare('process_id',$this->process_id);
+		$criteria->compare('role_id',$this->role_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -77,7 +69,7 @@ class ProductRole extends RootActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ProductRole the static model class
+	 * @return ProcessRoles the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

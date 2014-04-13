@@ -1,0 +1,40 @@
+<div class="control-group formSep">
+	<div class="span5">
+		<%input name='name' obj=$product%>
+	</div>
+	<div class="span5">
+		<%select name='type' obj=$product data=$product->trust_type%>
+	</div>
+</div>
+<div class="control-group formSep">
+	<div class="span5">
+		<%input name='fund_size' obj=$product%>
+	</div>
+	<div class="span5">
+		<label for="expected_rate_return" class="control-label">预期年化收益率</label>
+		<div class="controls">
+			<input type="text" name="min_rate" id="min_rate" class=" input-mini" value="<%$product->min_rate%>">
+			&ndash;&nbsp;<input type="text" name="max_rate" id="max_rate" class=" input-mini" value="<%$product->max_rate%>">
+		</div>
+	</div>
+</div>
+<div class="control-group formSep">
+	<div class="span5">
+		<%input name='build_date' obj=$product%>
+	</div>
+	<div class="span5">
+		<%input name='duration' obj=$product%>
+	</div>
+</div>
+<div class="control-group formSep">
+	<div class="span5">
+		<%input name='funds_source' obj=$product%>
+	</div>
+	<div class="span5">
+		<%select name='investment_way' obj=$product data=$product->investment_ways%>
+	</div>
+</div>
+
+<%javascript%>
+eric.common.datepicker('build_date');
+<%/javascript%>

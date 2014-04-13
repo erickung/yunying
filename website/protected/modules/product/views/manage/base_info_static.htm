@@ -1,0 +1,50 @@
+<div class="vcard">
+<ul>
+
+<%static_text name='name' obj=$product%>
+<li>
+	<span class="item-key"><%$product->labels.fund_size%></span>
+	<div class="vcard-item"><%$product->fund_size%>  (万元)</div>
+</li>
+<li>
+	<span class="item-key">预期年化收益率</span>
+	<div class="vcard-item"><%$product->min_rate%>%  ~  <%$product->max_rate%>%</div>
+</li>
+
+
+<li>
+	<span class="item-key"><%$product->labels.type%></span>
+	<div class="vcard-item"><%$product->type_name%></div>
+</li>
+<%static_text name='build_date' obj=$product%>
+
+<li>
+	<span class="item-key"><%$product->labels.duration%></span>
+	<div class="vcard-item"><%$product->duration%>  (个月)</div>
+</li>
+<%static_text name='funds_source' obj=$product%>
+<li>
+	<span class="item-key"><%$product->labels.investment_way%></span>
+	<div class="vcard-item"><%$product->investment_way_name%></div>
+</li>
+
+<!-- 
+<li>
+	<span class="item-key">Languages:</span>
+	<div class="vcard-item">
+		<ul class="list_a">
+			<li>English</li>
+			<li>French</li>
+			<li>German</li>
+		</ul>
+	</div>
+</li>
+<li>
+	<span class="item-key">Signature</span>
+	<div class="vcard-item">
+		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id quam orci, in ornare sapien. Nulla ultrices vestibulum erat a ullamcorper. Fusce eu nisl at nulla tempus posuere.
+	</div>
+</li>
+ -->
+</ul>
+</div>

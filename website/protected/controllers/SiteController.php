@@ -68,26 +68,12 @@ class SiteController extends FController
 			if ($UserIdentity->authenticate())
 			{
 				$this->redirect(Yii::app()->user->returnUrl);
-				/*
-				$user = WebUser::Instance()->getLoginUer();
-				$rnt = $user ? $user->attributes : false;
-				if ($rnt)
-					$rnt['modules'] = WebUser::Instance()->getUserModuleActions();
-				*/
-				//echo json_encode(array('success' => true, 'user' => $rnt));
 			}
 			else
 			{
-				CMS::error("login failure : {$_POST['username']}");
-				echo json_encode(array('success' => false));
+				Root::error("login failure : {$_POST['username']}");
 			}
-			
-			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
 		}
-
-		// display the login form
-		//$this->render('login',array('model'=>$model));
 		$this->renderPartial('login');
 	}
 

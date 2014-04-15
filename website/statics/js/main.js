@@ -25,6 +25,10 @@ eric.request = {
 	
 	ajaxPost : function(url){
 		
+	},
+	
+	ajaxLoad : function(url, id, param, callback){
+		jQuery("#"+id).load(url, param,callback);
 	}
 };
 

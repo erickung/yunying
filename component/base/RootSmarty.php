@@ -69,8 +69,14 @@ class RootSmarty extends Smarty
 	public function getView($view)
 	{
 		if (strpos($view, "."))
-			return Yii::getPathOfAlias($view);
-		
+		{
+			$files = explode('.', $view);
+			$file = array_pop($files);
+			$dir = array_pop($files);
+			$path = implode('.', $files) . '.views.' . $dir;
+			return Yii::getPathOfAlias($path).'/'.$file.'.htm';
+		}
+
 		$cid = $this->controller->getId();
 		$cid = strtolower($cid);
 		if ($this->controller->getModule())

@@ -28,4 +28,24 @@ class RootTools
 		$format = is_null($format) ? 'Y-m-d' : $format;
 		return empty($v) ? '' : date($format, $v);
 	}
+	
+	public static function dump()
+	{
+		$v = func_get_args();
+		if (empty($v)) return ''; 
+
+		$html = 
+<<<HTML
+		<html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		</head>
+		<body>
+HTML;
+		echo $html;
+		foreach ($v as $vv)
+			var_dump($vv);
+		echo "</body></html>";
+		
+	}
 }

@@ -8,10 +8,18 @@ class Response
 	
 	public static function postSuccess($msg='', $url)
 	{
-		self::showPostMsg("eric.response.success('提交成功！', '$url')");
+		if ($url) 
+			self::showPostMsg("eric.response.success('提交成功！', '$url')");
+		else 
+			self::showPostMsg("parent.window.href = parent.window.href");
 	}
 	
 	public static function postFailure($msg='')
+	{
+		
+	}
+	
+	public static function errorPage()
 	{
 		
 	}

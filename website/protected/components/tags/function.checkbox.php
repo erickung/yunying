@@ -2,7 +2,7 @@
 function smarty_function_checkbox($params,&$smarty) 
 {
 	if (empty($params['data']) || empty($params['name']) || empty($params['id'])) {
-		throw new CException(Yii::t('yiiext', "You should specify data and name and id parameters."));
+		//throw new CException(Yii::t('yiiext', "You should specify data and name and id parameters."));
 	}
 	$data = $params['data'];
 	foreach ($data as &$data_tmp)

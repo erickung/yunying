@@ -1,0 +1,23 @@
+<div role="grid" class="dataTables_wrapper form-inline" id="uploadedfiles">
+		<table id="smpl_tbl" class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th>文件名称</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%foreach from=$files item=item%>
+				<tr>
+					<td><%$item->file_name%></td>
+					<td class=" ">
+						<a title="删除" id="delete_file" class="sepV_a" href="#"><i class="splashy-folder_stuffed_remove"></i></a>
+						
+					</td>
+				</tr>
+				<%/foreach%>
+				
+			</tbody>
+		</table>
+	</div>
+	<br><br>

@@ -619,11 +619,11 @@
 		
 	/* vcard */	
 		.vcard .thumbnail {float:left}
-		.vcard > ul {list-style:none;margin:10px 0 0 120px;overflow:hidden}
+		.vcard > ul {list-style:none;margin:10px 0 0 40px;overflow:hidden}
 		.vcard > ul > li:first-child {border-top:1px dashed #dcdcdc}
 		.vcard > ul > li {padding:8px;border-bottom:1px dashed #dcdcdc;overflow:hidden}
-		.vcard .item-key {float:left;color:#888}
-		.vcard .vcard-item {margin-left:120px}
+		.vcard .item-key {float:left;color:#222;font-size:14px;font-weight: 400;}
+		.vcard .vcard-item {margin-left:200px;font-size:14px;}
 		.vcard .v-heading {background:#F0F9FF;font-weight:700}
 		.vcard .v-heading span {font-weight:100;font-size:11px;color:#666}
 		.vcard .item-list-more,.vcard .thumbnail.item-list-more {display:none}

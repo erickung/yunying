@@ -25,7 +25,7 @@ class ProductPublishAR extends ProductPublish
 	public function getPublishInfoById($id)
 	{
 		$info = $this->findByPk($id);
-		ActiveRecordServ::Instance($info)->resetDisplays();
+		if ($info) ActiveRecordServ::Instance($info)->resetDisplays();
 		return $info;
 	}
 	

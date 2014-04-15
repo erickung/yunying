@@ -33,14 +33,14 @@ class UserController extends FController
 		{
 			$user = UserAR::model()->findByPk(Request::$get['user_id']);
 			$this->assign('user', $user);
-			
-			$user_roles = $user->getAllUserRoles();
-			$user_products = $user->getAllProductRoles();
 		}
 		else 
 		{
-			$user_roles = UserAR::model()->getAllUserRoles();
+			$user = new UserAR();
+
 		}
+		$user_roles = $user->getAllUserRoles();
+		$user_products = $user->getAllProductRoles();
 		
 		$this->assign('user_roles', $user_roles);
 		$this->assign('user_products', $user_products);

@@ -9,6 +9,8 @@ class RootActiveRecord extends CActiveRecord implements ActiveRecordInterface, A
 			self::MODIFY_TIME_FIELD, 
 			self::MODIFY_USER_FIELD,
 	);
+	public $labels = array();
+	
 	protected $database = self::DB_POCKET;
 	private $databases = array(
 			self::DB_CORSAIR => 	self::DB_CORSAIR,
@@ -16,6 +18,12 @@ class RootActiveRecord extends CActiveRecord implements ActiveRecordInterface, A
 	);
 	private $_transaction;		
 	private $modify_before;
+	
+	public function __construct($scenario='insert')
+	{
+		parent::__construct($scenario);
+		$this->labels = $this->attributeLabels();
+	}
 	
 	public function isReadOnly()
 	{
@@ -103,6 +111,7 @@ class RootActiveRecord extends CActiveRecord implements ActiveRecordInterface, A
 		}
 		catch (CDbException $e)
 		{
+			var_dump($e->getMessage());
 			$this->rollBack();
 			return false;
 		}
@@ -125,14 +134,15 @@ class RootActiveRecord extends CActiveRecord implements ActiveRecordInterface, A
 	{
 		try
 		{
-			$this->setIsNewRecord(false);
+			//$this->setIsNewRecord(false);
 			//OperateLogServ::Instance()->setModify();
 			$this->modify_before = $ar = $this->findByPk($this->getPrimaryKey());
 			if (is_null($ar) || !$ar instanceof CActiveRecord)
 				return false;
-		
+			
 			//OperateLogServ::Instance()->addLogBeforeCommit($ar);
-			$this->copyAttributesFromAR($this, $ar);	
+		
+			$this->copyAttributesFromAR($this, $ar);
 			$ar->save();
 		}
 		catch(Exception $e)

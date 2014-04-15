@@ -9,6 +9,7 @@ class RootActiveRecord extends CActiveRecord implements ActiveRecordInterface, A
 			self::MODIFY_TIME_FIELD, 
 			self::MODIFY_USER_FIELD,
 	);
+	public $labels = array();
 	protected $database = self::DB_POCKET;
 	private $databases = array(
 			self::DB_CORSAIR => 	self::DB_CORSAIR,
@@ -16,6 +17,12 @@ class RootActiveRecord extends CActiveRecord implements ActiveRecordInterface, A
 	);
 	private $_transaction;		
 	private $modify_before;
+	
+	public function __construct($scenario='insert')
+	{
+		parent::__construct($scenario);
+		$this->labels = $this->attributeLabels();
+	}
 	
 	public function isReadOnly()
 	{

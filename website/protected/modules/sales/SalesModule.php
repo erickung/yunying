@@ -9,7 +9,7 @@ class SalesModule extends CWebModule
 
 		// import the module-level models and components
 		$this->setImport(array(
-			'sales.models.*',
+			'sales.ar.*',
 			'sales.components.*',
 		));
 	}

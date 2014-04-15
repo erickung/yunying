@@ -1,0 +1,36 @@
+<div role="grid" class="dataTables_wrapper form-inline" id="dt_gal_wrapper">
+        <div class="row">
+        	<div class="span6">
+        		<a href="/sales/customer/info"><i class="splashy-add"></i></a>
+    			<div  class="dataTables_length">
+		
+    			</div>
+    		</div>
+    	</div>
+        
+		<table id="smpl_tbl" class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th>客户名称</th>
+					<th>客户号码</th>
+					<th>销售人员</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%foreach from=$sales item=item%>
+				<tr>
+					<td><%$item->name%></td>
+					<td><%$item->mobile_num%></td>
+					<td><%$item->user_id%></td>
+					<td class=" ">
+						
+						<a title="Edit" class="sepV_a" href="/sales/customer/info?id=<%$item->customer_id%>"><i class="icon-pencil"></i></a>
+						
+					</td>
+				</tr>
+				<%/foreach%>
+				
+			</tbody>
+		</table>
+	</div>

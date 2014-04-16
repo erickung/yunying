@@ -28,30 +28,33 @@ class SiteController extends FController
 		}
 	}
 
-	/**
-	 * Displays the contact page
-	 */
-	public function actionContact()
+	function actionUpload()
 	{
-		$model=new ContactForm;
-		if(isset($_POST['ContactForm']))
+		Yii::import('product.ar.*');
+		if (!isset($_GET['token']))  Response::failure('auth error');
+		
+		$_COOKIE['token'] = $_GET['token'];
+		$user = WebUser::Instance()->getLoginUer();
+		if (!$user) Response::failure('您没有权限');
+		
+		$UploadServ = new UploadServ();
+		$UploadServ->setParams(array('priduct_id'=>$_GET['id']));
+		if ($UploadServ->upload())
 		{
-			$model->attributes=$_POST['ContactForm'];
-			if($model->validate())
-			{
-				$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
-				$subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
-				$headers="From: $name <{$model->email}>\r\n".
-					"Reply-To: {$model->email}\r\n".
-					"MIME-Version: 1.0\r\n".
-					"Content-Type: text/plain; charset=UTF-8";
-
-				mail(Yii::app()->params['adminEmail'],$subject,$model->body,$headers);
-				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
-				$this->refresh();
-			}
+			$path = $UploadServ->getFilePath();
+			$file_name = $UploadServ->getUploadFileName();
+			$ProductFilesAR = new ProductFilesAR();
+			$ProductFilesAR->file_name = $file_name;
+			$ProductFilesAR->file_path = $path;
+			$ProductFilesAR->product_id = $_GET['id'];
+			$ProductFilesAR->save();
+			
+			die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
+		} 
+		else 
+		{
+			die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
 		}
-		$this->render('contact',array('model'=>$model));
 	}
 
 	/**

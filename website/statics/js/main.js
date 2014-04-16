@@ -1,4 +1,18 @@
 eric = new Object();
+
+eric.global  = {
+	cookie : {}	
+};
+
+eric.init = function(){
+	var cookies = document.cookie.split(";");
+	for(var i=0;i<cookies.length;i++)
+	{
+		var kv = cookies[i].split("=");
+		eric.global.cookie[kv[0]] = kv[1];
+	}
+};
+
 eric.common = {
 	go : function(url){
 		if(url)
@@ -16,6 +30,13 @@ eric.common = {
 		}); 
 	}
 };
+
+eric.cookie = {
+	getCookie : function(name){
+		return eric.global.cookie[name] || '';
+	}
+};
+
 eric.request = {
 	post : function(form, url){
 		form.action = url;

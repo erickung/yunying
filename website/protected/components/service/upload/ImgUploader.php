@@ -18,7 +18,7 @@ class ImgUploader extends UploadAbstract
 	
 	public function getFileRef()
 	{
-		return IMG_URL . $this->getFilePath();
+		return $this->getFilePath();
 	}
 
 	public function checkFile()

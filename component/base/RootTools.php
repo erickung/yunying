@@ -48,4 +48,14 @@ HTML;
 		echo "</body></html>";
 		
 	}
+	
+	/**
+	 * @Purpose: 循环创建目录，直到最底层
+	 * @Param: string $dir 要创建目录的绝对路径。如：/root/temp/cache
+	 * @Return: 成功返回true，异常返回false
+	 */
+	public static function make_dir($dir)
+	{
+		return is_dir($dir) || (self::make_dir(dirname($dir)) && mkdir($dir, 0777));
+	}
 }

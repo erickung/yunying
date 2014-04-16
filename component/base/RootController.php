@@ -10,7 +10,7 @@ class RootController extends CController implements RootInterface
 	private $view_path;
 	
 	private static $nologin = array(
-			'site' => array('login'),
+			'site' => array('login','upload'),
 	);
 	public static $defaultModules = array(
 			'custom.pass' => array('info'),
@@ -46,13 +46,16 @@ class RootController extends CController implements RootInterface
 	protected function checkLogin()
 	{
 		if (!WebUser::Instance()->auth())
-			$this->redirect('/site/login', true, 403);
+			Yii::app()->getRequest()->redirect('/site/login',true);
 	}
 	
 	protected function checkPower()
 	{
-		if (!WebUser::Instance()->checkPower($this)) return true;
-			//$this->redirect("/", true, 404);
+		if (!WebUser::Instance()->checkPower($this))
+		{
+			$this->redirect("/site/login", true, 403);
+			return true;
+		} 
 	}
 	
 	protected function processRequest()

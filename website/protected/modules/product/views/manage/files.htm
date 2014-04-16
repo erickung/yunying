@@ -13,28 +13,59 @@
 <%asset js="lib/plupload/js/jquery.plupload.queue/jquery.plupload.queue.full.js"%>
 
 <%javascript%>  
-eric.request.ajaxLoad('/product/manage/ProductFiles','uploaded_files',{id:16});
+var pid = <%$product->product_id%>;
 
+eric.request.ajaxLoad('/product/manage/ProductFiles','uploaded_files',{id:pid});
 
 $("#multi_upload").pluploadQueue({
-                // General settings
-                runtimes : 'html5,flash,silverlight',
-                url : '/upload.php',
-                max_file_size : '10mb',
-                chunk_size : '1mb',
-                unique_names : true,
-                browse_button : 'pickfiles',
-        
-                // Specify what files to browse for
-                filters : [
-                    {title : "text files", extensions : "txt,pdf,png"},
-                    {title : "Zip files", extensions : "zip"}
-                ],
-        
-                // Flash settings
-                flash_swf_url : '<%$res%>/lib/plupload/js/plupload.flash.swf',
-        
-                // Silverlight settings
-                silverlight_xap_url : '<%$res%>/lib/plupload/js/plupload.silverlight.xap'
-            });
+	// General settings
+	runtimes : 'html5,flash,silverlight,html4',
+	//url : '/site/upload?id='+pid+'&token=' + eric.cookie.getCookie('token'),
+	url : '/upload.php',
+	max_file_size : '10mb',
+	chunk_size : '1mb',
+	unique_names : true,
+	browse_button : 'pickfiles',
+	
+	// Specify what files to browse for
+	/*
+	filters : [
+	    {title : "text files", extensions : "txt,pdf"},
+	    {title : "Zip files", extensions : "zip"}
+	],
+	*/
+	// Flash settings
+	flash_swf_url : '<%$res%>/lib/plupload/js/plupload.flash.swf',
+	
+	// Silverlight settings
+	silverlight_xap_url : '<%$res%>/lib/plupload/js/plupload.silverlight.xap',
+	
+	init : {
+		PostInit: function() {
+		    // Called after initialization is finished and internal event handlers bound
+		    //log('[PostInit]');
+		     
+		    document.getElementById('uploadfiles').onclick = function() {
+		        uploader.start();
+		        return false;
+		    };
+		},
+		
+		FilesAdded: function(up, files) {
+		    plupload.each(files, function(file) {
+		       // alert(file);
+		    });
+		},
+		
+		UploadComplete: function(up, files) {
+		   eric.request.ajaxLoad('/product/manage/ProductFiles','uploaded_files',{id:pid});
+		},
+		
+		Destroy: function(up) {
+		},
+		
+		Error: function(up, args) {
+		}
+	}
+});
 <%/javascript%>  

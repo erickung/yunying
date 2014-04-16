@@ -7,6 +7,7 @@
  * @property integer $file_id
  * @property integer $product_id
  * @property string $file_name
+ * @property string $file_path
  *
  * The followings are the available model relations:
  * @property ProductInfo $product
@@ -42,6 +43,7 @@ class ProductFiles extends RootActiveRecord
 			'file_id' => 'File',
 			'product_id' => 'Product',
 			'file_name' => 'File Name',
+			'file_path' => 'File Path',
 		);
 	}
 
@@ -66,6 +68,7 @@ class ProductFiles extends RootActiveRecord
 		$criteria->compare('file_id',$this->file_id);
 		$criteria->compare('product_id',$this->product_id);
 		$criteria->compare('file_name',$this->file_name,true);
+		$criteria->compare('file_path',$this->file_path,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

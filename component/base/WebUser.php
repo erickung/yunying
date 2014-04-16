@@ -60,7 +60,7 @@ class WebUser extends CWebUser
 			$contr->assignModules($this->all_view_modules, $this->all_module_tree, $module);
 			return true;
 		}
-
+	
 		if (isset($this->all_action_modules[$controller_id][$action_id])) 
 		{
 			$module_id = $this->all_action_modules[$controller_id][$action_id];
@@ -82,6 +82,7 @@ class WebUser extends CWebUser
 	
 	public function getModuleActions()
 	{				
+		//RootTools::dump($this->modules);
 		foreach ($this->modules as $module)
 		{
 			if ($module->is_action)
@@ -111,6 +112,8 @@ class WebUser extends CWebUser
 			$module->href = str_replace('.', '/', $module->controller) . '/' . $module->action;
 			$this->all_view_modules[$module->module_id] = $module;
 		}
+		//RootTools::dump($this->all_action_modules);
+		//exit;
 	}
 	
 	public function getFirstModule()

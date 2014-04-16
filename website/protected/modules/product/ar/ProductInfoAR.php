@@ -91,8 +91,19 @@ class ProductInfoAR extends ProductInfo
 	{	
 		$this->setAttributesFromRequest($info);
 		$this->save();
-		ProductPublishAR::model()->updatePublish($info);
-		ProductExtraAR::model()->updateExtra($info);
+		
+		$ProductPublishAR = new ProductPublishAR();
+		$ProductPublishAR->product_id = $this->product_id;
+		$ProductPublishAR->updatePublish($info);
+		
+		$ProductExtraAR = new ProductExtraAR();
+		$ProductExtraAR->product_id = $this->product_id;
+		$ProductExtraAR->updateExtra($info);
+	}
+	
+	protected function addOtherInfo($info)
+	{
+
 	}
 	
 	protected function initConf()

@@ -30,6 +30,10 @@ class ManageController extends FController
 			$this->assign('power', $power);
 			
 			$publish = ProductPublishAR::model()->getPublishInfoById(Request::$get['id']);
+			if (!$publish)  $publish = new ProductPublishAR();
+			
+			
+
 		}
 		else 
 		{
@@ -42,6 +46,8 @@ class ManageController extends FController
 		
 		$extra_info = is_null($product->productExtra) ? new ProductExtraAR() : $product->productExtra;
 		$this->assign('extra_info', $extra_info);
+		
+		
 
 		$this->render('info');
 	}
@@ -83,10 +89,21 @@ class ManageController extends FController
 		}
 		else
 		{
-			$flag = $ProductInfoAR->saveCommit('addProduct',Request::$post);
+			/*
+			if ($ProductInfoAR->saveCommit('addProduct', Request::$post)) 
+				$flag = $ProductInfoAR->saveCommit('addOtherInfo', Request::$post);
+			*/
+			$flag = $ProductInfoAR->saveCommit('addProduct', Request::$post);
 		}
 		
-		Response::resp($flag, '', '/product/manage/list');
+		$url = '';
+		if (Request::$post['status'] == 1)
+			$url = '/product/manage/list';
+		else 
+			$url = !Request::$post['product_id'] ? '/product/manage/info' : '/product/manage/info?id='.Request::$post['product_id'];
+
+		
+		Response::resp($flag, '', $url);
 	}
 	
 	
@@ -110,5 +127,16 @@ class ManageController extends FController
 		}
 		
 		Response::resp($flag, '', '/product/manage/list');
+	}
+	
+	function actionProductFiles()
+	{
+		if (!isset(Request::$post['id']) || !Request::$post['id'])
+			exit(); 
+
+		$product_files = ProductFilesAR::model()->findAllByAttributes(array('product_id'=>Request::$post['id']));
+		$this->assign('files', $product_files);
+		
+		echo $this->fetch('product.manage.uploadedfiles');
 	}
 }

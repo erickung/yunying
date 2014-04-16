@@ -22,7 +22,8 @@ class RootController extends CController implements RootInterface
 	}
 	
 	public function assignModules($modules_detail, $user_modules, $module)
-	{
+	{	
+	//	RootTools::dump($user_modules, $module);exit;
 		if ($this->smarty)
 		{
 			$this->assign('modules_detail', $modules_detail);

@@ -1,0 +1,40 @@
+<div class="span8" id="uploaded_files">
+</div>
+<div>
+<div class="span8 formSep">
+    <div id="multi_upload" class="gebo-upload">
+        <p>You browser doesn't have Flash, Silverlight or HTML5 support.</p>
+    </div>
+</div>
+</div>
+
+<%asset css="lib/plupload/js/jquery.plupload.queue/css/plupload-gebo.css"%>
+<%asset js="lib/plupload/js/plupload.full.js"%>
+<%asset js="lib/plupload/js/jquery.plupload.queue/jquery.plupload.queue.full.js"%>
+
+<%javascript%>  
+eric.request.ajaxLoad('/product/manage/ProductFiles','uploaded_files',{id:16});
+
+
+$("#multi_upload").pluploadQueue({
+                // General settings
+                runtimes : 'html5,flash,silverlight',
+                url : '/upload.php',
+                max_file_size : '10mb',
+                chunk_size : '1mb',
+                unique_names : true,
+                browse_button : 'pickfiles',
+        
+                // Specify what files to browse for
+                filters : [
+                    {title : "text files", extensions : "txt,pdf,png"},
+                    {title : "Zip files", extensions : "zip"}
+                ],
+        
+                // Flash settings
+                flash_swf_url : '<%$res%>/lib/plupload/js/plupload.flash.swf',
+        
+                // Silverlight settings
+                silverlight_xap_url : '<%$res%>/lib/plupload/js/plupload.silverlight.xap'
+            });
+<%/javascript%>  

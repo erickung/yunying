@@ -20,9 +20,9 @@ eric.request.ajaxLoad('/product/manage/ProductFiles','uploaded_files',{id:pid});
 $("#multi_upload").pluploadQueue({
 	// General settings
 	runtimes : 'html5,flash,silverlight,html4',
-	//url : '/site/upload?id='+pid+'&token=' + eric.cookie.getCookie('token'),
-	url : '/upload.php',
-	max_file_size : '10mb',
+	url : '/site/upload?id='+pid+'&token=' + eric.cookie.getCookie('token'),
+	//url : '/upload.php',
+	max_file_size : '20mb',
 	chunk_size : '1mb',
 	unique_names : true,
 	browse_button : 'pickfiles',
@@ -53,7 +53,7 @@ $("#multi_upload").pluploadQueue({
 		
 		FilesAdded: function(up, files) {
 		    plupload.each(files, function(file) {
-		       // alert(file);
+		          alert(file.name);
 		    });
 		},
 		

@@ -20,14 +20,61 @@ class ProductFileUploader extends FileUploader
 		return true;
 	}
 	
-	/*
 	public function upload()
 	{
+		$this->product_id = $this->params['product_id'];
 		$this->initFile();
+		$targetDir = $this->getFullUploadDir();
+		//$targetDir = 'uploads';
+		$cleanupTargetDir = true; // Remove old files
+		$maxFileAge = 5 * 3600; // Temp file age in seconds
+		
+		// Create target dir
+		if (!file_exists($targetDir)) {
+			@mkdir($targetDir);
+		}
+		
+		// Get a file name
+		if (isset($_REQUEST["name"])) {
+			$fileName = $_REQUEST["name"];
+		} elseif (!empty($_FILES)) {
+			$fileName = $_FILES["file"]["name"];
+		} else {
+			$fileName = uniqid("file_");
+		}
+		
+		$filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
+		
+		// Chunking might be enabled
 		$chunk = isset($_REQUEST["chunk"]) ? intval($_REQUEST["chunk"]) : 0;
 		$chunks = isset($_REQUEST["chunks"]) ? intval($_REQUEST["chunks"]) : 0;
 		
-		if (!$out = @fopen("{$this->full_file_name}.part", $chunks ? "ab" : "wb")) {
+		
+		// Remove old temp files
+		if ($cleanupTargetDir) {
+			if (!is_dir($targetDir) || !$dir = opendir($targetDir)) {
+				die('{"jsonrpc" : "2.0", "error" : {"code": 100, "message": "Failed to open temp directory."}, "id" : "id"}');
+			}
+		
+			while (($file = readdir($dir)) !== false) {
+				$tmpfilePath = $targetDir . DIRECTORY_SEPARATOR . $file;
+		
+				// If temp file is current file proceed to the next
+				if ($tmpfilePath == "{$filePath}.part") {
+					continue;
+				}
+		
+				// Remove temp file if it is older than the max age and is not the current file
+				if (preg_match('/\.part$/', $file) && (filemtime($tmpfilePath) < time() - $maxFileAge)) {
+					@unlink($tmpfilePath);
+				}
+			}
+			closedir($dir);
+		}
+		
+
+		// Open temp file
+		if (!$out = @fopen("{$filePath}.part", $chunks ? "ab" : "wb")) {
 			die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
 		}
 		
@@ -38,10 +85,9 @@ class ProductFileUploader extends FileUploader
 		
 			// Read binary input stream and append it to temp file
 			if (!$in = @fopen($_FILES["file"]["tmp_name"], "rb")) {
-				exit('ddd');
 				die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
 			}
-		} else {	
+		} else {
 			if (!$in = @fopen("php://input", "rb")) {
 				die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
 			}
@@ -56,9 +102,15 @@ class ProductFileUploader extends FileUploader
 		
 		// Check if file has been uploaded
 		if (!$chunks || $chunk == $chunks - 1) {
-			// Strip the temp .part suffix off 
-			rename("{$this->full_file_name}.part", $this->full_file_name);
+			rename("{$filePath}.part", $filePath);
+
+			$ProductFilesAR = new ProductFilesAR();
+			$ProductFilesAR->file_name = $this->file_name;
+			$ProductFilesAR->file_path =  $this->getFilePath();
+			$ProductFilesAR->product_id = $this->product_id;
+			$ProductFilesAR->save();
 		}
 		
-	}*/
+		return true;
+	}
 }

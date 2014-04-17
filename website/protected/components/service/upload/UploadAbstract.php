@@ -92,6 +92,7 @@ abstract class UploadAbstract
 	{
 		$this->file_obj = CUploadedFile::getInstanceByName($this->ins_name);//读取图像上传域,并使用系统上传组件上传
 		$this->ext = strtolower($this->file_obj->extensionName);	//上传文件的扩展名
+		
 		$this->upload_file_name = $this->file_obj->name;
 		$this->file_name = $this->getFileName() . '.' . $this->ext;
 		$this->full_file_name =  $this->getFullUploadDir() . $this->file_name;

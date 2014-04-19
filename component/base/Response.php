@@ -1,9 +1,21 @@
 <?php
 class Response
 {
-	public static function resp($boolean, $msg='', $url)
+	public static function resp($boolean, $msg='', $url='')
 	{
 		($boolean) ? Response::postSuccess($msg, $url) : Response::postFailure('提交失败！');
+	}
+	
+	public static function respThisPage($boolean, $msg='', $url='')
+	{
+		if ($boolean)
+		{
+			self::showPostMsg("eric.response.success('提交成功！')");
+		} 
+		else 
+		{
+			
+		}
 	}
 	
 	public static function postSuccess($msg='', $url)
@@ -24,7 +36,7 @@ class Response
 		
 	}
 	
-	private static function showPostMsg($js)
+	public static function showPostMsg($js)
 	{
 		$Html = 
 <<<HTML

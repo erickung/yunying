@@ -39,7 +39,7 @@ class RootController extends CController implements RootInterface
 
 		$this->checkLogin();
 		$this->checkPower();
-		
+
 		return true;
 	}
 	
@@ -67,8 +67,8 @@ class RootController extends CController implements RootInterface
 		}
 		else 
 		{
-			if (!Yii::app()->request->isAjaxRequest)
-				$this->smarty = new RootSmarty($this);
+			//if (!Yii::app()->request->isAjaxRequest)
+			$this->smarty = new RootSmarty($this);
 
 			Request::processGet();
 		}	
@@ -107,6 +107,9 @@ class RootController extends CController implements RootInterface
 	
 	public function renderPartial($view,$data=null,$return=false,$processOutput=false)
 	{
+		if($data && !empty($data))
+			$this->smarty->var_init($data);
+		
 		$this->smarty->display($this->smarty->getView($view));
 	}
 	

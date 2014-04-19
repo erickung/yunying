@@ -123,7 +123,14 @@ class Root
 	
 	public static function error($msg)
 	{
+		if (self::isDev()) echo $msg; 
+
 		Yii::log($msg, CLogger::LEVEL_ERROR);
+	}
+	
+	public static function isDev()
+	{
+		return defined('DEV_MODE');
 	}
 	
 }

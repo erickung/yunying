@@ -1,0 +1,54 @@
+<div class="span12">
+        <h3 class="heading">产品信息</h3>
+		<div class="row-fluid">
+			
+				
+					<div class="span12">
+					<fieldset>
+						<div class="tabbable tabbable-bordered">
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#base_info" data-toggle="tab">基本信息</a></li>
+								<li ><a href="#product" id="tab_product" data-toggle="tab">产品预约</a></li>
+								<li><a href="#publish_info" data-toggle="tab">跟踪记录</a></li>
+								<li><a href="#purchase_info" id="tab_purchase_info" data-toggle="tab">购买历史</a></li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="base_info">
+									<%require file="sales.customer.base_info"%>
+								</div>
+								<div class="tab-pane" id="product">
+							
+								</div>
+								<div class="tab-pane" id="publish_info">
+							
+								</div>
+								<div class="tab-pane" id="purchase_info">
+								
+								</div>
+								
+							</div>
+						</div>
+						<br>
+						
+					
+					
+					</fieldset>
+
+					</div>
+			
+			
+		</div>
+</div>
+
+<%asset css="lib/datepicker/datepicker.css"%>
+<%asset js="lib/datepicker/bootstrap-datepicker.min.js"%>
+<%javascript%>  
+$("#tab_product").click(function(){
+	eric.request.ajaxLoad('/sales/cproduct/list?type=part&cid=<%$customer->customer_id%>','product');
+});
+
+$("#tab_purchase_info").click(function(){
+	eric.request.ajaxLoad('/sales/customer/CustomerPurchase?cid=<%$customer->customer_id%>','purchase_info');
+});
+
+<%/javascript%>

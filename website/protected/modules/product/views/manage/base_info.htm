@@ -8,13 +8,21 @@
 </div>
 <div class="control-group formSep">
 	<div class="span5">
-		<%input name='fund_size' obj=$product%>
+		<%input_addon span=12 name='fund_size' obj=$product after="万"%>
 	</div>
 	<div class="span5">
 		<label for="expected_rate_return" class="control-label">预期年化收益率</label>
-		<div class="controls">
-			<input type="text" name="min_rate" id="min_rate" class=" input-mini" value="<%$product->min_rate%>">
-			&ndash;&nbsp;<input type="text" name="max_rate" id="max_rate" class=" input-mini" value="<%$product->max_rate%>">
+		<div class="controls ">
+			<div class="span3">
+				<div class="input-append">
+					<input placeholder="最低" type="text" name="min_rate" id="min_rate" class=" input-mini" value="<%$product->min_rate%>"><span class="add-on">%</span>
+				<span class="add-on" style="background-color:#eeffff;">~</span>
+					<input placeholder="最高" type="text" name="max_rate" id="max_rate" class=" input-mini" value="<%$product->max_rate%>"><span class="add-on">%</span>
+				</div>
+				
+			</div>
+			
+			
 		</div>
 	</div>
 </div>
@@ -23,7 +31,7 @@
 		<%input name='build_date' obj=$product%>
 	</div>
 	<div class="span5">
-		<%input name='duration' obj=$product%>
+		<%input_addon span=12 name='duration' obj=$product after="月"%>
 	</div>
 </div>
 <div class="control-group formSep">

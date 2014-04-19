@@ -11,5 +11,8 @@ function smarty_function_require($params,&$smarty)
 	$dir = array_pop($files);
 	$path = implode('.', $files) . '.views.' . $dir;
 
+	unset($params['file']);
+	foreach ($params as $k=>$v)
+		$smarty->assign($k,$v);
 	return $smarty->fetch(Yii::getPathOfAlias($path).'/'.$file.'.htm');
 }

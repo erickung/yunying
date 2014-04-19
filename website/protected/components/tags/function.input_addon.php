@@ -2,23 +2,36 @@
 function smarty_function_input_addon($params, &$smarty)
 {
 
-	if (empty($params['name']) || empty($params['obj'])) {
-		throw new CException(Yii::t('yiiext', "You should specify name and obj parameters."));
+	if (empty($params['name'])) {
+		throw new CException(Yii::t('yiiext', "You should specify name  parameters."));
 	}
 
 	$name = $params['name'];
-	$ar = $params['obj'];
+	if (isset($params['obj']))
+	{
+		$ar = $params['obj'];
+		$value = !is_null($ar->{$name}) ? CHtml::encode($ar->{$name}) : '';
+		$label = $ar->labels[$name];
+	} 
+	else 
+	{
+		$value = ($params['value']) ? CHtml::encode($params['value']) : '';
+		$label = $params['label'];
+	}
 	
-	$value = !is_null($ar->{$name}) ? CHtml::encode($ar->{$name}) : '';
-	$label = $ar->labels[$name];
-	$add = $params['add'];
-
+	$class = isset($params['span']) ? 'span'.$params['span'] : 'input';
+	
+	if(isset($params['after']))
+		$after = '<span class="add-on">'.$params['after'].'</span>';
+	
 	$text = 
 <<<TEXT
-	<label for="$name" class="span4 control-label">$label</label>
-	<div class="span7 input-append">
-		<input class="span5" type="text" name="$name" id="$name" class="input" value="$value">
-		<span class="add-on">$add</span>
+	<label for="$name" class="control-label">$label</label>
+	<div class="controls">
+		<div class="input-append">
+		<input type="text" name="$name" id="$name" class="$class" value="$value">
+		$after
+		</div>
 	</div>
 TEXT;
 

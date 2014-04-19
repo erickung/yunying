@@ -110,6 +110,8 @@ class RootActiveRecord extends CActiveRecord implements ActiveRecordInterface, A
 		}
 		catch (CDbException $e)
 		{
+			Root::error($e->getMessage());
+
 			$this->rollBack();
 			return false;
 		}

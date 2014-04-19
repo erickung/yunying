@@ -24,6 +24,7 @@ class ProductFileUploader extends FileUploader
 	{
 		$this->product_id = $this->params['product_id'];
 		$this->initFile();
+		$this->file_name = $this->params['name'];
 		$targetDir = $this->getFullUploadDir();
 		//$targetDir = 'uploads';
 		$cleanupTargetDir = true; // Remove old files
@@ -106,7 +107,7 @@ class ProductFileUploader extends FileUploader
 
 			$ProductFilesAR = new ProductFilesAR();
 			$ProductFilesAR->file_name = $this->file_name;
-			$ProductFilesAR->file_path =  $this->getFilePath();
+			$ProductFilesAR->file_path =  $filePath;
 			$ProductFilesAR->product_id = $this->product_id;
 			$ProductFilesAR->save();
 		}

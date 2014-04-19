@@ -1,9 +1,22 @@
 <?php
 class CustomerAR extends Customer
 {	
+	public $sex_data;
+	
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	
+	public function __construct($s='insert')
+	{
+		parent::__construct($s);
+		$this->initConf();
+	}
+	
+	function initConf()
+	{
+		$this->sex_data = CommonConf::getSex();
 	}
 	
 	public function displays()
@@ -11,6 +24,29 @@ class CustomerAR extends Customer
 		return array(
 				'user_id' => array('UserAR', 'getUserNameByUserid'),
 		);
+	}
+	
+	function addCustomer($info)
+	{
+		$this->setAttributesFromRequest($info);
+		$this->user_id = WebUser::Instance()->user->user_id;
+		$this->save();
+		if (isset($info['appoint_account'])) 
+		{
+			$CustomerPurchaseAR = new CustomerPurchaseAR();
+			$CustomerPurchaseAR->customer_id = $this->customer_id;
+			$CustomerPurchaseAR->product_id = $info['product_id'];
+			$CustomerPurchaseAR->appoint_account = $info['appoint_account'];
+			$CustomerPurchaseAR->save();
+		}
+
+	}
+	
+	function updateCustomer($info)
+	{
+		$this->setAttributesFromRequest($info);
+		$this->user_id = WebUser::Instance()->user->user_id;
+		$this->modifyByPk($this->customer_id);
 	}
 	
 	function getCustomByCustomId($custom_id)

@@ -1,0 +1,46 @@
+<%require file="sales.cproduct.appoint_info"%>
+<div role="grid" class="dataTables_wrapper form-inline" id="dt_gal_wrapper">
+        <div class="row">
+        	<div class="span6">
+        		<a href="/product/manage/info"><i class="splashy-add"></i></a>
+    			<div  class="dataTables_length">
+		
+    			</div>
+    		</div>
+    	</div>
+        
+		<table id="smpl_tbl" class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>产品名称</th>
+					<th>产品金额</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%foreach from=$products item=item%>
+				<tr>
+					<td><%$item->product_id%></td>
+					<td><%$item->name%></td>
+					<td><%$item->fund_size%></td>
+					<td class=" ">
+						<%if $customer_id%>
+						<a title="预约" id="product_appoint" onClick="product_appoint(<%$item->product_id%>)"  data-toggle="modal" data-backdrop="static" href="#approval_appoint" class="sepV_a"><i class="icon-eye-open"></i></a>
+						<%else%>
+						<a title="预约" id="product_appoint"  data-toggle="modal" data-backdrop="static" href="/sales/cproduct/AddAppointInfo?pid=<%$item->product_id%>" class="sepV_a"><i class="icon-eye-open"></i></a>
+						<%/if%>
+					</td>
+				</tr>
+				<%/foreach%>
+				
+			</tbody>
+		</table>
+	</div>
+	
+<%javascript%>  
+function product_appoint(pid)
+{
+	eric.cproduct.id = pid;
+}
+<%/javascript%>  

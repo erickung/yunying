@@ -1,0 +1,9 @@
+<div class="span8" id="uploaded_files">
+</div>
+
+<%javascript%>  
+var pid = <%$product->product_id%>;
+
+eric.request.ajaxLoad('/product/manage/ProductFiles','uploaded_files',{id:pid,static:1});
+
+<%/javascript%>  

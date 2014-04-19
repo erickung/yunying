@@ -44,8 +44,8 @@ eric.request = {
 		return true;
 	},	
 	
-	ajaxPost : function(url){
-		
+	ajaxPost : function(url,param,callback){
+		jQuery.post(url,param,callback);
 	},
 	
 	ajaxLoad : function(url, id, param, callback){
@@ -63,7 +63,8 @@ eric.response = {
 			      TimeShown : 1000,
 			      HorizontalPosition : 'center',
 			      onCompleted : function(){
-			    	  window.location.href = url;
+			    	  if(url)
+			    		  window.location.href = url;
 			    }
 			  }
 		);

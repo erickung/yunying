@@ -32,22 +32,15 @@ class SiteController extends FController
 	{
 		Yii::import('product.ar.*');
 		if (!isset($_GET['token']))  Response::failure('auth error');
-		var_dump($_REQUEST);
+		
 		$_COOKIE['token'] = $_GET['token'];
 		$user = WebUser::Instance()->getLoginUer();
 		if (!$user) Response::failure('您没有权限');
 		
 		@set_time_limit(5 * 60);
-		
-		// Uncomment this one to fake upload time
-		// usleep(5000);
-		
-		// Settings
-		
-		// Return Success JSON-RPC response
 
 		$UploadServ = new UploadServ();
-		$UploadServ->setParams(array('product_id'=>$_GET['id']));
+		$UploadServ->setParams(array('product_id'=>$_GET['id'], 'name'=>$_GET['name']));
 		if ($UploadServ->upload())
 		{
 			die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');

@@ -16,6 +16,11 @@
 var pid = <%$product->product_id%>;
 
 eric.request.ajaxLoad('/product/manage/ProductFiles','uploaded_files',{id:pid});
+eric.product_files = {};
+eric.product_files.deleteSuccess = function(){
+	alert('删除成功');
+	eric.request.ajaxLoad('/product/manage/ProductFiles','uploaded_files',{id:pid});
+}
 
 $("#multi_upload").pluploadQueue({
 	// General settings
@@ -26,6 +31,7 @@ $("#multi_upload").pluploadQueue({
 	chunk_size : '1mb',
 	unique_names : true,
 	browse_button : 'pickfiles',
+	rename:false,
 	
 	// Specify what files to browse for
 	/*
@@ -39,26 +45,39 @@ $("#multi_upload").pluploadQueue({
 	
 	// Silverlight settings
 	silverlight_xap_url : '<%$res%>/lib/plupload/js/plupload.silverlight.xap',
+	preinit : {
+		UploadFile: function(up, file) {
+              		//  alert(file.name);
+            }
 	
+	},
 	init : {
 		PostInit: function() {
 		    // Called after initialization is finished and internal event handlers bound
 		    //log('[PostInit]');
 		     
 		    document.getElementById('uploadfiles').onclick = function() {
-		        uploader.start();
-		        return false;
+		    	//alert('1111');
+		        //uploader.start();
+		        //return false;
 		    };
 		},
 		
 		FilesAdded: function(up, files) {
 		    plupload.each(files, function(file) {
-		          alert(file.name);
+		         // alert(file.name);
 		    });
 		},
 		
+		BeforeUpload: function(up, file, info) {
+			up.settings.url = '/site/upload?id='+pid+'&token=' + eric.cookie.getCookie('token')+'&name='+file.name;
+			
+             //this.url += '&vname=' + file.name;
+       },
+		
 		UploadComplete: function(up, files) {
 		   eric.request.ajaxLoad('/product/manage/ProductFiles','uploaded_files',{id:pid});
+		   $('div.plupload_buttons').show();
 		},
 		
 		Destroy: function(up) {

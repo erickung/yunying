@@ -18,11 +18,14 @@
  * @property double $max_rate
  *
  * The followings are the available model relations:
+ * @property CustomerPurchase[] $customerPurchases
  * @property ProductAccountInformation $productAccountInformation
  * @property ProductApprovalItem[] $productApprovalItems
  * @property ProductExtra $productExtra
+ * @property ProductFiles[] $productFiles
  * @property Process $process
  * @property ProductPublish $productPublish
+ * @property ProductPublishRate[] $productPublishRates
  * @property ProductReturnRate[] $productReturnRates
  */
 class ProductInfo extends RootActiveRecord
@@ -43,11 +46,14 @@ class ProductInfo extends RootActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'customerPurchases' => array(self::HAS_MANY, 'CustomerPurchase', 'product_id'),
 			'productAccountInformation' => array(self::HAS_ONE, 'ProductAccountInformation', 'product_id'),
 			'productApprovalItems' => array(self::HAS_MANY, 'ProductApprovalItem', 'product_id'),
 			'productExtra' => array(self::HAS_ONE, 'ProductExtra', 'product_id'),
+			'productFiles' => array(self::HAS_MANY, 'ProductFiles', 'product_id'),
 			'process' => array(self::BELONGS_TO, 'Process', 'process_id'),
 			'productPublish' => array(self::HAS_ONE, 'ProductPublish', 'product_id'),
+			'productPublishRates' => array(self::HAS_MANY, 'ProductPublishRate', 'product_id'),
 			'productReturnRates' => array(self::HAS_MANY, 'ProductReturnRate', 'product_id'),
 		);
 	}

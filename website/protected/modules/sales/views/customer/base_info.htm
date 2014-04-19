@@ -1,0 +1,51 @@
+<%form id="form_customer_info" name="form_customer_info" action="/sales/customer/edit" method="POST" class="form-horizontal"%>
+<div class="control-group formSep">
+	<div class="span5">
+		<%input name='name' obj=$customer%>
+	</div>
+	<div class="span5">
+		<%input name='mobile_num' obj=$customer%>
+	</div>
+</div>
+<div class="control-group formSep">
+	<div class="span5">
+		<%input name='birthday' obj=$customer%>
+	</div>
+	<div class="span5">
+		<%select name='sex' obj=$customer data=$customer->sex_data%>
+	</div>
+</div>
+<%if $type=='appoint'%>
+	<div class="control-group formSep">
+		<div class="span5">
+			<label for="purchase_account" class="control-label">约定金额</label>
+			<div class="controls">
+				<div class="input-append">
+				<input type="text" name="appoint_account" id="appoint_account" class="class10" value="">
+				<span class="add-on">万</span>
+				</div>
+			</div>
+		</div>
+	</div>
+<%/if%>
+<fieldset>
+	<input type="hidden" name="customer_id" id="customer_id" value="<%$customer->customer_id%>">
+	<%if $product_id%>
+		<input type="hidden" name="product_id" id="product_id" value="<%$product_id%>">
+	<%/if%>
+</fieldset>
+<div class="control-group" align="left">
+		<div class="controls">
+		
+			<button type="submit" class="btn btn-gebo">保  存</button>
+			<button type="button" class="btn" onClick="eric.common.go();">返回</button>
+		</div>
+</div>
+<%/form%>
+
+<%javascript%>
+eric.common.datepicker('birthday');
+eric.cproduct = {
+	id:0
+};
+<%/javascript%>

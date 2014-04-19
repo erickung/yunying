@@ -108,10 +108,8 @@ class ProductInfoAR extends ProductInfo
 	
 	protected function initConf()
 	{
-		$this->trust_type = isset(self::$static_conf['trust_type']) ? 
-			self::$static_conf['trust_type'] : ProductConf::getTrustType();
-		$this->investment_ways = isset(self::$static_conf['investment_ways']) ?
-			self::$static_conf['investment_ways'] : ProductConf::getInvestmentWay();
+		$this->trust_type = ProductConf::getTrustType();
+		$this->investment_ways = ProductConf::getInvestmentWay();
 	}
 	
 	public static function model($className=__CLASS__)

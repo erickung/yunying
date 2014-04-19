@@ -1,0 +1,35 @@
+<div class="modal hide" id="approval_appoint">
+	<%form id="form_appoint_info" name="form_appoint_info" action="/sales/cproduct/appoint" method="POST" class="form-horizontal"%>
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>预约产品</h3>
+	</div>
+	<div class="modal-body">
+	<div class="control-group formSep">
+		<div class="span5">
+			<label for="purchase_account" class="control-label">约定金额</label>
+			<div class="controls">
+				<div class="input-append">
+				<input type="text" name="appoint_account" id="appoint_account" class="input" value="">
+				<span class="add-on">万</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	</div>
+	<div class="modal-footer">
+		<button type="button" id="btn_appoint" class="btn btn-gebo">提  交</button>
+		<a href="#" class="btn" data-dismiss="modal">Close</a>
+	</div>
+	<input type="hidden" name="customer_id" id="customer_id" value="<%$customer_id%>">
+	<input type="hidden" name="product_id" id="product_id" value="">
+	<%/form%>
+</div>
+
+<%javascript%>  
+	$("#btn_appoint").click(function(){
+		$("#product_id").val(eric.cproduct.id);
+		$("#form_appoint_info").submit();
+	});
+<%/javascript%>  

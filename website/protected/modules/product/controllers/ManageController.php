@@ -46,8 +46,6 @@ class ManageController extends FController
 		
 		$extra_info = is_null($product->productExtra) ? new ProductExtraAR() : $product->productExtra;
 		$this->assign('extra_info', $extra_info);
-		
-		
 
 		$this->render('info');
 	}
@@ -136,7 +134,25 @@ class ManageController extends FController
 
 		$product_files = ProductFilesAR::model()->findAllByAttributes(array('product_id'=>Request::$post['id']));
 		$this->assign('files', $product_files);
-		
+		if (isset(Request::$post['static']))
+			$this->assign('static', 1);
+
 		echo $this->fetch('product.manage.uploadedfiles');
+	}
+	
+	function actionDeleteFile()
+	{
+		ProductFilesAR::model()->deleteByPk($_POST['file_id']);
+		Response::showPostMsg("eric.product_files.deleteSuccess();");
+	}
+	
+	function actionDownFile()
+	{
+		if (!isset(Request::$get['id']) || !Request::$get['id'])
+			exit();
+		
+		$ProductFilesAR = new ProductFilesAR();
+		$ProductFilesAR->file_id = Request::$get['id'];
+		$ProductFilesAR->downFile();
 	}
 }

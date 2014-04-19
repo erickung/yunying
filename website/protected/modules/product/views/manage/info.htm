@@ -10,7 +10,9 @@
 								<li class="active"><a href="#base_info" data-toggle="tab">基本信息</a></li>
 								<li><a href="#publish_info" data-toggle="tab">发行信息</a></li>
 								<li><a href="#extra_info" data-toggle="tab">扩展信息</a></li>
+								<%if $product->product_id%>
 								<li><a href="#files" data-toggle="tab">上传附件</a></li>
+								<%/if%>
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="base_info">
@@ -22,9 +24,11 @@
 								<div class="tab-pane" id="extra_info">
 								<%require file='product.manage.extra_info'%>
 								</div>
+								<%if $product->product_id%>
 								<div class="tab-pane" id="files">
 								<%require file='product.manage.files'%>
 								</div>
+								<%/if%>
 							</div>
 						</div>
 						<br>

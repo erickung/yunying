@@ -112,7 +112,7 @@ class WebUser extends CWebUser
 			$module->href = str_replace('.', '/', $module->controller) . '/' . $module->action;
 			$this->all_view_modules[$module->module_id] = $module;
 		}
-		//RootTools::dump($this->all_action_modules);
+		//RootTools::dump($this->all_module_tree);
 		//exit;
 	}
 	

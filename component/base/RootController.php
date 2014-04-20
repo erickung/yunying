@@ -12,6 +12,10 @@ class RootController extends CController implements RootInterface
 	private static $nologin = array(
 			'site' => array('login','upload'),
 	);
+	private static $no_power_check = array(
+		'site'=>array('index'),
+	);
+	
 	public static $defaultModules = array(
 			'custom.pass' => array('info'),
 	);
@@ -38,6 +42,8 @@ class RootController extends CController implements RootInterface
 		if ($this->noLoginActions($action)) return true;
 
 		$this->checkLogin();
+		
+		if ($this->noPowerCheck($action)) return true; 
 		$this->checkPower();
 
 		return true;
@@ -80,6 +86,14 @@ class RootController extends CController implements RootInterface
 		$action = strtolower($this->getAction()->getId());
 		
 		return isset(self::$nologin[$controller]) && in_array($action, self::$nologin[$controller]);
+	}
+	
+	private function noPowerCheck($action)
+	{
+		$controller = $this->getId();
+		$action = strtolower($this->getAction()->getId());
+		
+		return isset(self::$no_power_check[$controller]) && in_array($action, self::$no_power_check[$controller]);
 	}
 
 	public function redirect($url,$terminate=true,$statusCode=302)

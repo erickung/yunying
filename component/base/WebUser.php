@@ -60,7 +60,7 @@ class WebUser extends CWebUser
 			$contr->assignModules($this->all_view_modules, $this->all_module_tree, $module);
 			return true;
 		}
-	
+		//RootTools::dump($this->all_action_modules);exit;
 		if (isset($this->all_action_modules[$controller_id][$action_id])) 
 		{
 			$module_id = $this->all_action_modules[$controller_id][$action_id];

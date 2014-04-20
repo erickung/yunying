@@ -14,7 +14,6 @@
 				<tr>
 					<th>id</th>
 					<th>产品名称</th>
-					<th>产品金额</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -23,12 +22,12 @@
 				<tr>
 					<td><%$item->product_id%></td>
 					<td><%$item->name%></td>
-					<td><%$item->fund_size%></td>
 					<td class=" ">
+						<a title="产品详情" id="product_detail" href="/product/manage/CustomerStatic?id=<%$item->product_id%>" class="sepV_a"><i class="icon-eye-open"></i></a>
 						<%if $customer_id%>
-						<a title="预约" id="product_appoint" onClick="product_appoint(<%$item->product_id%>)"  data-toggle="modal" data-backdrop="static" href="#approval_appoint" class="sepV_a"><i class="icon-eye-open"></i></a>
+						<a title="预约" id="product_appoint" onClick="product_appoint(<%$item->product_id%>)"  data-toggle="modal" data-backdrop="static" href="#approval_appoint" class="splashy-group_green_add"></a>
 						<%else%>
-						<a title="预约" id="product_appoint"  data-toggle="modal" data-backdrop="static" href="/sales/cproduct/AddAppointInfo?pid=<%$item->product_id%>" class="sepV_a"><i class="icon-eye-open"></i></a>
+						<a title="预约" id="product_appoint"  data-toggle="modal" data-backdrop="static" href="/sales/cproduct/AddAppointInfo?pid=<%$item->product_id%>" class="splashy-contact_blue_add"></a>
 						<%/if%>
 					</td>
 				</tr>

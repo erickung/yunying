@@ -75,6 +75,28 @@ class ManageController extends FController
 		$this->render('static');
 	}
 	
+	function actionCustomerStatic()
+	{
+		if (!isset(Request::$get['id']) || !Request::$get['id'])
+			Response::errorPage();
+		
+		$product = ProductInfoAR::model()->getProductInfoById(Request::$get['id']);
+		$product_roles = $product->getProductProcessRoles();
+		$this->assign('product_roles', $product_roles);
+		$this->assign('product', $product);
+		
+		$publish = ProductPublishAR::model()->getPublishInfoById(Request::$get['id']);
+		$this->assign('publish', !$publish ? new ProductPublishAR() : $publish);
+		
+		$extra_info = is_null($product->productExtra) ? new ProductExtraAR() : $product->productExtra;
+		$this->assign('extra_info', $extra_info);
+		
+		$approval_items = ProductApprovalItemAR::model()->getItemsByProductId(Request::$get['id']);
+		$this->assign('approval_items', $approval_items);
+		
+		$this->render('customer_static');
+	}
+	
 	
 	function actionEdit()
 	{
@@ -154,5 +176,39 @@ class ManageController extends FController
 		$ProductFilesAR = new ProductFilesAR();
 		$ProductFilesAR->file_id = Request::$get['id'];
 		$ProductFilesAR->downFile();
+	}
+	
+	function actionProductDetail()
+	{
+		if (!isset(Request::$get['id']) || !Request::$get['id'])
+			exit();
+	
+		if (isset(Request::$get['type']) && Request::$get['type'] == 'part')
+		{	
+			Yii::import('sales.ar.*');
+			Yii::import('service.sales.*');
+				
+				
+			$CustomerPurchaseAR = new CustomerPurchaseAR();
+			$data = $CustomerPurchaseAR->getProductCustomer(Request::$get['id']);
+			foreach ($data as $d)
+				$d->status_name = $d->getStatusName($d->status);
+			
+				
+			$this->renderPartial('load_customer_detail', array(
+					'data'=>$data,
+					'status'=>SalesConf::getCustomAppointStatus(),
+			));
+			
+			
+		} 
+		else 
+		{
+			$this->render('customer_detail', array(
+					'pid'=>Request::$get['id'],
+			));
+		}
+		
+
 	}
 }

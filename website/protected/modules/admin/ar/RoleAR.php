@@ -38,13 +38,14 @@ class RoleAR extends Roles
 	
 	function getAllRoleModules($column=3)
 	{
-		$modules = ModulesAR::model()->findAll();
+		$modules = ModulesAR::model()->findAll(array('order'=>'parent_module_id asc'));
 		$role_modules = ($this->role_id) ? $this->getRoleModules() : array();
 		
 		$rnt = array();
 		$j = 0;
 		foreach ($modules as $i => $m)
 		{
+		
 			if ($i%$column == 0) $j++;
 			if (!isset($rnt[$j])) $rnt[$j] = array();
 			

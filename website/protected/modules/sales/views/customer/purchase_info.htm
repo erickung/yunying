@@ -5,23 +5,23 @@
 		<h3>预约产品</h3>
 	</div>
 	<div class="modal-body">
-	<div class="control-group formSep">
+	<div id="dev_appoint" class="control-group formSep">
 		<div class="span5">
-			<label for="purchase_account" class="control-label">约定金额</label>
+			<label for="d_appoint_account" class="control-label">约定金额</label>
 			<div class="controls">
 				<div class="input-append">
-				<input  disabled="disabled" type="text" name="appoint_account" id="appoint_account" class="input" value="">
+				<input type="text" name="appoint_account" id="d_appoint_account" class="input" value="">
 				<span class="add-on">万</span>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="control-group formSep">
+	<div id="dev_account" class="control-group formSep">
 		<div class="span5">
-			<label for="real_account" class="control-label">实际金额</label>
+			<label for="d_real_account" class="control-label">实际金额</label>
 			<div class="controls">
 				<div class="input-append">
-				<input type="text" name="real_account" id="real_account" class="input" value="">
+				<input type="text" name="real_account" id="d_real_account" class="input" value="">
 				<span class="add-on">万</span>
 				</div>
 			</div>
@@ -33,6 +33,7 @@
 		<a href="#" class="btn" id="btn_appoint_close" data-dismiss="modal">Close</a>
 	</div>
 	<input type="hidden" name="ps_id" id="ps_id" value="">
+	<input type="hidden" name="status" id="d_status" value="">
 	<%/form%>
 </div>
 <div role="grid" class="dataTables_wrapper form-inline" id="dt_gal_wrapper">
@@ -42,6 +43,7 @@
 					<th>产品名称</th>
 					<th>预约金额（万）</th>
 					<th>实际金额（万）</th>
+					<th>状态</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -51,8 +53,13 @@
 					<td><%$item->product_id%></td>
 					<td><%$item->appoint_account%></td>
 					<td><%$item->real_account%></td>
+					<td><%$item->status_name%></td>
 					<td class=" ">
-						<a title="确认付款" id="product_appoint" onClick="check_appoint(<%$item->ps_id%>,<%$item->appoint_account%>,<%$item->real_account%>)"  data-toggle="modal" data-backdrop="static" href="#check_appoint" class="sepV_a"><i class="icon-eye-open"></i></a>
+						<%if $item->status == 2 || $item->status == 4%>
+						<a title="确认付款" id="product_appoint" onClick="check_account(<%$item->ps_id%>,<%$item->appoint_account%>,<%$item->real_account%>)"  data-toggle="modal" data-backdrop="static" href="#check_appoint" class="sepV_a"><i class="icon-eye-open"></i></a>
+						<%elseif $item->status == -1%>
+						<a title="确认签约" id="product_appoint" onClick="check_appoint(<%$item->ps_id%>,<%$item->appoint_account%>,<%$item->real_account%>)"  data-toggle="modal" data-backdrop="static" href="#check_appoint" class="sepV_a"><i class="icon-eye-open"></i></a>	
+						<%/if%>
 					</td>
 				</tr>
 				<%/foreach%>
@@ -65,11 +72,26 @@
 function check_appoint(ps_id,appoint_account,real_account)
 {
 	$("#ps_id").val(ps_id);
-	$("#appoint_account").val(appoint_account);
-	$("#real_account").val(real_account);
+	$("#dev_account").hide();
+	$("#d_status").val(1);
+}
+
+function check_account(ps_id,appoint_account,real_account)
+{
+	$("#ps_id").val(ps_id);
+	$("#d_status").val(3);
+	$("#d_appoint_account").val(appoint_account);
+	$("#d_real_account").val(real_account);
+}
+
+function submitOK()
+{
+	eric.response.success('提交成功！');
+	$('#btn_appoint_close').trigger('click'); 
 }
 
 $("#btn_appoint_close").click(function(){
 	eric.request.ajaxLoad('/sales/customer/CustomerPurchase?cid=<%$cid%>','purchase_info');
+	
 });
 <%/javascript%>  

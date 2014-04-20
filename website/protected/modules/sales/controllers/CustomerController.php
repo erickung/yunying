@@ -54,6 +54,7 @@ class CustomerController extends FController
 
 	function actionCustomerPurchase()
 	{
+		Yii::import('service.sales.*');
 		if (!Request::$get['cid']) return false;
 
 		$products = CustomerPurchaseAR::model()
@@ -62,12 +63,13 @@ class CustomerController extends FController
 		$count = CustomerPurchaseAR::model()->countByAttributes(array('customer_id'=>Request::$get['cid']));
 		
 		foreach ($products as $product)
-			ActiveRecordServ::Instance($product)->resetDisplays();
+			$product->status_name = $product->getStatusName($product->status);
 		
 		$this->renderPartial('purchase_info', array(
 				'cid'=>Request::$get['cid'],
 				'products'=>$products,
 				'count'=>$count,
+				'status'=>SalesConf::getCustomAppointStatus(),
 		));
 	}
 }

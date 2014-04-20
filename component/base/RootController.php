@@ -9,11 +9,12 @@ class RootController extends CController implements RootInterface
 	public $module_id;
 	private $view_path;
 	
-	private static $nologin = array(
+	protected static $nologin = array(
 			'site' => array('login','upload'),
 	);
-	private static $no_power_check = array(
+	protected static $no_power_check = array(
 		'site'=>array('index'),
+		//'product.manage'=>array('customerstatic'),
 	);
 	
 	public static $defaultModules = array(
@@ -42,9 +43,8 @@ class RootController extends CController implements RootInterface
 		if ($this->noLoginActions($action)) return true;
 
 		$this->checkLogin();
-		
 		if ($this->noPowerCheck($action)) return true; 
-		$this->checkPower();
+		$this->checkPower();	
 
 		return true;
 	}
@@ -82,15 +82,14 @@ class RootController extends CController implements RootInterface
 	
 	private function noLoginActions($action)
 	{
-		$controller = $this->getId();
+		$controller =  $this->getModule() ? $this->getModule()->id . '.' . $this->getId() : $this->getId();
 		$action = strtolower($this->getAction()->getId());
-		
 		return isset(self::$nologin[$controller]) && in_array($action, self::$nologin[$controller]);
 	}
 	
 	private function noPowerCheck($action)
 	{
-		$controller = $this->getId();
+		$controller =  $this->getModule() ? $this->getModule()->id . '.' . $this->getId() : $this->getId();
 		$action = strtolower($this->getAction()->getId());
 		
 		return isset(self::$no_power_check[$controller]) && in_array($action, self::$no_power_check[$controller]);

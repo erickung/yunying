@@ -45,9 +45,9 @@ class CProductController extends FController
 		if(!Request::$post['customer_id']) return false;		
 		$CustomerPurchaseAR = new CustomerPurchaseAR();
 		$CustomerPurchaseAR->setAttributesFromRequest(Request::$post);
-		$CustomerPurchaseAR->status = 0;
+		$CustomerPurchaseAR->status = 1;
 		$rnt = $CustomerPurchaseAR->saveCommit('addPurchase');
-		Response::resp($rnt);
+		Response::respThisPage($rnt, 'submitOK()');
 	}
 	
 	function actionCheckSale()
@@ -56,6 +56,6 @@ class CProductController extends FController
 		$CustomerPurchaseAR = new CustomerPurchaseAR();
 		$CustomerPurchaseAR->setAttributesFromRequest(Request::$post);
 		$rnt = $CustomerPurchaseAR->saveCommit('modifyByPk');
-		Response::respThisPage($rnt);
+		Response::respThisPage($rnt, 'submitOK()');
 	}
 }

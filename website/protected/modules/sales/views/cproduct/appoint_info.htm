@@ -19,17 +19,27 @@
 
 	</div>
 	<div class="modal-footer">
-		<button type="button" id="btn_appoint" class="btn btn-gebo">提  交</button>
-		<a href="#" class="btn" data-dismiss="modal">Close</a>
+		<button type="button" id="btn_appoint_d" class="btn btn-gebo">提  交</button>
+		<a href="#" id="btn_appoint_close_d" class="btn" data-dismiss="modal">Close</a>
 	</div>
 	<input type="hidden" name="customer_id" id="customer_id" value="<%$customer_id%>">
 	<input type="hidden" name="product_id" id="product_id" value="">
+	<input type="hidden" name="status" id="status" value="1">
 	<%/form%>
 </div>
 
 <%javascript%>  
-	$("#btn_appoint").click(function(){
+	$("#btn_appoint_d").click(function(){
 		$("#product_id").val(eric.cproduct.id);
 		$("#form_appoint_info").submit();
 	});
+	
+function submitOK()
+{
+	eric.response.success('提交成功！');
+	$('#btn_appoint_close_d').trigger('click'); 
+	$('#tab_purchase_info').trigger('click'); 
+}
+
+
 <%/javascript%>  

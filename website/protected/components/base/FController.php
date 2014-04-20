@@ -7,6 +7,7 @@ class FController extends RootController
 {
 	protected function beforeAction($action)
 	{
+		Yii::setPathOfAlias('service', Yii::getPathOfAlias('application.components.service'));
 		if (!parent::beforeAction($action)) return false;
 		return true;
 	}

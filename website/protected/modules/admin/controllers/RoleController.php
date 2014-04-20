@@ -32,6 +32,8 @@ class RoleController extends FController
 		}
 		
 		$this->assign('role_modules', $role_modules);
+		//var_dump($role_modules);
+		//exit;
 		$this->render('role_info');
 	}
 	

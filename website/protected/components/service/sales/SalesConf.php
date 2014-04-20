@@ -18,4 +18,24 @@ class SalesConf
 				4=>'D级',
 		);
 	}
+	
+	static function getCustomAppointStatus()
+	{
+		return array(
+				'show'=>array(
+					-1=>'被驳回',
+					1=>'待确认',
+					2=>'已确认',
+					3=>'签约中',
+					4=>'签约驳回',
+					99=>'已签约',
+				),
+				'opt'=>array(
+					-1=>'驳回',
+					2=>'确认',
+					4=>'签约驳回',
+					99=>'确认签约',
+				),
+		);
+	}
 }

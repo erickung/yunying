@@ -11,6 +11,8 @@
  * @property integer $real_account
  * @property integer $status
  * @property string $note
+ * @property integer $account_status
+ * @property string $user_id
  *
  * The followings are the available model relations:
  * @property ProductInfo $product
@@ -52,6 +54,8 @@ class CustomerPurchase extends RootActiveRecord
 			'real_account' => 'Real Account',
 			'status' => '状态',
 			'note' => 'Note',
+			'account_status' => '打款状态',
+			'user_id' => 'User',
 		);
 	}
 
@@ -80,6 +84,8 @@ class CustomerPurchase extends RootActiveRecord
 		$criteria->compare('real_account',$this->real_account);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('note',$this->note,true);
+		$criteria->compare('account_status',$this->account_status);
+		$criteria->compare('user_id',$this->user_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

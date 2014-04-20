@@ -1,0 +1,18 @@
+<div role="grid" class="dataTables_wrapper form-inline" id="table_customer_product">
+		
+</div>
+<script type="text/javascript">
+function checkProduct(ps_id)
+{
+	var id = 'status_'+ps_id;
+	var val = $("#"+id).children('option:selected').val();
+	eric.request.ajaxPost('/sales/cproduct/CheckSale',{ps_id:ps_id,status:val},function(){
+		eric.request.ajaxLoad('/product/manage/ProductDetail?type=part&id=<%$pid%>','table_customer_product');
+	})
+}
+ </script>
+ 
+<%javascript%>
+
+eric.request.ajaxLoad('/product/manage/ProductDetail?type=part&id=<%$pid%>','table_customer_product');
+<%/javascript%>

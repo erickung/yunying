@@ -19,7 +19,7 @@
 				<select onChange="checkProduct(<%$item->ps_id%>)" class="span6" onChange="check" id='status_<%$item->ps_id%>' name='status_<%$item->ps_id%>'>
 					<option>操作</option>
 					<%foreach $status.opt as $s => $v%>
-						<%if $s > $item->status%>
+						<%if $s == $item->status+1%>
 						<option value='<%$s%>'><%$v%></option>
 						<%/if%>
 					<%/foreach%>

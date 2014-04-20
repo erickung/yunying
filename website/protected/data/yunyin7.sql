@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50524
 File Encoding         : 65001
 
-Date: 2014-04-20 07:46:12
+Date: 2014-04-21 00:52:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ CREATE TABLE `customer` (
   KEY `user_id` (`user_id`),
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of customer
@@ -41,6 +41,8 @@ CREATE TABLE `customer` (
 INSERT INTO `customer` VALUES ('3', '2', '15201251668', 'eric', '1', '0', '', '2', '2014-04-01 00:00:00');
 INSERT INTO `customer` VALUES ('4', '2', '15201251668', 'eric1', '1', '0', '', '1', '2014-04-07 00:00:00');
 INSERT INTO `customer` VALUES ('5', '2', '15201251668', 'eric', '1', '0', '', '1', '2014-04-19 00:00:00');
+INSERT INTO `customer` VALUES ('6', '2', '13800138000', 'tina', '1', '0', '', '2', '2014-04-01 00:00:00');
+INSERT INTO `customer` VALUES ('7', '5', '1398013818313', '张三', '1', '0', '', '1', '1980-02-14 00:00:00');
 
 -- ----------------------------
 -- Table structure for `customer_purchase`
@@ -52,20 +54,27 @@ CREATE TABLE `customer_purchase` (
   `customer_id` int(11) NOT NULL,
   `appoint_account` int(11) NOT NULL COMMENT '购买金额',
   `real_account` int(11) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
   `note` text,
+  `account_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '打款状态',
+  `user_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`ps_id`),
   KEY `product_id` (`product_id`),
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `customer_purchase_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product_info` (`product_id`),
   CONSTRAINT `customer_purchase_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of customer_purchase
 -- ----------------------------
-INSERT INTO `customer_purchase` VALUES ('1', '17', '3', '111', '100', '0', null);
-INSERT INTO `customer_purchase` VALUES ('2', '17', '5', '111', '0', '0', null);
+INSERT INTO `customer_purchase` VALUES ('1', '17', '3', '111', '111', '99', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('2', '17', '5', '111', '0', '99', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('3', '17', '3', '40', '0', '4', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('4', '16', '7', '200', '0', '3', null, '0', '5');
+INSERT INTO `customer_purchase` VALUES ('5', '16', '5', '10', '0', '2', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('6', '16', '5', '100', '0', '2', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('7', '17', '7', '300', '0', '1', null, '0', '5');
 
 -- ----------------------------
 -- Table structure for `modules`
@@ -82,7 +91,7 @@ CREATE TABLE `modules` (
   `modify_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `ordering` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`module_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of modules
@@ -115,6 +124,8 @@ INSERT INTO `modules` VALUES ('25', '产品列表', '16', '1', 'sales.cproduct',
 INSERT INTO `modules` VALUES ('26', '产品预约', '16', '1', 'sales.cproduct', 'appoint,AddAppointInfo', 'eric1', '2014-04-19 16:33:49', '0');
 INSERT INTO `modules` VALUES ('27', '购买历史', '15', '1', 'sales.customer', 'CustomerPurchase', 'eric1', '2014-04-19 15:33:50', '0');
 INSERT INTO `modules` VALUES ('28', '销售确认', '16', '1', 'sales.cproduct', 'CheckSale', 'eric1', '2014-04-19 16:00:35', '0');
+INSERT INTO `modules` VALUES ('29', '预约确认', '12', '1', 'product.manage', 'ProductDetail', 'eric1', '2014-04-20 20:13:22', '0');
+INSERT INTO `modules` VALUES ('30', '产品资料', '12', '1', 'product.manage', 'CustomerStatic', 'eric1', '2014-04-21 00:05:25', '0');
 
 -- ----------------------------
 -- Table structure for `process`
@@ -187,7 +198,7 @@ CREATE TABLE `product_approval_item` (
   KEY `product_approval_item_ibfk_1` (`product_id`),
   CONSTRAINT `product_approval_item_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product_info` (`product_id`),
   CONSTRAINT `product_approval_item_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_approval_item
@@ -203,6 +214,11 @@ INSERT INTO `product_approval_item` VALUES ('16', '9', '2', '3', '0', '', '2');
 INSERT INTO `product_approval_item` VALUES ('17', '9', '1', '2', '0', '1111', '2');
 INSERT INTO `product_approval_item` VALUES ('18', '9', '0', '1', '0', '', '2');
 INSERT INTO `product_approval_item` VALUES ('19', '9', '0', '1', '0', '31313', '2');
+INSERT INTO `product_approval_item` VALUES ('20', '9', '0', '1', '0', '附件', '2');
+INSERT INTO `product_approval_item` VALUES ('21', '16', '2', '1', '1', '1111', '2');
+INSERT INTO `product_approval_item` VALUES ('22', '16', '3', '2', '1', '2222', '2');
+INSERT INTO `product_approval_item` VALUES ('23', '16', '4', '3', '1', '3333', '2');
+INSERT INTO `product_approval_item` VALUES ('24', '16', '0', '4', '1', '444', '2');
 
 -- ----------------------------
 -- Table structure for `product_extra`
@@ -236,7 +252,7 @@ CREATE TABLE `product_files` (
   PRIMARY KEY (`file_id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_files_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product_info` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_files
@@ -245,11 +261,6 @@ INSERT INTO `product_files` VALUES ('36', '16', '[中文版] MongoDB权威指南
 INSERT INTO `product_files` VALUES ('37', '16', 'C 学习笔记.pdf', 'G:\\wamp\\www\\framework\\website\\..\\website\\runtime\\tmp\\product\\16\\\\p18lqrl2aq1hlp1lkp1t6e14r03csf.pdf');
 INSERT INTO `product_files` VALUES ('38', '9', '团队的法则.pdf', 'G:\\wamp\\www\\framework\\website\\..\\website\\runtime\\tmp\\product\\9\\\\p18lrvaq3dt1u178911i5nt91rq74.pdf');
 INSERT INTO `product_files` VALUES ('39', '9', '王二的经济学故事.txt', 'G:\\wamp\\www\\framework\\website\\..\\website\\runtime\\tmp\\product\\9\\\\p18lrvb23q1chp1i9q4r5bt41s115.txt');
-INSERT INTO `product_files` VALUES ('40', '9', 'Hive 优化以及执行原理.pdf', 'G:\\wamp\\www\\framework\\website\\..\\website\\runtime\\tmp\\product\\9\\\\p18lsk043ck6vt5h16as12sr2ui5.pdf');
-INSERT INTO `product_files` VALUES ('41', '9', 'Netty5.0架构剖析和源码解读.pdf', 'G:\\wamp\\www\\framework\\website\\..\\website\\runtime\\tmp\\product\\9\\\\p18lsk043c1buj7mepp1331fra6.pdf');
-INSERT INTO `product_files` VALUES ('42', '9', 'PHP扩展开发-基础篇.pptx', 'G:\\wamp\\www\\framework\\website\\..\\website\\runtime\\tmp\\product\\9\\\\p18lsk043c1g2k1t1l14qcmgejvu7.pptx');
-INSERT INTO `product_files` VALUES ('43', '9', 'PHP内核介绍及扩展开发指南.pdf', 'G:\\wamp\\www\\framework\\website\\..\\website\\runtime\\tmp\\product\\9\\\\p18lsk043d1dm25div2m10831rvm8.pdf');
-INSERT INTO `product_files` VALUES ('44', '9', 'Python 学习笔记 第二版.pdf', 'G:\\wamp\\www\\framework\\website\\..\\website\\runtime\\tmp\\product\\9\\\\p18lsk043dpmo1p2l1t5pg7g51a.pdf');
 
 -- ----------------------------
 -- Table structure for `product_info`
@@ -276,8 +287,8 @@ CREATE TABLE `product_info` (
 -- ----------------------------
 -- Records of product_info
 -- ----------------------------
-INSERT INTO `product_info` VALUES ('9', '测试1', '2', '1000000', '1396540800', '1212121111111111', '0', '1', '18', '1', '7.26', '9.32');
-INSERT INTO `product_info` VALUES ('16', 'FOT-上海长汇富恒投资管理中心（有限合伙）', '1', '3000', '1397491200', '财富中心直销', '1', '1', '12', '1', '7.00', '9.50');
+INSERT INTO `product_info` VALUES ('9', '测试1', '2', '1000000', '1396540800', '1212121111111111', '1', '1', '18', '1', '7.26', '9.32');
+INSERT INTO `product_info` VALUES ('16', 'FOT-上海长汇富恒投资管理中心（有限合伙）', '1', '3000', '1397491200', '财富中心直销', '99', '1', '12', '1', '7.00', '9.50');
 INSERT INTO `product_info` VALUES ('17', '31333', '1', '1000000', '1396281600', '大家的', '99', '1', '11', '1', '7.26', '9.32');
 
 -- ----------------------------
@@ -371,13 +382,14 @@ CREATE TABLE `roles` (
   `modify_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `modify_username` varchar(31) NOT NULL,
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of roles
 -- ----------------------------
-INSERT INTO `roles` VALUES ('1', '系统管理员', '2014-04-19 16:00:47', 'eric1');
-INSERT INTO `roles` VALUES ('2', '产品管理', '2014-04-13 15:25:01', 'eric1');
+INSERT INTO `roles` VALUES ('1', '系统管理员', '2014-04-21 00:05:34', 'eric1');
+INSERT INTO `roles` VALUES ('2', '产品管理', '2014-04-21 00:05:41', 'eric1');
+INSERT INTO `roles` VALUES ('3', '销售经理', '2014-04-21 00:25:39', 'eric1');
 
 -- ----------------------------
 -- Table structure for `role_module`
@@ -423,10 +435,24 @@ INSERT INTO `role_module` VALUES ('1', '25');
 INSERT INTO `role_module` VALUES ('1', '26');
 INSERT INTO `role_module` VALUES ('1', '27');
 INSERT INTO `role_module` VALUES ('1', '28');
+INSERT INTO `role_module` VALUES ('1', '29');
+INSERT INTO `role_module` VALUES ('1', '30');
 INSERT INTO `role_module` VALUES ('2', '11');
 INSERT INTO `role_module` VALUES ('2', '12');
 INSERT INTO `role_module` VALUES ('2', '13');
 INSERT INTO `role_module` VALUES ('2', '19');
+INSERT INTO `role_module` VALUES ('2', '29');
+INSERT INTO `role_module` VALUES ('2', '30');
+INSERT INTO `role_module` VALUES ('3', '14');
+INSERT INTO `role_module` VALUES ('3', '15');
+INSERT INTO `role_module` VALUES ('3', '16');
+INSERT INTO `role_module` VALUES ('3', '22');
+INSERT INTO `role_module` VALUES ('3', '24');
+INSERT INTO `role_module` VALUES ('3', '25');
+INSERT INTO `role_module` VALUES ('3', '26');
+INSERT INTO `role_module` VALUES ('3', '27');
+INSERT INTO `role_module` VALUES ('3', '28');
+INSERT INTO `role_module` VALUES ('3', '30');
 
 -- ----------------------------
 -- Table structure for `trust_type`
@@ -463,9 +489,9 @@ CREATE TABLE `user` (
 -- ----------------------------
 INSERT INTO `user` VALUES ('1', 'erickung@sina.com', 'eric', '1', '0000-00-00 00:00:00', '', '123456');
 INSERT INTO `user` VALUES ('2', 'eric1@sina.com', 'eric1', '1', '2014-04-16 23:08:27', '1354e6a5d9aebdbadf8c2c7659793756', '7c4a8d09ca3762af61e59520943dc26494f8941b');
-INSERT INTO `user` VALUES ('3', 'tina@sina.com', 'tina', '1', '2014-04-19 00:40:59', '64627e4a755435c94c7ee54dc54653dc', '7c4a8d09ca3762af61e59520943dc26494f8941b');
-INSERT INTO `user` VALUES ('4', 'tina1@sina.com', 'tina1', '1', '2014-04-07 22:30:32', 'b89ab392e59e9f37551b010d3a42acff', '20eabe5d64b0e216796e834f52d61fd0b70332fc');
-INSERT INTO `user` VALUES ('5', 'tina2@mai.com', 'tina2', '1', '0000-00-00 00:00:00', '', '7c4a8d09ca3762af61e59520943dc26494f8941b');
+INSERT INTO `user` VALUES ('3', 'tina@sina.com', 'tina', '1', '2014-04-20 08:20:58', 'cb223418a2dfa08acf5d6fc7cad15872', '7c4a8d09ca3762af61e59520943dc26494f8941b');
+INSERT INTO `user` VALUES ('4', 'tina1@sina.com', 'tina1', '1', '2014-04-20 08:23:27', 'b89ab392e59e9f37551b010d3a42acff', '7c4a8d09ca3762af61e59520943dc26494f8941b');
+INSERT INTO `user` VALUES ('5', 'tina2@mai.com', 'tina2', '1', '2014-04-21 00:10:31', '8191a36aa942227c7aec7c04033aa44b', '7c4a8d09ca3762af61e59520943dc26494f8941b');
 
 -- ----------------------------
 -- Table structure for `user_product_role`
@@ -510,4 +536,4 @@ INSERT INTO `user_roles` VALUES ('2', '1');
 INSERT INTO `user_roles` VALUES ('1', '2');
 INSERT INTO `user_roles` VALUES ('3', '2');
 INSERT INTO `user_roles` VALUES ('4', '2');
-INSERT INTO `user_roles` VALUES ('5', '2');
+INSERT INTO `user_roles` VALUES ('5', '3');

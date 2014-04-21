@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50524
 File Encoding         : 65001
 
-Date: 2014-04-21 00:52:56
+Date: 2014-04-22 01:42:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ CREATE TABLE `customer` (
   KEY `user_id` (`user_id`),
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of customer
@@ -43,6 +43,16 @@ INSERT INTO `customer` VALUES ('4', '2', '15201251668', 'eric1', '1', '0', '', '
 INSERT INTO `customer` VALUES ('5', '2', '15201251668', 'eric', '1', '0', '', '1', '2014-04-19 00:00:00');
 INSERT INTO `customer` VALUES ('6', '2', '13800138000', 'tina', '1', '0', '', '2', '2014-04-01 00:00:00');
 INSERT INTO `customer` VALUES ('7', '5', '1398013818313', '张三', '1', '0', '', '1', '1980-02-14 00:00:00');
+INSERT INTO `customer` VALUES ('8', '2', '13131313', 'tt', '1', '0', '', '2', '2014-04-19 00:00:00');
+INSERT INTO `customer` VALUES ('9', '2', '15201251668', 'dd', '1', '0', '', '1', '2014-04-01 00:00:00');
+INSERT INTO `customer` VALUES ('10', '2', '15201251668', 'cc', '1', '0', '', '1', '2014-04-19 00:00:00');
+INSERT INTO `customer` VALUES ('11', '2', '13800138000', 'fff', '1', '0', '', '1', '2014-04-01 00:00:00');
+INSERT INTO `customer` VALUES ('12', '2', '13131313', 'ttad', '1', '0', '', '1', '0000-00-00 00:00:00');
+INSERT INTO `customer` VALUES ('13', '2', '15201251668', 'erad', '1', '0', '', '1', '2014-03-31 00:00:00');
+INSERT INTO `customer` VALUES ('14', '2', '15201251668', 'd231', '1', '0', '', '1', '2014-04-01 00:00:00');
+INSERT INTO `customer` VALUES ('15', '2', '13800138000', '测试1', '1', '0', '', '1', '2014-04-01 00:00:00');
+INSERT INTO `customer` VALUES ('16', '2', '15201251668', '测试2', '1', '0', '', '1', '2014-04-19 00:00:00');
+INSERT INTO `customer` VALUES ('17', '2', '13800138000', 'd231', '1', '0', '', '1', '2014-04-01 00:00:00');
 
 -- ----------------------------
 -- Table structure for `customer_purchase`
@@ -63,7 +73,7 @@ CREATE TABLE `customer_purchase` (
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `customer_purchase_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product_info` (`product_id`),
   CONSTRAINT `customer_purchase_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of customer_purchase
@@ -75,6 +85,17 @@ INSERT INTO `customer_purchase` VALUES ('4', '16', '7', '200', '0', '3', null, '
 INSERT INTO `customer_purchase` VALUES ('5', '16', '5', '10', '0', '2', null, '0', '2');
 INSERT INTO `customer_purchase` VALUES ('6', '16', '5', '100', '0', '2', null, '0', '2');
 INSERT INTO `customer_purchase` VALUES ('7', '17', '7', '300', '0', '1', null, '0', '5');
+INSERT INTO `customer_purchase` VALUES ('8', '17', '8', '40', '0', '1', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('9', '16', '8', '20', '0', '1', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('10', '17', '9', '100', '0', '1', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('11', '17', '10', '100', '0', '1', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('12', '17', '11', '100', '0', '1', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('13', '16', '12', '111', '0', '1', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('14', '16', '13', '200', '0', '1', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('15', '16', '14', '100', '0', '1', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('16', '16', '15', '50', '0', '1', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('17', '17', '16', '100', '0', '1', null, '0', '2');
+INSERT INTO `customer_purchase` VALUES ('18', '16', '17', '100', '0', '1', null, '0', '2');
 
 -- ----------------------------
 -- Table structure for `modules`
@@ -91,7 +112,7 @@ CREATE TABLE `modules` (
   `modify_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `ordering` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`module_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of modules
@@ -126,6 +147,8 @@ INSERT INTO `modules` VALUES ('27', '购买历史', '15', '1', 'sales.customer',
 INSERT INTO `modules` VALUES ('28', '销售确认', '16', '1', 'sales.cproduct', 'CheckSale', 'eric1', '2014-04-19 16:00:35', '0');
 INSERT INTO `modules` VALUES ('29', '预约确认', '12', '1', 'product.manage', 'ProductDetail', 'eric1', '2014-04-20 20:13:22', '0');
 INSERT INTO `modules` VALUES ('30', '产品资料', '12', '1', 'product.manage', 'CustomerStatic', 'eric1', '2014-04-21 00:05:25', '0');
+INSERT INTO `modules` VALUES ('31', '产品销售', '11', '0', 'product.salestrack', 'list', 'eric1', '2014-04-21 22:38:28', '0');
+INSERT INTO `modules` VALUES ('32', '销售列表', '31', '1', 'product.salestrack', 'list', 'eric1', '2014-04-21 22:38:51', '0');
 
 -- ----------------------------
 -- Table structure for `process`
@@ -252,7 +275,7 @@ CREATE TABLE `product_files` (
   PRIMARY KEY (`file_id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_files_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product_info` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_files
@@ -387,7 +410,7 @@ CREATE TABLE `roles` (
 -- ----------------------------
 -- Records of roles
 -- ----------------------------
-INSERT INTO `roles` VALUES ('1', '系统管理员', '2014-04-21 00:05:34', 'eric1');
+INSERT INTO `roles` VALUES ('1', '系统管理员', '2014-04-21 22:50:07', 'eric1');
 INSERT INTO `roles` VALUES ('2', '产品管理', '2014-04-21 00:05:41', 'eric1');
 INSERT INTO `roles` VALUES ('3', '销售经理', '2014-04-21 00:25:39', 'eric1');
 
@@ -437,6 +460,8 @@ INSERT INTO `role_module` VALUES ('1', '27');
 INSERT INTO `role_module` VALUES ('1', '28');
 INSERT INTO `role_module` VALUES ('1', '29');
 INSERT INTO `role_module` VALUES ('1', '30');
+INSERT INTO `role_module` VALUES ('1', '31');
+INSERT INTO `role_module` VALUES ('1', '32');
 INSERT INTO `role_module` VALUES ('2', '11');
 INSERT INTO `role_module` VALUES ('2', '12');
 INSERT INTO `role_module` VALUES ('2', '13');

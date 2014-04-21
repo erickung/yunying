@@ -1,0 +1,53 @@
+<div class="modal hide" id="check_appoint">
+	<%form id="form_check_appoint" name="form_check_appoint" action="/sales/cproduct/CheckSale" method="POST" class="form-horizontal"%>
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>预约产品</h3>
+	</div>
+	<div class="modal-body">
+	<div class="control-group formSep">
+		<div class="span5">
+			<%input name='name' obj=$customer%>
+		</div>
+		<div class="span5">
+			<%input name='mobile_num' obj=$customer%>
+		</div>
+	</div>
+	<div class="control-group formSep">
+		<div class="span5">
+			<%input name='birthday' obj=$customer%>
+		</div>
+		<div class="span5">
+			<%select name='sex' obj=$customer data=$customer->sex_data%>
+		</div>
+	</div>
+	<div id="dev_appoint" class="control-group formSep">
+		<div class="span5">
+			<label for="d_appoint_account" class="control-label">约定金额</label>
+			<div class="controls">
+				<div class="input-append">
+				<input type="text" name="appoint_account" id="d_appoint_account" class="input" value="">
+				<span class="add-on">万</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="dev_account" class="control-group formSep">
+		<div class="span5">
+			<label for="d_real_account" class="control-label">实际金额</label>
+			<div class="controls">
+				<div class="input-append">
+				<input type="text" name="real_account" id="d_real_account" class="input" value="">
+				<span class="add-on">万</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" id="btn_appoint" class="btn btn-gebo">提  交</button>
+		<a href="#" class="btn" id="btn_appoint_close" data-dismiss="modal">Close</a>
+	</div>
+	<input type="hidden" name="ps_id" id="ps_id" value="">
+	<%/form%>
+</div>

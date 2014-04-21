@@ -116,4 +116,31 @@ class ProductInfoAR extends ProductInfo
 	{
 		return parent::model($className);
 	}
+	
+	function getProductsOrderBySales($order='real_account', $start=0, $limit=20)
+	{
+		$sql = "
+		SELECT
+				p.*, c.real_account,c.appoint_account
+			FROM
+				product_info p
+			LEFT JOIN (
+				SELECT
+					product_id,
+					sum(real_account) real_account , sum(appoint_account) appoint_account
+				FROM
+					customer_purchase
+				GROUP BY
+					product_id
+			) c ON p.product_id = c.product_id
+			WHERE
+				p. STATUS = 99
+			ORDER BY
+				c.real_account DESC
+			LIMIT $start,$limit
+			";
+		$command = $this->getDbConnection()->createCommand($sql);
+		$rows = $command->queryAll();
+		return $rows;
+	}
 }

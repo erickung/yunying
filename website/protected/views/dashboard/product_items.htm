@@ -1,0 +1,36 @@
+				<div class="tabbable clearfix">
+                        <ul class="nav nav-tabs">
+						<li class="active"><a href="#unpublished_items" id="tab_unfinished_items" data-toggle="tab">待发行(<%$unfinished_count%>)</a></li>
+						<li><a href="#publish_items" data-toggle="tab" id="tab_finish_items">发行中(<%$publish_count%>)</a></li>
+						<li><a href="#over_items" data-toggle="tab">发行结束(<%$over_count%>)</a></li>
+						</ul>
+				
+					<div class="tab-content">
+						<div class="tab-pane active" id="unpublished_items">
+							<%require file="dashboard.unfinished_items"%>
+						</div>
+						<div class="tab-pane" id="publish_items">
+							<%require file="dashboard.finish_items"%>
+						</div>
+						<div class="tab-pane" id="over_items">
+							<%require file="dashboard.over_items"%>
+						</div>
+					</div>
+                </div>
+
+<%javascript%>
+function product_reload()
+{	
+	$("#btn_appoint_close").trigger('click'); 
+	eric.request.ajaxLoad('/dashboard/ProductItems','product_items');
+	var t_reload = function(){
+		
+	}
+	var t=setTimeout(function t_reload(){
+			$("#tab_finish_items").trigger('click');
+		},2000);
+	
+}
+
+
+<%/javascript%>

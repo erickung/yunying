@@ -1,0 +1,20 @@
+<table class="table table-striped">
+     <thead>
+		<th>id</th>
+		<th>产品名称</th>
+		<th>产品金额</th>
+		<th>状态</th>
+
+     </thead>
+     <tbody>
+         <%foreach from=$unfinished_products item=item%>
+				<tr>
+					<td><%$item->product_id%></td>
+					<td><%$item->name%></td>
+					<td><%$item->fund_size%></td>
+					<td><%$item->status_name%></td>
+					
+				</tr>
+		<%/foreach%>
+     </tbody>
+ </table>

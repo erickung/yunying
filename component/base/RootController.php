@@ -14,11 +14,13 @@ class RootController extends CController implements RootInterface
 	);
 	protected static $no_power_check = array(
 		'site'=>array('index'),
+		'dashboard'=>array('productitems'),
 		//'product.manage'=>array('customerstatic'),
 	);
 	
 	public static $defaultModules = array(
 			'custom.pass' => array('info'),
+			'dashboard'=>array('index'),
 	);
 
 	public function __construct($id,$module=null)
@@ -91,7 +93,7 @@ class RootController extends CController implements RootInterface
 	{
 		$controller =  $this->getModule() ? $this->getModule()->id . '.' . $this->getId() : $this->getId();
 		$action = strtolower($this->getAction()->getId());
-		
+		//var_dump($controller,$action);exit;
 		return isset(self::$no_power_check[$controller]) && in_array($action, self::$no_power_check[$controller]);
 	}
 

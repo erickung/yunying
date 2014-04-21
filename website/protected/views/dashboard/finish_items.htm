@@ -1,0 +1,77 @@
+<div class="modal hide" id="approval_appoint">
+	<%form id="form_check_appoint" name="form_check_appoint" action="/sales/customer/edit" method="POST" class="form-horizontal"%>
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>预约产品</h3>
+	</div>
+	<div class="modal-body">
+	<div class="control-group formSep">
+		<div class="span5">
+			<%input name='name' obj=$customer class="input-small"%>
+		</div>
+		<div class="span5">
+			<%input name='mobile_num' obj=$customer class="input-small"%>
+		</div>
+	</div>
+	<div class="control-group formSep">
+		<div class="span5">
+			<%input name='birthday' obj=$customer class="input-small"%>
+		</div>
+		<div class="span5">
+			<%select name='sex' obj=$customer data=$customer->sex_data class="input-small"%>
+		</div>
+	</div>
+	<div id="dev_appoint" class="control-group formSep">
+		<div class="span5">
+			<label class="control-label">约定金额</label>
+			<div class="controls">
+				<div class="input-append">
+				<input type="text" name="appoint_account" id="d_appoint_account" class="input-small" value="">
+				<span class="add-on">万</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" id="btn_appoint" class="btn btn-gebo">提  交</button>
+		<a href="#" class="btn" id="btn_appoint_close" data-dismiss="modal">Close</a>
+	</div>
+	<input type="hidden" name="product_id" id="d_product_id" value="">
+	<input type="hidden" name="dashboard" id="d_dashboard" value="dashboard">
+	<%/form%>
+</div>
+<table id="smpl_tbl" class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th>产品名称</th>
+					<th>发行金额</th>
+					<th>已预约金额</th>
+					<th>已确认金额</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%foreach from=$publish_products item=item%>
+				<tr>
+					<td><%$item.name%></td>
+					<td><%$item.fund_size%></td>
+					<td><%$item.appoint_account|intval%></td>
+					<td><%$item.real_account|intval%></td>
+					<td class=" ">
+						<a title="预约" id="product_appoint" onClick="product_appoint(<%$item.product_id%>)"  data-toggle="modal" data-backdrop="static" href="#approval_appoint" class="splashy-group_green_add"></a>
+							
+											
+					</td>
+				</tr>
+				<%/foreach%>
+				
+			</tbody>
+		</table>
+<script>
+
+function product_appoint(pid)
+{
+	$("#d_product_id").val(pid);
+}
+</script>

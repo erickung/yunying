@@ -18,14 +18,14 @@ function smarty_function_input($params, &$smarty)
 		$value = ($params['value']) ? CHtml::encode($params['value']) : '';
 		$label = $params['label'];
 	}
-
+	$class = isset($params['class']) ? $params['class'] : 'input';
 
 
 	$text = 
 <<<TEXT
 	<label for="$name" class="control-label">$label</label>
 	<div class="controls">
-		<input type="text" name="$name" id="$name" class="input" value="$value">
+		<input type="text" name="$name" id="$name" class="$class" value="$value">
 	</div>
 TEXT;
 

@@ -37,6 +37,8 @@ class CustomerAR extends Customer
 			$CustomerPurchaseAR->customer_id = $this->customer_id;
 			$CustomerPurchaseAR->product_id = $info['product_id'];
 			$CustomerPurchaseAR->appoint_account = $info['appoint_account'];
+			$CustomerPurchaseAR->user_id = WebUser::Instance()->user->user_id;
+			$CustomerPurchaseAR->status = 1;
 			$CustomerPurchaseAR->save();
 		}
 

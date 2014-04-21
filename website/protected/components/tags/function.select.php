@@ -8,8 +8,9 @@ function smarty_function_select($params, &$smarty)
 	$name = $params['name'];
 	$data = $params['data'];
 	$label = $ar->labels[$name];
+	$class = isset($params['class']) ? $params['class'] : '';
 
-	$select = "<label for='$name' class='control-label'>$label</label><div class='controls'><select id='$name' name='$name'>";
+	$select = "<label for='$name' class='control-label'>$label</label><div class='controls'><select class='$class' id='$name' name='$name'>";
 	foreach ($data as $k => $v)
 	{
 		$selected = $ar->{$name} == $k ? 'selected="selected"' : '';

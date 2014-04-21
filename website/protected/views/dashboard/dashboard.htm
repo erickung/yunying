@@ -1,0 +1,40 @@
+<div id="sortable_panels">
+	<div class="row-fluid">
+	    <div class="span12 not_sortable">
+            <div id="w_sort02" class="w-box">
+                <div class="w-box-header">
+                   	 处理事项
+                    
+                </div>
+                <div class="w-box-content" id="process_items">
+                   
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+	
+	<div class="row-fluid">
+		<div class="span12 not_sortable">
+			<div class="w-box">
+				<div class="w-box-header">
+					 项目一览
+				</div>
+				<div class="w-box-content" id="product_items">
+
+				
+					
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<%javascript%>
+eric.request.ajaxLoad('/dashboard/ProductItems','product_items');
+
+<%/javascript%>
+

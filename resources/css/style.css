@@ -404,7 +404,7 @@
             background: -ms-linear-gradient(top,  #fbfbfb 0%,#f1f1f1 100%);
             background: linear-gradient(top,  #fbfbfb 0%,#f1f1f1 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbfbfb', endColorstr='#f1f1f1',GradientType=0 );
-            font-weight:700;color:#666;font-size:11px
+            font-weight:700;color:#666;font-size:13px
         }
         .w-box-header .btn-group {margin-top:5px;line-height:1}
         .w-box-header .dropdown-menu {font-size:12px}
@@ -419,7 +419,7 @@
         .w-box-content .gebo-upload .plupload_filelist_footer {border-bottom:none}
         .w-box-content .nav-tabs {position:relative;top:-30px;margin-bottom:-18px;border-bottom:none}
         .w-box-content .nav-tabs {float:right;clear:both}
-        .w-box-content .nav-tabs > li > a {padding:4px 6px;font-size:11px}
+        .w-box-content .nav-tabs > li > a {padding:4px 6px;font-size:13px}
         .w-box-content .nav-tabs > li.active > a {background:#fff !important}
         .w-box-content .nav-tabs > li > a:hover {border-color:#ddd #ddd transparent;background: transparent}
         .w-box-content .tab-content {clear:both}

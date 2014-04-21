@@ -48,7 +48,16 @@ class CustomerController extends FController
 			$flag = $customer->saveCommit('addCustomer', Request::$post);
 		}
 		
-		Response::resp($flag, '', '/sales/customer/list');
+		if (Request::$post['dashboard'])
+		{
+			Response::respThisPage($flag, 'product_reload()');
+		} 
+		else 
+		{
+			Response::resp($flag, '', '/sales/customer/list');
+		}
+
+		
 	}
 	
 

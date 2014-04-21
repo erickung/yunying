@@ -1,0 +1,34 @@
+<div class="span12">
+	<h3 class="heading">产品列表</h3>
+	<div role="grid" class="dataTables_wrapper form-inline" id="dt_gal_wrapper">
+
+    
+		<table id="smpl_tbl" class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th>产品名称</th>
+					<th>发行金额</th>
+					<th>已预约金额</th>
+					<th>已确认金额</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%foreach from=$products item=item%>
+				<tr>
+					<td><%$item.name%></td>
+					<td><%$item.fund_size%></td>
+					<td><%$item.appoint_account|intval%></td>
+					<td><%$item.real_account|intval%></td>
+					<td class=" ">
+						
+						<a title="销售明细" class="splashy-documents_share" href="/product/manage/ProductDetail?id=<%$item.product_id%>"></a>
+						
+					</td>
+				</tr>
+				<%/foreach%>
+				
+			</tbody>
+		</table>
+	</div>
+</div>

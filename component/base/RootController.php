@@ -14,7 +14,7 @@ class RootController extends CController implements RootInterface
 	);
 	protected static $no_power_check = array(
 		'site'=>array('index'),
-		'dashboard'=>array('productitems'),
+		'dashboard'=>array('productitems','matterswithdeal'),
 		//'product.manage'=>array('customerstatic'),
 	);
 	

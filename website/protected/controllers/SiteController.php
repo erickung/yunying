@@ -8,8 +8,8 @@ class SiteController extends FController
 	 */
 	public function actionIndex()
 	{
-		$first_module = WebUser::Instance()->getFirstModule();
-		header("Location: $first_module");
+		//$first_module = WebUser::Instance()->getFirstModule();
+		header("Location: /dashboard/index");
 		
 		//$this->render('index');
 	}

@@ -54,7 +54,8 @@ class CustomerController extends FController
 		} 
 		else 
 		{
-			Response::resp($flag, '', '/sales/customer/list');
+			$url = Request::$post['customer_id'] ? '/sales/customer/info?id='.Request::$post['customer_id'] : '/sales/customer/info';
+			Response::resp($flag, '', $url);
 		}
 
 		
@@ -64,6 +65,7 @@ class CustomerController extends FController
 	function actionCustomerPurchase()
 	{
 		Yii::import('service.sales.*');
+		Yii::import('product.ar.*');
 		if (!Request::$get['cid']) return false;
 
 		$products = CustomerPurchaseAR::model()
@@ -72,7 +74,10 @@ class CustomerController extends FController
 		$count = CustomerPurchaseAR::model()->countByAttributes(array('customer_id'=>Request::$get['cid']));
 		
 		foreach ($products as $product)
+		{
 			$product->status_name = $product->getStatusName($product->status);
+			$product->product_id = $product->getProductName($product->product_id);
+		}
 		
 		$this->renderPartial('purchase_info', array(
 				'cid'=>Request::$get['cid'],

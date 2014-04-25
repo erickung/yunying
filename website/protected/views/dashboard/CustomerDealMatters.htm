@@ -36,11 +36,11 @@
 	<input type="hidden" name="status" id="d_status" value="">
 	<%/form%>
 </div>
-<div role="grid" class="dataTables_wrapper form-inline" id="dt_gal_wrapper">
-		<table id="smpl_tbl" class="table table-bordered table-striped table-hover">
+<table id="tab_dealing_matters" class="table table-bordered table-striped table-hover">
 			<thead>
 				<tr>
 					<th>产品名称</th>
+					<th>用户名</th>
 					<th>预约金额（万）</th>
 					<th>实际金额（万）</th>
 					<th>状态</th>
@@ -51,24 +51,24 @@
 				<%foreach from=$products item=item%>
 				<tr>
 					<td><%$item->product_id%></td>
+					<th><%$item->customer_id%></th>
 					<td><%$item->appoint_account%></td>
 					<td><%$item->real_account%></td>
 					<td><%$item->status_name%></td>
 					<td class=" ">
 						<%if $item->status == 2 || $item->status == 4%>
-						<a title="确认付款" id="product_appoint" onClick="check_account(<%$item->ps_id%>,<%$item->appoint_account%>,<%$item->real_account%>)"  data-toggle="modal" data-backdrop="static" href="#check_appoint" class="sepV_a"><i class="splashy-okay"></i></a>
-						<%elseif $item->status == -1%>
-						<a title="确认签约" id="product_appoint" onClick="check_appoint(<%$item->ps_id%>,<%$item->appoint_account%>,<%$item->real_account%>)"  data-toggle="modal" data-backdrop="static" href="#check_appoint" class="splashy-documents_okay"></i></a>	
+						<a title="确认付款" id="product_appoint" onClick="check_account(<%$item->ps_id%>,<%$item->appoint_account%>,<%$item->real_account%>)"  data-toggle="modal" data-backdrop="static" href="#check_appoint" class="splashy-okay"></a>
+						<%elseif $item->status == 0%>
+						<a title="确认签约" id="product_appoint" onClick="check_appoint(<%$item->ps_id%>,<%$item->appoint_account%>,<%$item->real_account%>)"  data-toggle="modal" data-backdrop="static" href="#check_appoint" class="splashy-documents_okay"></a>	
 						<%/if%>
 					</td>
 				</tr>
 				<%/foreach%>
 				
 			</tbody>
-		</table>
-	</div>
-	
-<%javascript%>  
+</table>
+
+<script>
 function check_appoint(ps_id,appoint_account,real_account)
 {
 	$("#ps_id").val(ps_id);
@@ -91,7 +91,7 @@ function submitOK()
 }
 
 $("#btn_appoint_close").click(function(){
-	eric.request.ajaxLoad('/sales/customer/CustomerPurchase?cid=<%$cid%>','purchase_info');
+	eric.request.ajaxLoad('/dashboard/MattersWithDeal','dealing_matters');
 	
 });
-<%/javascript%>  
+</script>

@@ -1,4 +1,4 @@
-<table id="smpl_tbl" class="table table-bordered table-striped table-hover">
+<table id="table_product_matters" class="table table-bordered table-striped table-hover">
 	<thead>
 		<tr>
 			<th>客户名</th>
@@ -8,9 +8,9 @@
 		</tr>
 	</thead>
 	<tbody>
-		<%foreach from=$data item=item%>
+		<%foreach from=$products item=item%>
 		<tr>
-			<td><%$item->customer->name%></td>
+			<td><%$item->customer_id%></td>
 			<td><%$item->appoint_account%></td>
 			<td><%$item->real_account%></td>
 			<td>
@@ -34,3 +34,14 @@
 		
 	</tbody>
 </table>
+
+<script type="text/javascript">
+function checkProduct(ps_id)
+{
+	var id = 'status_'+ps_id;
+	var val = $("#"+id).children('option:selected').val();
+	eric.request.ajaxPost('/sales/cproduct/CheckSale',{ps_id:ps_id,status:val},function(){
+		eric.request.ajaxLoad('/dashboard/MattersWithDeal','dealing_matters');
+	});
+}
+ </script>

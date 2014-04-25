@@ -68,5 +68,19 @@ class CustomerAR extends Customer
 		return $data;
 	}
 	
+	function getUserCustomers($user_id)
+	{
+		if ($user_id) 	
+			$data = $this->findAllByAttributes(array('user_id'=>$user_id));
+		else 
+			$data = $this->findAll();
+		$rnt = array();
+		foreach ($data as $d)
+		{
+			$rnt[$d->customer_id] = $d->name;
+		}
+		return $rnt;
+	}
+	
 	
 }

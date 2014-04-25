@@ -47,4 +47,29 @@ class DashboardController extends FController
 				'customer'=>new CustomerAR(),
 		));
 	}
+	
+	function actionMattersWithDeal()
+	{
+		Yii::import('service.sales.*');
+		$DashboardAR = new DashboardAR();
+		if ($DashboardAR->isSaler())
+		{
+			list($products, $count) = $DashboardAR->CustomerDealMatters();
+			$this->renderPartial('CustomerDealMatters', array(
+				'products'=>$products,
+				'count'=>$count,
+			));
+		}
+		else 
+		{
+			list($products, $count) = $DashboardAR->productDealMatters();
+			$this->renderPartial('ProductDealMatters', array(
+				'products'=>$products,
+				'count'=>$count,
+				'status'=>SalesConf::getCustomAppointStatus(),
+			));
+		} 
+
+	}
+	
 }

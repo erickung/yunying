@@ -6,7 +6,7 @@
                    	 处理事项
                     
                 </div>
-                <div class="w-box-content" id="process_items">
+                <div class="w-box-content" id="dealing_matters">
                    
                 </div>
             </div>
@@ -34,6 +34,7 @@
 </div>
 
 <%javascript%>
+eric.request.ajaxLoad('/dashboard/MattersWithDeal','dealing_matters');
 eric.request.ajaxLoad('/dashboard/ProductItems','product_items');
 
 <%/javascript%>

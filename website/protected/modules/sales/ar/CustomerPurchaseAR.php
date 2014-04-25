@@ -7,6 +7,7 @@ class CustomerPurchaseAR extends CustomerPurchase
 	{
 		return array(
 			'status' => 'getStatusName',
+			'customer_id'=>'getCustomerName',
 		);
 	}
 	
@@ -32,5 +33,21 @@ class CustomerPurchaseAR extends CustomerPurchase
 		if (empty($conf)) $conf = SalesConf::getCustomAppointStatus(); 
 
 		return $conf['show'][$v];
+	}
+	
+	function getCustomerName($v)
+	{
+		$customer = CustomerAR::model()->getCustomByCustomId($v);
+
+		return $customer->name;
+	}
+	
+	function getProductName($v)
+	{
+		static $products;
+		if (!$products) 
+			$products = ProductInfoAR::model()->getProducts();
+		
+		return $products[$v];
 	}
 }

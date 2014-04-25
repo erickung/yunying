@@ -143,4 +143,16 @@ class ProductInfoAR extends ProductInfo
 		$rows = $command->queryAll();
 		return $rows;
 	}
+	
+	function getProducts()
+	{
+		$products = ProductInfoAR::model()->findAllByAttributes(array('status'=>99));
+		
+		$rnt = array();
+		foreach($products as $product)
+		{
+			$rnt[$product->product_id] = $product->name;
+		}
+		return $rnt;
+	}
 }

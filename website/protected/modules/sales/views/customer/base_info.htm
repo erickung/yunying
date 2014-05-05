@@ -1,7 +1,7 @@
 <%form id="form_customer_info" name="form_customer_info" action="/sales/customer/edit" method="POST" class="form-horizontal"%>
 <div class="control-group formSep">
 	<div class="span5">
-		<%input name='name' obj=$customer%>
+		<%input name='name' obj=$customer required=true%>
 	</div>
 	<div class="span5">
 		<%input name='mobile_num' obj=$customer%>

@@ -7,12 +7,16 @@ class ManageController extends FController
 		$count = ProductInfoAR::model()->count();
 		
 		foreach ($products as $product)
+		{
 			$product->status_name = ProductConf::getStatusLabel($product->status);
+			$product->check_power = $product->checkPassPower();
+		}
 
 		$this->render('list', array(
 				'fields' => array('product_id','name'),
 				'products'=>$products,
 				'count'=>$count,
+				'product_roles'=>ProductRoleAR::model()->getProductRoles(),
 		));
 	}
 	
@@ -31,7 +35,6 @@ class ManageController extends FController
 			
 			$publish = ProductPublishAR::model()->getPublishInfoById(Request::$get['id']);
 			if (!$publish)  $publish = new ProductPublishAR();
-			
 			
 
 		}
@@ -71,7 +74,10 @@ class ManageController extends FController
 		
 		$approval_items = ProductApprovalItemAR::model()->getItemsByProductId(Request::$get['id']);
 		$this->assign('approval_items', $approval_items);
+		$this->assign('productRoles', $product->process->productRoles);
 		
+		if (isset(Request::$get['ref'])) $this->assign('ref', Request::$get['ref']);
+
 		$this->render('static');
 	}
 	
@@ -120,7 +126,7 @@ class ManageController extends FController
 		if (Request::$post['status'] == 1)
 			$url = '/product/manage/list';
 		else 
-			$url = !Request::$post['product_id'] ? '/product/manage/info' : '/product/manage/info?id='.Request::$post['product_id'];
+			$url = '/product/manage/info?id='.$ProductInfoAR->product_id;
 
 		
 		Response::resp($flag, '', $url);
@@ -146,7 +152,12 @@ class ManageController extends FController
 			$flag = $ProductApproval->saveCommit('rejectProduct', Request::$post);
 		}
 		
-		Response::resp($flag, '', '/product/manage/list');
+		if (isset(Request::$post['ref']) && Request::$post['ref']) 
+			Response::resp($flag, '', Request::$post['ref']);
+		else 
+			Response::resp($flag, '', '/product/manage/list');
+
+		
 	}
 	
 	function actionProductFiles()
@@ -183,14 +194,14 @@ class ManageController extends FController
 		if (!isset(Request::$get['id']) || !Request::$get['id'])
 			exit();
 	
+		Yii::import('sales.ar.*');
+		Yii::import('service.sales.*');
 		if (isset(Request::$get['type']) && Request::$get['type'] == 'part')
 		{	
-			Yii::import('sales.ar.*');
-			Yii::import('service.sales.*');
-				
-				
+			if (Request::$get['status'] == 'all') Request::$get['status'] = null; 
+
 			$CustomerPurchaseAR = new CustomerPurchaseAR();
-			$data = $CustomerPurchaseAR->getProductCustomer(Request::$get['id']);
+			$data = $CustomerPurchaseAR->getProductCustomer(Request::$get['id'], Request::$get['status']);
 			foreach ($data as $d)
 				$d->status_name = $d->getStatusName($d->status);
 			
@@ -206,9 +217,20 @@ class ManageController extends FController
 		{
 			$this->render('customer_detail', array(
 					'pid'=>Request::$get['id'],
+					'status'=>SalesConf::getCustomAppointStatus(),
 			));
 		}
 		
 
+	}
+	
+	function actionCheckSale()
+	{
+		Yii::import('sales.ar.*');
+		if(!Request::$post['ps_id']) return false;
+		$CustomerPurchaseAR = new CustomerPurchaseAR();
+		$CustomerPurchaseAR->setAttributesFromRequest(Request::$post);
+		$rnt = $CustomerPurchaseAR->saveCommit('modifyByPk');
+		Response::respThisPage($rnt, 'submitOK()');
 	}
 }

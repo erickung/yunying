@@ -1,5 +1,7 @@
 <div class="span8" id="uploaded_files">
 </div>
+
+<%if $product->status<=0%>
 <div>
 <div class="span8 formSep">
     <div id="multi_upload" class="gebo-upload">
@@ -7,7 +9,7 @@
     </div>
 </div>
 </div>
-
+<%/if%>
 <%asset css="lib/plupload/js/jquery.plupload.queue/css/plupload-gebo.css"%>
 <%asset js="lib/plupload/js/plupload.full.js"%>
 <%asset js="lib/plupload/js/jquery.plupload.queue/jquery.plupload.queue.full.js"%>
@@ -22,6 +24,7 @@ eric.product_files.deleteSuccess = function(){
 	eric.request.ajaxLoad('/product/manage/ProductFiles','uploaded_files',{id:pid});
 }
 
+<%if $product->status<=0%>
 $("#multi_upload").pluploadQueue({
 	// General settings
 	runtimes : 'html5,flash,silverlight,html4',
@@ -87,4 +90,6 @@ $("#multi_upload").pluploadQueue({
 		}
 	}
 });
+
+<%/if%>
 <%/javascript%>  

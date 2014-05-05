@@ -3,19 +3,23 @@
 						<div class="container-fluid">
 							<a class="brand" href="/"><i class="icon-home icon-white"></i> MAI运营平台 </a>
 							<ul class="nav user_menu pull-right">
+							<!-- 
 								<li class="hidden-phone hidden-tablet">
 									<div class="nb_boxes clearfix">
 										<a data-toggle="modal" data-backdrop="static" href="#myMail" class="label ttip_b" title="New messages">25 <i class="splashy-mail_light"></i></a>
 										<a data-toggle="modal" data-backdrop="static" href="#myTasks" class="label ttip_b" title="New tasks">10 <i class="splashy-calendar_week"></i></a>
 									</div>
 								</li>
+							 -->
 								<li class="divider-vertical hidden-phone hidden-tablet"></li>
 								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="<%$res%>/img/user_avatar.png" alt="" class="user_avatar" />孔繁兴 <b class="caret"></b></a>
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="<%$res%>/img/user_avatar.png" alt="" class="user_avatar" /><%$self_user->user_name%> <b class="caret"></b></a>
 									<ul class="dropdown-menu">
+										<!-- 
 										<li><a href="index.php?uid=1&amp;page=user_profile">My Profile</a></li>
 										<li><a href="javascrip:void(0)">Another action</a></li>
 										<li class="divider"></li>
+										 -->
 										<li><a href="/site/logout">Log Out</a></li>
 									</ul>
 								</li>

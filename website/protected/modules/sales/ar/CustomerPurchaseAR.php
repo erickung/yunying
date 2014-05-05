@@ -22,9 +22,12 @@ class CustomerPurchaseAR extends CustomerPurchase
 		$this->save();
 	}
 	
-	function getProductCustomer($product_id)
+	function getProductCustomer($product_id, $status=null)
 	{
-		return $this->with('customer')->findAllByAttributes(array('product_id'=>$product_id));
+		$condition = array('product_id'=>$product_id);
+		if (!is_null($status)) $condition['status'] = $status;
+		
+		return $this->with('customer')->findAllByAttributes($condition);
 	}
 	
 	function getStatusName($v)

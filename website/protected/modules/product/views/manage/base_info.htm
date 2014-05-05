@@ -1,6 +1,7 @@
+<h3 class="heading">基本信息</h3>
 <div class="control-group formSep">
 	<div class="span5">
-		<%input name='name' obj=$product%>
+		<%input name='name' obj=$product required=true%>
 	</div>
 	<div class="span5">
 		<%select name='type' obj=$product data=$product->trust_type%>
@@ -8,16 +9,16 @@
 </div>
 <div class="control-group formSep">
 	<div class="span5">
-		<%input_addon span=12 name='fund_size' obj=$product after="万"%>
+		<%input_addon span=12 name='fund_size' obj=$product after="万" required=true%>
 	</div>
 	<div class="span5">
-		<label for="expected_rate_return" class="control-label">预期年化收益率</label>
+		<label for="expected_rate_return" class="control-label">预期年化收益率 <span class='f_req'>*</span></label>
 		<div class="controls ">
 			<div class="span3">
 				<div class="input-append">
-					<input placeholder="最低" type="text" name="min_rate" id="min_rate" class=" input-mini" value="<%$product->min_rate%>"><span class="add-on">%</span>
+					<input placeholder="最低" required=true type="text" name="min_rate" id="min_rate" class=" input-mini" value="<%$product->min_rate%>"><span class="add-on">%</span>
 				<span class="add-on" style="background-color:#eeffff;">~</span>
-					<input placeholder="最高" type="text" name="max_rate" id="max_rate" class=" input-mini" value="<%$product->max_rate%>"><span class="add-on">%</span>
+					<input placeholder="最高" required=true type="text" name="max_rate" id="max_rate" class=" input-mini" value="<%$product->max_rate%>"><span class="add-on">%</span>
 				</div>
 				
 			</div>
@@ -28,21 +29,61 @@
 </div>
 <div class="control-group formSep">
 	<div class="span5">
-		<%input name='build_date' obj=$product%>
+		<%input name='build_date' obj=$product required=true%>
 	</div>
 	<div class="span5">
-		<%input_addon span=12 name='duration' obj=$product after="月"%>
+		<%input_addon span=12 name='duration' obj=$product after="月" required=true%>
 	</div>
 </div>
 <div class="control-group formSep">
 	<div class="span5">
-		<%input name='funds_source' obj=$product%>
+		<%input name='funds_source' obj=$product required=true%>
 	</div>
 	<div class="span5">
 		<%select name='investment_way' obj=$product data=$product->investment_ways%>
 	</div>
 </div>
 
+
+<h3 class="heading">发行信息</h3>
+<div class="control-group formSep">
+	<div class="span5">
+		<%input name='start_date' obj=$publish required=true%>
+	</div>
+	<div class="span5">
+		<%input name='end_date' obj=$publish required=true%>
+	</div>
+</div>
+<div class="control-group formSep">
+	<div class="span5">
+		<%input_addon span=12 name='personal_threshold' obj=$publish after="万"%>
+	</div>
+	<div class="span5">
+		<%input_addon span=12 name='origin_threshold' obj=$publish after="万"%>
+	</div>
+</div>
+<div class="control-group formSep">
+	<div class="span5">
+		<%input name='bank_account' obj=$publish required=true%>
+	</div>
+	<div class="span5">
+		<%input name='bank_name' obj=$publish required=true%>
+	</div>
+</div>
+<div class="control-group formSep">
+	<div class="span5">
+		<%input name='bank_address' obj=$publish required=true%>
+	</div>
+</div>
+
+
+
+
+
+
+
 <%javascript%>
 eric.common.datepicker('build_date');
+eric.common.datepicker('start_date');
+eric.common.datepicker('end_date');
 <%/javascript%>

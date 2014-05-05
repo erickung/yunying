@@ -1,0 +1,24 @@
+		<table id="smpl_tbl" class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th>产品名称</th>
+					<th>产品金额</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%foreach from=$products item=item%>
+				<tr>
+					<td><%$item->name%></td>
+					<td><%$item->fund_size%></td>
+					<td class=" ">
+						
+						<%if $item->status > 0 && $item->status < 99%>
+						<a title="审核" class="splashy-box_okay" href="/product/manage/static?id=<%$item->product_id%>&ref=/dashboard/index"></a>
+						<%/if%>
+					</td>
+				</tr>
+				<%/foreach%>
+				
+			</tbody>
+		</table>

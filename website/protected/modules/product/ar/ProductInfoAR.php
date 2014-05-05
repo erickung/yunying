@@ -13,6 +13,7 @@ class ProductInfoAR extends ProductInfo
 	public $status_name;
 	public $type_name;
 	public $investment_way_name;
+	public $check_power;
 	
 	private static $static_conf = array();
 	
@@ -32,7 +33,7 @@ class ProductInfoAR extends ProductInfo
 	public function displays()
 	{
 		return array(
-				'build_date' => ActiveRecordInterface::TIME_TO_DATE,
+			'build_date' => ActiveRecordInterface::TIME_TO_DATE,
 		);
 	}
 	
@@ -50,6 +51,10 @@ class ProductInfoAR extends ProductInfo
 		return $rnt;
 	}
 	
+	/**
+	 * 判断是否具有审核权限
+	 * @return number
+	 */
 	public function checkPassPower()
 	{
 		if ($this->status == 0) return 1; 

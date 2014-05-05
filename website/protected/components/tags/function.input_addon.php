@@ -24,12 +24,15 @@ function smarty_function_input_addon($params, &$smarty)
 	if(isset($params['after']))
 		$after = '<span class="add-on">'.$params['after'].'</span>';
 	
+	$required = (isset($params['required']) ) ? "required=true" : '';
+	$f_req = (isset($params['required']) ) ? "<span class='f_req'>*</span>" : '';
+	
 	$text = 
 <<<TEXT
-	<label for="$name" class="control-label">$label</label>
+	<label for="$name" class="control-label">$label $f_req</label>
 	<div class="controls">
 		<div class="input-append">
-		<input type="text" name="$name" id="$name" class="$class" value="$value">
+		<input type="text" name="$name" id="$name" class="$class" value="$value" $required>
 		$after
 		</div>
 	</div>

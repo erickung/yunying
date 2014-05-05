@@ -21,11 +21,8 @@
 <%javascript%>
 function product_reload()
 {	
-	$("#btn_appoint_close").trigger('click'); 
+	$("#btn_appoint_close_a").trigger('click'); 
 	eric.request.ajaxLoad('/dashboard/ProductItems','product_items');
-	var t_reload = function(){
-		
-	}
 	var t=setTimeout(function t_reload(){
 			$("#tab_finish_items").trigger('click');
 		},2000);

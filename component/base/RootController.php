@@ -10,11 +10,12 @@ class RootController extends CController implements RootInterface
 	private $view_path;
 	
 	protected static $nologin = array(
-			'site' => array('login','upload'),
+			'site' => array('login','upload','logout'),
 	);
 	protected static $no_power_check = array(
 		'site'=>array('index'),
 		'dashboard'=>array('productitems','matterswithdeal'),
+		//'sales.customer'=>array('edit'),
 		//'product.manage'=>array('customerstatic'),
 	);
 	

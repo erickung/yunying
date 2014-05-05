@@ -1,7 +1,7 @@
 <div role="grid" class="dataTables_wrapper form-inline" id="dt_gal_wrapper">
         <div class="row">
         	<div class="span6">
-        		<a href="/product/manage/info"><i class="splashy-add"></i></a>
+        		<a title="添加产品" href="/product/manage/info" class="btn "><i class="splashy-documents_add"></i></a>
     			<div  class="dataTables_length">
 		
     			</div>
@@ -26,11 +26,17 @@
 					<td><%$item->fund_size%></td>
 					<td><%$item->status_name%></td>
 					<td class=" ">
+						<%if $item->status<1%>
+						<a title="修改" class="splashy-hcard_edit" href="/product/manage/info?id=<%$item->product_id%>"></a>
+						<%/if%>
 						
-						<a title="修改" class="sepV_a" href="/product/manage/info?id=<%$item->product_id%>"><i class="icon-pencil"></i></a>
+						<%if $item->status == 99%>
 						<a title="销售明细" class="splashy-documents_share" href="/product/manage/ProductDetail?id=<%$item->product_id%>"></a>
-						<a title="审核" class="sepV_a" href="/product/manage/static?id=<%$item->product_id%>"><i class="icon-eye-open"></i></a>
+						<%/if%>
 						
+						<%if $item->status > 0 && $item->status < 99%>
+						<a title="审核" class="splashy-box_okay" href="/product/manage/static?id=<%$item->product_id%>"></a>
+						<%/if%>
 					</td>
 				</tr>
 				<%/foreach%>

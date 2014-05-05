@@ -7,10 +7,10 @@
 	<div class="modal-body">
 	<div class="control-group formSep">
 		<div class="span5">
-			<%input name='name' obj=$customer class="input-small"%>
+			<%input name='name' obj=$customer class="input-small" required=true%>
 		</div>
 		<div class="span5">
-			<%input name='mobile_num' obj=$customer class="input-small"%>
+			<%input name='mobile_num' obj=$customer class="input-small" required=true%>
 		</div>
 	</div>
 	<div class="control-group formSep">
@@ -23,10 +23,10 @@
 	</div>
 	<div id="dev_appoint" class="control-group formSep">
 		<div class="span5">
-			<label class="control-label">约定金额</label>
+			<label class="control-label">约定金额<span class='f_req'>*</span></label>
 			<div class="controls">
 				<div class="input-append">
-				<input type="text" name="appoint_account" id="d_appoint_account" class="input-small" value="">
+				<input type="text" required=true name="appoint_account" id="d_appoint_account" class="input-small" value="">
 				<span class="add-on">万</span>
 				</div>
 			</div>
@@ -35,7 +35,7 @@
 	</div>
 	<div class="modal-footer">
 		<button type="submit" id="btn_appoint" class="btn btn-gebo">提  交</button>
-		<a href="#" class="btn" id="btn_appoint_close" data-dismiss="modal">Close</a>
+		<a href="#" class="btn" id="btn_appoint_close_a" data-dismiss="modal">Close</a>
 	</div>
 	<input type="hidden" name="product_id" id="d_product_id" value="">
 	<input type="hidden" name="dashboard" id="d_dashboard" value="dashboard">
@@ -59,8 +59,9 @@
 					<td><%$item.appoint_account|intval%></td>
 					<td><%$item.real_account|intval%></td>
 					<td class=" ">
+						<%if $is_saler%>
 						<a title="预约" id="product_appoint" onClick="product_appoint(<%$item.product_id%>)"  data-toggle="modal" data-backdrop="static" href="#approval_appoint" class="splashy-group_green_add"></a>
-							
+						<%/if%>	
 											
 					</td>
 				</tr>

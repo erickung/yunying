@@ -1,3 +1,27 @@
+<div class="well clearfix">
+    <div class="row-fluid">
+        <div class="pull-left">
+            <span class="sepV_c">
+              	  状态：
+                <select id="search_status" class="span8" onchange="search()">
+                    <option value="all">全部</option>
+                    <%foreach $status.show as $s => $v%>
+						<option value='<%$s%>'><%$v%></option>
+					<%/foreach%>
+                </select>
+            </span>
+           
+
+        </div>
+        <!-- 
+        <div class="pull-center">
+                <span class="result_view">
+                <a href="javascript:void(0)" class="btn"><i class="splashy-zoom"></i></a>
+            	</span>
+        </div>
+         -->
+    </div>
+</div>
 <div role="grid" class="dataTables_wrapper form-inline" id="table_customer_product">
 		
 </div>
@@ -6,9 +30,15 @@ function checkProduct(ps_id)
 {
 	var id = 'status_'+ps_id;
 	var val = $("#"+id).children('option:selected').val();
-	eric.request.ajaxPost('/sales/cproduct/CheckSale',{ps_id:ps_id,status:val},function(){
+	eric.request.ajaxPost('/product/manage/CheckSale',{ps_id:ps_id,status:val},function(){
 		eric.request.ajaxLoad('/product/manage/ProductDetail?type=part&id=<%$pid%>','table_customer_product');
 	})
+}
+
+function search()
+{
+	var val = $("#search_status").children('option:selected').val();
+	eric.request.ajaxLoad('/product/manage/ProductDetail?type=part&id=<%$pid%>&status='+val,'table_customer_product');
 }
  </script>
  

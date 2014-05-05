@@ -9,6 +9,8 @@ class FController extends RootController
 	{
 		Yii::setPathOfAlias('service', Yii::getPathOfAlias('application.components.service'));
 		if (!parent::beforeAction($action)) return false;
+		
+		$this->assign('self_user', WebUser::Instance()->user);
 		return true;
 	}
 	

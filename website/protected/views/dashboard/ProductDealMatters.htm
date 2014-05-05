@@ -40,7 +40,7 @@ function checkProduct(ps_id)
 {
 	var id = 'status_'+ps_id;
 	var val = $("#"+id).children('option:selected').val();
-	eric.request.ajaxPost('/sales/cproduct/CheckSale',{ps_id:ps_id,status:val},function(){
+	eric.request.ajaxPost('/product/manage/CheckSale',{ps_id:ps_id,status:val},function(){
 		eric.request.ajaxLoad('/dashboard/MattersWithDeal','dealing_matters');
 	});
 }

@@ -17,8 +17,8 @@ class ProductPublishAR extends ProductPublish
 	public function displays()
 	{
 		return array(
-				'start_date' => ActiveRecordInterface::TIME_TO_DATE,
-				'end_date' => ActiveRecordInterface::TIME_TO_DATE,
+				'start_date' => array('FTool', 'date'),
+				'end_date' => array('FTool', 'date'),
 		);
 	}
 

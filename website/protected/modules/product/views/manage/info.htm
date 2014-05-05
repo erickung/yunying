@@ -8,7 +8,7 @@
 						<div class="tabbable tabbable-bordered">
 							<ul class="nav nav-tabs">
 								<li class="active"><a href="#base_info" data-toggle="tab">基本信息</a></li>
-								<li><a href="#publish_info" data-toggle="tab">发行信息</a></li>
+							<!-- <li><a href="#publish_info" data-toggle="tab">发行信息</a></li> -->	
 								<li><a href="#extra_info" data-toggle="tab">扩展信息</a></li>
 								<%if $product->product_id%>
 								<li><a href="#files" data-toggle="tab">上传附件</a></li>
@@ -18,9 +18,7 @@
 								<div class="tab-pane active" id="base_info">
 								<%require file='product.manage.base_info'%>
 								</div>
-								<div class="tab-pane" id="publish_info">
-								<%require file='product.manage.publish_info'%>
-								</div>
+								
 								<div class="tab-pane" id="extra_info">
 								<%require file='product.manage.extra_info'%>
 								</div>
@@ -43,7 +41,7 @@
 					<div class="control-group" align="left">
 							<div class="controls">
 								<%if !$product->product_id or $product->status == 0%>
-								<button type="submit" class="btn btn-gebo">保  存</button>
+								<button type="submit" class="btn btn-gebo">保存草稿 </button>
 								<button type="button" id="bnt_send" class="btn btn-gebo">提交审批</button>
 								<%/if%>
 								<button type="button" class="btn" onClick="eric.common.go();">返回</button>

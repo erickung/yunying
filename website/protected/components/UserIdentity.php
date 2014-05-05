@@ -39,7 +39,6 @@ class UserIdentity extends CUserIdentity
 		}
 		else 
 		{
-			Root::error("ldap auth failure : {$this->username}");
 			return false;
 		}
 	}

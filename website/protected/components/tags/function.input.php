@@ -19,13 +19,15 @@ function smarty_function_input($params, &$smarty)
 		$label = $params['label'];
 	}
 	$class = isset($params['class']) ? $params['class'] : 'input';
-
+	$required = (isset($params['required']) ) ?
+					"required=true" : '';
+	$f_req = (isset($params['required']) ) ? "<span class='f_req'>*</span>" : '';
 
 	$text = 
 <<<TEXT
-	<label for="$name" class="control-label">$label</label>
+	<label for="$name" class="control-label">$label $f_req</label>
 	<div class="controls">
-		<input type="text" name="$name" id="$name" class="$class" value="$value">
+		<input type="text" name="$name" id="$name" class="$class" value="$value" $required>
 	</div>
 TEXT;
 

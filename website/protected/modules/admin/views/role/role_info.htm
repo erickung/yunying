@@ -6,15 +6,52 @@
 				<div class="control-group">
 					<label class="control-label" for="role_name">角色名称<span class="f_req">*</span></label>
 					<div class="controls">
-						<input type="text" required name="role_name" id="role_name" placeholder="角色名称" value="<%c v=$role->role_name %>" >
+						<input type="text" required name="role_name" id="role_name" placeholder="角色名称" value="<%c v=$myrole->role_name %>" >
 					</div>
             	</div>
 				<div class="control-group formSep">
 					<label class="control-label">角色模块:</label>
+
+					
 					<div class="controls">
-					<span class="label label-inverse">Auto-Expanding Textarea</span>
+					<ul class="nav nav-tabs">
+					<%foreach $role_modules as $ppid => $item%>
+						<li <%if $item.node.active%> class="active"<%/if%> ><a href="#role_items_<%$item.node.module_id%>" id="tab_role_items_<%$item.node.module_id%>" data-toggle="tab"><%$item.node.module_name%>(<%$item.node.cnum%>)</a></li>
+					<%/foreach%>
+					</ul>
+					
+					<div class="tab-content">
+						<%foreach $role_modules as $ppid => $item%>
+							<div class="tab-pane <%if $item.node.active%>active<%/if%>" id="role_items_<%$item.node.module_id%>">
+								<div class="row-fluid">
+								<%foreach $item.data as $pid => $pdata%>
+									<div class="span10">
+										<span class="label" style="font-size:16px;"><%$pdata.node.module_name%></span>
+										<div class="">
+										<%foreach $pdata.data as $role%>
+										<label class="checkbox inline">
+											<input name="module_name[]" type="checkbox" <%if $role.node.checked%>checked="true"<%/if%>   value="<%$role.node.module_id%>">
+											<%$role.node.module_name%>
+										</label>
+										<%/foreach%>
+										</div>
+									</div>
+								<%/foreach%>
+								</div>
+							</div>
+						<%/foreach%>
+					
+				
 					</div>
-					<%checkbox data=$role_modules name="module_name" id="module_id" %>
+					
+					</div>
+					
+					
+						
+						
+						
+					
+					
 				</div>
 				<br><br>
 				<div class="control-group">
@@ -24,7 +61,7 @@
 						<button type="button" class="btn" onClick="eric.common.go();">返回</button>
 					</div>
 				</div>		
-				<input type="hidden" name="role_id" value="<%$role->role_id%>">
+				<input type="hidden" name="role_id" value="<%$myrole->role_id%>">
 			<%/form%>
 		</div>
 		<div class="span4"></div>

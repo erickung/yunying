@@ -23,8 +23,8 @@ class RoleController extends FController
 		if (isset(Request::$get['role_id']) && Request::$get['role_id']>0)
 		{
 			$role = RoleAR::model()->findByPk(Request::$get['role_id']);
-			$this->assign('role', $role);
-			$role_modules = $role->getAllRoleModules();
+			$this->assign('myrole', $role);
+			$role_modules = $role->getAllRoleModules(); 
 		}
 		else 
 		{
@@ -32,8 +32,6 @@ class RoleController extends FController
 		}
 		
 		$this->assign('role_modules', $role_modules);
-		//var_dump($role_modules);
-		//exit;
 		$this->render('role_info');
 	}
 	
@@ -43,6 +41,7 @@ class RoleController extends FController
 		$RoleAR->setAttributesFromRequest(Request::$post);
 		$modules = Request::$post['module_name'];
 		$flag = true;
+
 		if ($RoleAR->role_id)
 		{
 			$flag = $RoleAR->saveCommit('updateRole',$modules);

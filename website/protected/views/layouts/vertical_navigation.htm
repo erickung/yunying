@@ -13,7 +13,7 @@
 						<div class="accordion-group">
 							<div class="accordion-heading <%if $selected_module->href=='dashboard/index'%>sdb_h_active<%/if%>">
 								<a href="#collapseDashboard" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
-									<i class="icon-cog"></i> 工作台
+									<i class="icon-home"></i> 工作台
 								</a>
 							</div>
 							<div class="accordion-body collapse <%if $selected_module->href=='dashboard/index'%>in<%/if%>" id="collapseDashboard">
@@ -31,7 +31,7 @@
 						<div class="accordion-group">
 							<div class="accordion-heading <%if $selected_module->parent_module_id==$id%>sdb_h_active<%/if%>">
 								<a href="#collapse<%$id%>" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
-									<i class="icon-leaf"></i> <%$modules_detail.$id->module_name%>
+									<i class="<%$modules_detail.$id->class%>"></i> <%$modules_detail.$id->module_name%>
 								</a>
 							</div>
 							<div class="accordion-body collapse <%if $selected_module->parent_module_id==$id%>in<%/if%>" id="collapse<%$id%>">

@@ -18,6 +18,32 @@ class DashboardAR
 		return array($products, $count);
 	}
 	
+	function productDealProcess()
+	{
+		$criteria = new CDbCriteria();
+		$criteria->addCondition('status > 0');
+		$criteria->addCondition('status < 99');
+		$products = ProductInfoAR::model()->findAll($criteria);
+		if (empty($products))
+			return array(array(), 0);
+
+		$rnt = array();
+		$UserProductRole = UserProductRole::model()->findAllByAttributes(array('user_id'=>WebUser::Instance()->user->user_id));
+		foreach ($products as $p)
+		{
+			foreach ($UserProductRole as $role)
+			{
+				if ($role->pr_id == $p->status) 
+				{
+					array_push($rnt, $p);
+					break;
+				}
+
+			}
+		}
+		return array($rnt, count($rnt));
+	}
+	
 	function CustomerDealMatters()
 	{
 		$criteria = new CDbCriteria();
@@ -40,5 +66,10 @@ class DashboardAR
 	function isSaler()
 	{
 		return isset(WebUser::Instance()->roles[3]);
+	}
+	
+	function isProductManager()
+	{
+		return isset(WebUser::Instance()->roles[6]);
 	}
 }

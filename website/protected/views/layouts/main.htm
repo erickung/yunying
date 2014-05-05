@@ -46,6 +46,15 @@
 	            eric.init();
 	            <%$scripts%>
 	        });
+	        
+	        setInterval(notify, 10000);
+	        
+	        function notify()
+	        {
+	        	eric.request.ajaxPost('/dashboard/MattersWithDeal',{notify:1},function(count){
+	        		$.sticky("<a href='/dashboard/index' >您有"+count+"个处理事项</a>", {autoclose : 5000, position: "top-right", type: "st-info" });
+	        	});
+	        }
 		</script>	
 	</body>	
 	<iframe name="__hidden_call" style="display:none"></iframe>	

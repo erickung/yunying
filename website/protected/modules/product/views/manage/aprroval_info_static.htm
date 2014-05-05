@@ -1,3 +1,18 @@
+<h3 class="heading">审核进度</h3>
+<div class="row-fluid">
+<div class="control-group" align="left">
+<ul id="simple_wizard-titles" class="stepy-titles clearfix"><li id="simple_wizard-title-0" class="current-step">
+	<%foreach $productRoles as $i => $role%>
+		<li id="simple_wizard-title-1">
+		<div><%$role->pr_name%></div>
+		<span class="stepNb"  <%if $role->pr_id == $product->status%>style="background:#067EAD;"<%/if%>><%$role->pr_id%></span>
+		</li>
+	<%/foreach%>
+</ul>
+</div>
+</div>
+
+<h3 class="heading">审核信息</h3>
 <div class="vcard">
 <ul>
 

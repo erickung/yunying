@@ -34,8 +34,13 @@ class DashboardController extends FController
 		));
 		
 		foreach ($unfinished_products as $product)
+		{
 			$product->status_name = ProductConf::getStatusLabel($product->status);
+			$product->check_power = $product->checkPassPower();
+		}
+	
 		
+		$DashboardAR = new DashboardAR();
 		$this->renderPartial('product_items', array(
 				'fields' => array('product_id','name'),
 				'unfinished_products'=>$unfinished_products,
@@ -45,6 +50,7 @@ class DashboardController extends FController
 				'publish_products'=>$publish_products,
 				'publish_count'=>$publish_count,
 				'customer'=>new CustomerAR(),
+				'is_saler'=>$DashboardAR->isSaler(),
 		));
 	}
 	
@@ -52,9 +58,14 @@ class DashboardController extends FController
 	{
 		Yii::import('service.sales.*');
 		$DashboardAR = new DashboardAR();
-		if ($DashboardAR->isSaler())
+		if ($DashboardAR->isSaler() && !$DashboardAR->isProductManager())
 		{
 			list($products, $count) = $DashboardAR->CustomerDealMatters();
+			if (isset(Request::$post['notify']))
+			{
+				echo $count;exit();
+			} 
+
 			$this->renderPartial('CustomerDealMatters', array(
 				'products'=>$products,
 				'count'=>$count,
@@ -62,12 +73,38 @@ class DashboardController extends FController
 		}
 		else 
 		{
-			list($products, $count) = $DashboardAR->productDealMatters();
-			$this->renderPartial('ProductDealMatters', array(
-				'products'=>$products,
-				'count'=>$count,
-				'status'=>SalesConf::getCustomAppointStatus(),
-			));
+			list($products, $count) =  $DashboardAR->productDealProcess();
+
+			if ($DashboardAR->isProductManager()) 
+			{
+				if (isset(Request::$post['notify']))
+				{
+					echo $count;exit();
+				}
+				if (!empty($products))
+				{
+					$this->renderPartial('ProductDealProcess', array(
+							'products'=>$products,
+							'count'=>$count,
+					));
+				}
+			}
+			else 
+			{
+				list($products, $count) = $DashboardAR->productDealMatters();
+				if (isset(Request::$post['notify']))
+				{
+					echo $count;exit();
+				}
+				$this->renderPartial('ProductDealMatters', array(
+						'products'=>$products,
+						'count'=>$count,
+						'status'=>SalesConf::getCustomAppointStatus(),
+				));
+			}
+
+			
+			
 		} 
 
 	}

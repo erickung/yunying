@@ -3,6 +3,6 @@ class TrackController extends FController
 {
 	function actionList()
 	{
-		exit('111');
+		$this->render('list');
 	}
 }
